@@ -1,0 +1,12 @@
+D:\My Documents\Programming\RunGreaseWeazel\bin\Debug\RunGreaseWeazel.exe
+D:\My Documents\Programming\RunGreaseWeazel\bin\Debug\RunGreaseWeazel.pdb
+D:\My Documents\Programming\RunGreaseWeazel\bin\Debug\RunGreaseWeazel.xml
+D:\My Documents\Programming\RunGreaseWeazel\obj\Debug\RunGreaseWeazel.vbprojAssemblyReference.cache
+D:\My Documents\Programming\RunGreaseWeazel\obj\Debug\RunGreaseWeazel.Resources.resources
+D:\My Documents\Programming\RunGreaseWeazel\obj\Debug\RunGreaseWeazel.vbproj.GenerateResource.cache
+D:\My Documents\Programming\RunGreaseWeazel\obj\Debug\RunGreaseWeazel.vbproj.CoreCompileInputs.cache
+D:\My Documents\Programming\RunGreaseWeazel\obj\Debug\RunGreaseWeazel.exe
+D:\My Documents\Programming\RunGreaseWeazel\obj\Debug\RunGreaseWeazel.xml
+D:\My Documents\Programming\RunGreaseWeazel\obj\Debug\RunGreaseWeazel.pdb
+D:\My Documents\Programming\RunGreaseWeazel\obj\Debug\RunGreaseWeazel.frmMain.resources
+D:\My Documents\Programming\RunGreaseWeazel\bin\Debug\RunGreaseWeazel.exe.config
