@@ -76,6 +76,7 @@ Partial Class frmMain
         Me.cmbRevolutions = New System.Windows.Forms.ComboBox()
         Me.cmbStartTrack = New System.Windows.Forms.ComboBox()
         Me.ChkStartTrack = New System.Windows.Forms.CheckBox()
+        Me.btnResize = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'cmbSerialPorts
@@ -353,13 +354,14 @@ Partial Class frmMain
         'chkSaveLog
         '
         Me.chkSaveLog.AutoSize = True
+        Me.chkSaveLog.Checked = True
+        Me.chkSaveLog.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkSaveLog.Location = New System.Drawing.Point(176, 360)
         Me.chkSaveLog.Name = "chkSaveLog"
         Me.chkSaveLog.Size = New System.Drawing.Size(76, 17)
         Me.chkSaveLog.TabIndex = 37
         Me.chkSaveLog.Text = "Write LOG"
         Me.chkSaveLog.UseVisualStyleBackColor = True
-        Me.chkSaveLog.Visible = False
         '
         'cmbEndTrack
         '
@@ -557,11 +559,21 @@ Partial Class frmMain
         Me.ChkStartTrack.Text = "Start Track"
         Me.ChkStartTrack.UseVisualStyleBackColor = True
         '
+        'btnResize
+        '
+        Me.btnResize.Location = New System.Drawing.Point(483, 148)
+        Me.btnResize.Name = "btnResize"
+        Me.btnResize.Size = New System.Drawing.Size(24, 53)
+        Me.btnResize.TabIndex = 87
+        Me.btnResize.Text = "<"
+        Me.btnResize.UseVisualStyleBackColor = True
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(907, 452)
+        Me.ClientSize = New System.Drawing.Size(908, 452)
+        Me.Controls.Add(Me.btnResize)
         Me.Controls.Add(Me.rtbOutput)
         Me.Controls.Add(Me.cmbStartTrack)
         Me.Controls.Add(Me.ChkStartTrack)
@@ -675,4 +687,5 @@ Partial Class frmMain
     Friend WithEvents cmbRevolutions As ComboBox
     Friend WithEvents cmbStartTrack As ComboBox
     Friend WithEvents ChkStartTrack As CheckBox
+    Friend WithEvents btnResize As Button
 End Class

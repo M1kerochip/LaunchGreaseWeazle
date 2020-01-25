@@ -27,6 +27,10 @@ Public Class frmMain
         txtPublisher.Text = My.Settings.Company
         txtExecuteScript.Text = My.Settings.Script
 
+        rtbOutput.Visible = False
+        Me.Size = New Size(534, Me.Size.Height)
+        btnResize.Text = ">"
+
         Return True
     End Function
 
@@ -143,7 +147,6 @@ Public Class frmMain
         End If
         str = str + fName + " " + ComPort
 
-
         CMD.StartInfo.Arguments = str
 
         CMD.StartInfo.UseShellExecute = False
@@ -162,15 +165,12 @@ Public Class frmMain
 
         CMD.Dispose()
 
-        SW.Dispose()
-
         Do Until SR.EndOfStream = True
-
             rtbOutput.Text &= SR.ReadLine
-
             rtbOutput.Text &= Environment.NewLine
-
         Loop
+
+        SW.Dispose()
 
         SR.Dispose()
 
@@ -321,5 +321,17 @@ Public Class frmMain
 
     Private Sub ChkSaveLog_CheckedChanged(sender As Object, e As EventArgs) Handles chkSaveLog.CheckedChanged
 
+    End Sub
+
+    Private Sub BtnResize_Click(sender As Object, e As EventArgs) Handles btnResize.Click
+        If rtbOutput.Visible Then
+            rtbOutput.Visible = False
+            Me.Size = New Size(534, Me.Size.Height)
+            btnResize.Text = ">"
+        Else
+            rtbOutput.Visible = True
+            Me.Size = New Size(924, Me.Size.Height)
+            btnResize.Text = "<"
+        End If
     End Sub
 End Class
