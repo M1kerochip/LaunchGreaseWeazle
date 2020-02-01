@@ -56,7 +56,10 @@ Public Class frmMain
             filen = filen + "Disk" + cmbDisk.Text.Trim
         End If
         If cmbDiskOf.Text.Trim <> "" Then
-            filen = filen + "of" + cmbDiskOf.Text.Trim + "_"
+            filen = filen + "of" + cmbDiskOf.Text.Trim
+        End If
+        If ((cmbDisk.Text.Trim <> "") Or (cmbDiskOf.Text.Trim <> "")) Then
+            filen = filen + "_"
         End If
         If cmbDiskRevision.Text.Trim <> "" Then
             filen = filen + "Rev_" + cmbDiskRevision.Text.Trim + "_"

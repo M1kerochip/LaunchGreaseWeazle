@@ -101,7 +101,7 @@ Partial Class frmMain
         Me.rtbOutput.Location = New System.Drawing.Point(513, 12)
         Me.rtbOutput.Name = "rtbOutput"
         Me.rtbOutput.Size = New System.Drawing.Size(386, 430)
-        Me.rtbOutput.TabIndex = 4
+        Me.rtbOutput.TabIndex = 100
         Me.rtbOutput.Text = ""
         '
         'txtGWLocation
@@ -109,7 +109,7 @@ Partial Class frmMain
         Me.txtGWLocation.Location = New System.Drawing.Point(12, 281)
         Me.txtGWLocation.Name = "txtGWLocation"
         Me.txtGWLocation.Size = New System.Drawing.Size(465, 20)
-        Me.txtGWLocation.TabIndex = 9
+        Me.txtGWLocation.TabIndex = 70
         '
         'lblGWLocation
         '
@@ -117,7 +117,7 @@ Partial Class frmMain
         Me.lblGWLocation.Location = New System.Drawing.Point(9, 265)
         Me.lblGWLocation.Name = "lblGWLocation"
         Me.lblGWLocation.Size = New System.Drawing.Size(151, 13)
-        Me.lblGWLocation.TabIndex = 8
+        Me.lblGWLocation.TabIndex = 68
         Me.lblGWLocation.Text = "GreaseWeazel Script Location"
         '
         'btnGWLocation
@@ -125,7 +125,7 @@ Partial Class frmMain
         Me.btnGWLocation.Location = New System.Drawing.Point(483, 281)
         Me.btnGWLocation.Name = "btnGWLocation"
         Me.btnGWLocation.Size = New System.Drawing.Size(24, 20)
-        Me.btnGWLocation.TabIndex = 7
+        Me.btnGWLocation.TabIndex = 74
         Me.btnGWLocation.Text = "..."
         Me.btnGWLocation.UseVisualStyleBackColor = True
         '
@@ -134,7 +134,7 @@ Partial Class frmMain
         Me.txtPythonLocation.Location = New System.Drawing.Point(12, 330)
         Me.txtPythonLocation.Name = "txtPythonLocation"
         Me.txtPythonLocation.Size = New System.Drawing.Size(465, 20)
-        Me.txtPythonLocation.TabIndex = 12
+        Me.txtPythonLocation.TabIndex = 78
         '
         'lblPythonLocation
         '
@@ -142,7 +142,7 @@ Partial Class frmMain
         Me.lblPythonLocation.Location = New System.Drawing.Point(9, 314)
         Me.lblPythonLocation.Name = "lblPythonLocation"
         Me.lblPythonLocation.Size = New System.Drawing.Size(104, 13)
-        Me.lblPythonLocation.TabIndex = 11
+        Me.lblPythonLocation.TabIndex = 76
         Me.lblPythonLocation.Text = "Python.exe Location"
         '
         'btnPythonLocation
@@ -150,7 +150,7 @@ Partial Class frmMain
         Me.btnPythonLocation.Location = New System.Drawing.Point(483, 330)
         Me.btnPythonLocation.Name = "btnPythonLocation"
         Me.btnPythonLocation.Size = New System.Drawing.Size(24, 20)
-        Me.btnPythonLocation.TabIndex = 10
+        Me.btnPythonLocation.TabIndex = 82
         Me.btnPythonLocation.Text = "..."
         Me.btnPythonLocation.UseVisualStyleBackColor = True
         '
@@ -160,7 +160,7 @@ Partial Class frmMain
         Me.btnRead.Location = New System.Drawing.Point(12, 413)
         Me.btnRead.Name = "btnRead"
         Me.btnRead.Size = New System.Drawing.Size(240, 29)
-        Me.btnRead.TabIndex = 13
+        Me.btnRead.TabIndex = 96
         Me.btnRead.Text = "Read"
         Me.btnRead.UseVisualStyleBackColor = True
         '
@@ -304,7 +304,7 @@ Partial Class frmMain
         Me.btnWrite.Location = New System.Drawing.Point(267, 413)
         Me.btnWrite.Name = "btnWrite"
         Me.btnWrite.Size = New System.Drawing.Size(240, 29)
-        Me.btnWrite.TabIndex = 32
+        Me.btnWrite.TabIndex = 98
         Me.btnWrite.Text = "Write"
         Me.btnWrite.UseVisualStyleBackColor = True
         '
@@ -359,7 +359,7 @@ Partial Class frmMain
         Me.chkSaveLog.Location = New System.Drawing.Point(176, 360)
         Me.chkSaveLog.Name = "chkSaveLog"
         Me.chkSaveLog.Size = New System.Drawing.Size(76, 17)
-        Me.chkSaveLog.TabIndex = 37
+        Me.chkSaveLog.TabIndex = 88
         Me.chkSaveLog.Text = "Write LOG"
         Me.chkSaveLog.UseVisualStyleBackColor = True
         '
@@ -370,7 +370,7 @@ Partial Class frmMain
         Me.cmbEndTrack.Location = New System.Drawing.Point(267, 180)
         Me.cmbEndTrack.Name = "cmbEndTrack"
         Me.cmbEndTrack.Size = New System.Drawing.Size(42, 21)
-        Me.cmbEndTrack.TabIndex = 86
+        Me.cmbEndTrack.TabIndex = 56
         Me.cmbEndTrack.Text = "83"
         '
         'chkEndTrack
@@ -399,7 +399,7 @@ Partial Class frmMain
         Me.LinkLabelDLPython.Location = New System.Drawing.Point(386, 314)
         Me.LinkLabelDLPython.Name = "LinkLabelDLPython"
         Me.LinkLabelDLPython.Size = New System.Drawing.Size(91, 13)
-        Me.LinkLabelDLPython.TabIndex = 41
+        Me.LinkLabelDLPython.TabIndex = 80
         Me.LinkLabelDLPython.TabStop = True
         Me.LinkLabelDLPython.Text = "Download Python"
         '
@@ -409,7 +409,7 @@ Partial Class frmMain
         Me.LinkLabelDLGW.Location = New System.Drawing.Point(346, 265)
         Me.LinkLabelDLGW.Name = "LinkLabelDLGW"
         Me.LinkLabelDLGW.Size = New System.Drawing.Size(131, 13)
-        Me.LinkLabelDLGW.TabIndex = 42
+        Me.LinkLabelDLGW.TabIndex = 72
         Me.LinkLabelDLGW.TabStop = True
         Me.LinkLabelDLGW.Text = "Download Greeaseweazle"
         '
@@ -419,7 +419,7 @@ Partial Class frmMain
         Me.LinkLabelOpenLocation.Location = New System.Drawing.Point(400, 214)
         Me.LinkLabelOpenLocation.Name = "LinkLabelOpenLocation"
         Me.LinkLabelOpenLocation.Size = New System.Drawing.Size(77, 13)
-        Me.LinkLabelOpenLocation.TabIndex = 65
+        Me.LinkLabelOpenLocation.TabIndex = 64
         Me.LinkLabelOpenLocation.TabStop = True
         Me.LinkLabelOpenLocation.Text = "Open Location"
         '
@@ -440,7 +440,7 @@ Partial Class frmMain
         Me.btnSaveLocation.Location = New System.Drawing.Point(483, 230)
         Me.btnSaveLocation.Name = "btnSaveLocation"
         Me.btnSaveLocation.Size = New System.Drawing.Size(24, 20)
-        Me.btnSaveLocation.TabIndex = 68
+        Me.btnSaveLocation.TabIndex = 66
         Me.btnSaveLocation.Text = "..."
         Me.btnSaveLocation.UseVisualStyleBackColor = True
         '
@@ -450,7 +450,7 @@ Partial Class frmMain
         Me.lblSaveLocation.Location = New System.Drawing.Point(9, 214)
         Me.lblSaveLocation.Name = "lblSaveLocation"
         Me.lblSaveLocation.Size = New System.Drawing.Size(76, 13)
-        Me.lblSaveLocation.TabIndex = 64
+        Me.lblSaveLocation.TabIndex = 60
         Me.lblSaveLocation.Text = "Save Location"
         '
         'txtSaveLocation
@@ -458,14 +458,14 @@ Partial Class frmMain
         Me.txtSaveLocation.Location = New System.Drawing.Point(12, 230)
         Me.txtSaveLocation.Name = "txtSaveLocation"
         Me.txtSaveLocation.Size = New System.Drawing.Size(465, 20)
-        Me.txtSaveLocation.TabIndex = 66
+        Me.txtSaveLocation.TabIndex = 62
         '
         'txtExecuteScript
         '
         Me.txtExecuteScript.Location = New System.Drawing.Point(12, 377)
         Me.txtExecuteScript.Name = "txtExecuteScript"
         Me.txtExecuteScript.Size = New System.Drawing.Size(465, 20)
-        Me.txtExecuteScript.TabIndex = 47
+        Me.txtExecuteScript.TabIndex = 86
         '
         'lblExecuteScript
         '
@@ -473,7 +473,7 @@ Partial Class frmMain
         Me.lblExecuteScript.Location = New System.Drawing.Point(9, 361)
         Me.lblExecuteScript.Name = "lblExecuteScript"
         Me.lblExecuteScript.Size = New System.Drawing.Size(102, 13)
-        Me.lblExecuteScript.TabIndex = 46
+        Me.lblExecuteScript.TabIndex = 84
         Me.lblExecuteScript.Text = "Execute Script/EXE"
         '
         'btnExecuteScript
@@ -481,7 +481,7 @@ Partial Class frmMain
         Me.btnExecuteScript.Location = New System.Drawing.Point(483, 377)
         Me.btnExecuteScript.Name = "btnExecuteScript"
         Me.btnExecuteScript.Size = New System.Drawing.Size(24, 20)
-        Me.btnExecuteScript.TabIndex = 45
+        Me.btnExecuteScript.TabIndex = 94
         Me.btnExecuteScript.Text = "..."
         Me.btnExecuteScript.UseVisualStyleBackColor = True
         '
@@ -491,7 +491,7 @@ Partial Class frmMain
         Me.chkExecuteScript.Location = New System.Drawing.Point(267, 360)
         Me.chkExecuteScript.Name = "chkExecuteScript"
         Me.chkExecuteScript.Size = New System.Drawing.Size(144, 17)
-        Me.chkExecuteScript.TabIndex = 48
+        Me.chkExecuteScript.TabIndex = 90
         Me.chkExecuteScript.Text = "Execute script after R/W"
         Me.chkExecuteScript.UseVisualStyleBackColor = True
         '
@@ -501,7 +501,7 @@ Partial Class frmMain
         Me.LinkLabelLaunchNow.Location = New System.Drawing.Point(406, 361)
         Me.LinkLabelLaunchNow.Name = "LinkLabelLaunchNow"
         Me.LinkLabelLaunchNow.Size = New System.Drawing.Size(71, 13)
-        Me.LinkLabelLaunchNow.TabIndex = 49
+        Me.LinkLabelLaunchNow.TabIndex = 92
         Me.LinkLabelLaunchNow.TabStop = True
         Me.LinkLabelLaunchNow.Text = "Execute Now"
         '
@@ -534,7 +534,7 @@ Partial Class frmMain
         Me.cmbRevolutions.Location = New System.Drawing.Point(123, 180)
         Me.cmbRevolutions.Name = "cmbRevolutions"
         Me.cmbRevolutions.Size = New System.Drawing.Size(40, 21)
-        Me.cmbRevolutions.TabIndex = 82
+        Me.cmbRevolutions.TabIndex = 52
         Me.cmbRevolutions.Tag = ""
         Me.cmbRevolutions.Text = "5"
         '
@@ -564,7 +564,7 @@ Partial Class frmMain
         Me.btnResize.Location = New System.Drawing.Point(483, 148)
         Me.btnResize.Name = "btnResize"
         Me.btnResize.Size = New System.Drawing.Size(24, 53)
-        Me.btnResize.TabIndex = 87
+        Me.btnResize.TabIndex = 49
         Me.btnResize.Text = "<"
         Me.btnResize.UseVisualStyleBackColor = True
         '
