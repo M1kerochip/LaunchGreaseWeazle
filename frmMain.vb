@@ -50,11 +50,20 @@ Public Class frmMain
 
     Function CreateFileName() As String
         Dim filen As String
-        filen = txtTitle.Text.Trim + "_" + txtPublisher.Text.Trim + "_"
+        filen = txtTitle.Text.Trim + "_"                                            'Set initial name to Title + "_" (assuming no one won't set a title!)
+
+        If txtPublisher.Text.Trim <> "" Then
+            filen = filen + txtPublisher.Text.Trim + "_"                                   'Add Publisher, if one set
+        End If
+
+        If cmbDiskOf.Text.Trim <> "" Then
+            cmbDisk.Text = cmbDisk.Text.Trim.PadLeft(cmbDisk.Text.Length, "0")      'Pad disk number to length of "diskof" field
+        End If
 
         If cmbDisk.Text.Trim <> "" Then
             filen = filen + "Disk" + cmbDisk.Text.Trim
         End If
+
         If cmbDiskOf.Text.Trim <> "" Then
             filen = filen + "of" + cmbDiskOf.Text.Trim
         End If
@@ -75,13 +84,13 @@ Public Class frmMain
 
         'Check to see if file exists already. If so, get next available filename by appending "_X" where x is an ascending integer.
         Dim l As Integer = 0
-        If My.Computer.FileSystem.FileExists(filen + extst) Then
+        If My.Computer.FileSystem.FileExists(txtSaveLocation.Text.Trim + filen + extst) Then
             l = 1
-            While My.Computer.FileSystem.FileExists(filen + "_" + l + extst) = True
+            While My.Computer.FileSystem.FileExists(txtSaveLocation.Text.Trim + filen + "_" + CStr(l) + extst) = True
                 l = l + 1
             End While
         End If
-        If l > 0 Then filen = filen + "_" + l
+        If l > 0 Then filen = filen + "_" + CStr(l)
         filen = filen + extst
         Return filen
     End Function
