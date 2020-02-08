@@ -22,5 +22,12 @@ RunGreaseWeazel
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="M:RunGreaseWeazel.frmMain.CreateFileName(System.Boolean)">
+ <summary>
+ Create a filename from the attributes onscreen. (Including
+ </summary>
+ <param name="CheckExists">Check to see if the file exists on the disk. If so, append an integer to prevent GreaseSeazle from overwriting.</param>
+ <returns></returns>
+</member>
 </members>
 </doc>

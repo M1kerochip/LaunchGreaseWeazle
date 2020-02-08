@@ -48,7 +48,13 @@ Public Class frmMain
         My.Settings.Save()
     End Sub
 
-    Function CreateFileName() As String
+    ''' <summary>
+    ''' Create a filename from the attributes onscreen. (Including
+    ''' </summary>
+    ''' <param name="CheckExists">Check to see if the file exists on the disk. If so, append an integer to prevent GreaseSeazle from overwriting.</param>
+    ''' <returns></returns>
+    Function CreateFileName(ByVal CheckExists As Boolean) As String
+
         Dim filen As String
         filen = txtTitle.Text.Trim + "_"                                            'Set initial name to Title + "_" (assuming no one won't set a title!)
 
@@ -82,15 +88,17 @@ Public Class frmMain
 
         Dim extst As String = ".scp"
 
-        'Check to see if file exists already. If so, get next available filename by appending "_X" where x is an ascending integer.
-        Dim l As Integer = 0
-        If My.Computer.FileSystem.FileExists(txtSaveLocation.Text.Trim + filen + extst) Then
-            l = 1
-            While My.Computer.FileSystem.FileExists(txtSaveLocation.Text.Trim + filen + "_" + CStr(l) + extst) = True
-                l = l + 1
-            End While
+        If CheckExists = True Then
+            'Check to see if file exists already. If so, get next available filename by appending "_X" where x is an ascending integer.
+            Dim l As Integer = 0
+            If My.Computer.FileSystem.FileExists(txtSaveLocation.Text.Trim + filen + extst) Then
+                l = 1
+                While My.Computer.FileSystem.FileExists(txtSaveLocation.Text.Trim + filen + "_" + CStr(l) + extst) = True
+                    l = l + 1
+                End While
+            End If
+            If l > 0 Then filen = filen + "_" + CStr(l)
         End If
-        If l > 0 Then filen = filen + "_" + CStr(l)
         filen = filen + extst
         Return filen
     End Function
@@ -226,7 +234,7 @@ Public Class frmMain
                 Dim loopc As Integer
                 For loopc = 0 To CInt(cmbDump.Text)
                     cmbDump.Text = CStr(loopc)
-                    Dim fileGW As String = CreateFileName()
+                    Dim fileGW As String = CreateFileName(True)
                     rtbOutput.Clear()
                     rtbOutput.Text &= "Reading from Greaseweazel on " + cmbSerialPorts.Text
                     rtbOutput.Text &= Environment.NewLine
@@ -235,7 +243,7 @@ Public Class frmMain
                     CallGreaseWeazel(txtPythonLocation.Text, txtGWLocation.Text, True, txtSaveLocation.Text + fileGW, cmbSerialPorts.Text)
                 Next
             Else
-                Dim fileGW As String = CreateFileName()
+                Dim fileGW As String = CreateFileName(True)
                 rtbOutput.Clear()
                 rtbOutput.Text &= "Reading from Greaseweazel on " + cmbSerialPorts.Text
                 rtbOutput.Text &= Environment.NewLine
@@ -336,7 +344,7 @@ Public Class frmMain
     End Sub
 
     Private Sub LinkLabelLaunchNow_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabelLaunchNow.LinkClicked
-        System.Diagnostics.Process.Start(txtExecuteScript.Text.Trim, txtSaveLocation.Text.Trim + CreateFileName())
+        System.Diagnostics.Process.Start(txtExecuteScript.Text.Trim, txtSaveLocation.Text.Trim + CreateFileName(False))
     End Sub
 
     Private Sub ChkStartCyl_CheckedChanged(sender As Object, e As EventArgs) Handles ChkStartTrack.CheckedChanged
