@@ -70,7 +70,19 @@ Public Class frmMain
         If cmbDump.Text.Trim <> "" Then
             filen = filen + "Dump" + cmbDump.Text.Trim
         End If
-        filen = filen + ".scp"
+
+        Dim extst As String = ".scp"
+
+        'Check to see if file exists already. If so, get next available filename by appending "_X" where x is an ascending integer.
+        Dim l As Integer = 0
+        If My.Computer.FileSystem.FileExists(filen + extst) Then
+            l = 1
+            While My.Computer.FileSystem.FileExists(filen + "_" + l + extst) = True
+                l = l + 1
+            End While
+        End If
+        If l > 0 Then filen = filen + "_" + l
+        filen = filen + extst
         Return filen
     End Function
 

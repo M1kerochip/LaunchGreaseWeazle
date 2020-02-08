@@ -225,7 +225,7 @@ Partial Class frmMain
         'cmbSystem
         '
         Me.cmbSystem.FormattingEnabled = True
-        Me.cmbSystem.Items.AddRange(New Object() {"AtariST", "Amiga", "IBMPC", "Spectrum", "Commodore64", "Amstrad"})
+        Me.cmbSystem.Items.AddRange(New Object() {"AtariST", "Amiga", "IBMPC", "Spectrum", "Commodore64", "Amstrad", "AtariST-Amiga", "AtariST-IBMPC", "Amiga-IBMPC", "AtariST-Amiga-IBMPC"})
         Me.cmbSystem.Location = New System.Drawing.Point(12, 102)
         Me.cmbSystem.Name = "cmbSystem"
         Me.cmbSystem.Size = New System.Drawing.Size(240, 21)
