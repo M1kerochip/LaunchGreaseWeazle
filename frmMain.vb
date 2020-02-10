@@ -444,9 +444,9 @@ Public Class frmMain
             rtbOutput.Text &= Environment.NewLine
             rtbOutput.Text &= "using: " + fileGW
             rtbOutput.Text &= Environment.NewLine + Environment.NewLine
-            rtbOutput.Text &= "Please ensure DCLK + DCIO are bridged with a jumper before the process starts."
+            rtbOutput.Text &= "Please ensure GND + DCLK are bridged with a jumper before the process starts."
             rtbOutput.Text &= Environment.NewLine + Environment.NewLine
-            If MessageBox.Show("Continue with flashing process?" + vbNewLine + vbNewLine + "Are DCLK + DCIO are bridged with a jumper also?", "Flash Greaseweazle", MessageBoxButtons.OKCancel) = DialogResult.OK Then
+            If MessageBox.Show("Continue with flashing process?" + vbNewLine + vbNewLine + "Are GND + DCLK are bridged with a jumper also?", "Flash Greaseweazle", MessageBoxButtons.OKCancel) = DialogResult.OK Then
                 CallGreaseWeazel(txtPythonLocation.Text, txtGWLocation.Text, False, True, fileGW, cmbSerialPorts.Text)
             End If
         End If
