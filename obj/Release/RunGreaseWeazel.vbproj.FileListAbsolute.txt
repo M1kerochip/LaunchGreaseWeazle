@@ -14,7 +14,6 @@ C:\Users\Mikerochip\Source\Repos\LaunchGreaseWeazle\bin\Release\RunGreaseWeazel.
 C:\Users\Mikerochip\Source\Repos\LaunchGreaseWeazle\bin\Release\RunGreaseWeazel.exe
 C:\Users\Mikerochip\Source\Repos\LaunchGreaseWeazle\bin\Release\RunGreaseWeazel.pdb
 C:\Users\Mikerochip\Source\Repos\LaunchGreaseWeazle\bin\Release\RunGreaseWeazel.xml
-C:\Users\Mikerochip\Source\Repos\LaunchGreaseWeazle\obj\Release\RunGreaseWeazel.vbprojAssemblyReference.cache
 C:\Users\Mikerochip\Source\Repos\LaunchGreaseWeazle\obj\Release\RunGreaseWeazel.frmMain.resources
 C:\Users\Mikerochip\Source\Repos\LaunchGreaseWeazle\obj\Release\RunGreaseWeazel.Resources.resources
 C:\Users\Mikerochip\Source\Repos\LaunchGreaseWeazle\obj\Release\RunGreaseWeazel.vbproj.GenerateResource.cache
@@ -22,3 +21,4 @@ C:\Users\Mikerochip\Source\Repos\LaunchGreaseWeazle\obj\Release\RunGreaseWeazel.
 C:\Users\Mikerochip\Source\Repos\LaunchGreaseWeazle\obj\Release\RunGreaseWeazel.exe
 C:\Users\Mikerochip\Source\Repos\LaunchGreaseWeazle\obj\Release\RunGreaseWeazel.xml
 C:\Users\Mikerochip\Source\Repos\LaunchGreaseWeazle\obj\Release\RunGreaseWeazel.pdb
+C:\Users\Mikerochip\Source\Repos\LaunchGreaseWeazle\obj\Release\RunGreaseWeazel.vbprojAssemblyReference.cache

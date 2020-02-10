@@ -22,6 +22,7 @@ Partial Class frmMain
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
         Me.cmbSerialPorts = New System.Windows.Forms.ComboBox()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -77,6 +78,7 @@ Partial Class frmMain
         Me.cmbStartTrack = New System.Windows.Forms.ComboBox()
         Me.ChkStartTrack = New System.Windows.Forms.CheckBox()
         Me.btnResize = New System.Windows.Forms.Button()
+        Me.ToolTipMainForm = New System.Windows.Forms.ToolTip(Me.components)
         Me.SuspendLayout()
         '
         'cmbSerialPorts
@@ -688,4 +690,5 @@ Partial Class frmMain
     Friend WithEvents cmbStartTrack As ComboBox
     Friend WithEvents ChkStartTrack As CheckBox
     Friend WithEvents btnResize As Button
+    Friend WithEvents ToolTipMainForm As ToolTip
 End Class

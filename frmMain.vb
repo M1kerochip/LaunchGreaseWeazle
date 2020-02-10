@@ -31,6 +31,46 @@ Public Class frmMain
         Me.Size = New Size(534, Me.Size.Height)
         btnResize.Text = ">"
 
+        ToolTipMainForm.SetToolTip(btnRead, "Begin GreaseWeazle read process.")
+        ToolTipMainForm.SetToolTip(btnWrite, "Begin GreaseWeazle write process.")
+        ToolTipMainForm.SetToolTip(btnExecuteScript, "Select the program or batch file to run. Path to disk image is passed as first argument.")
+        ToolTipMainForm.SetToolTip(btnPythonLocation, "Select the location of the python.exe.")
+        ToolTipMainForm.SetToolTip(btnGWLocation, "Select the location of the gw.py script.")
+        ToolTipMainForm.SetToolTip(btnSaveLocation, "Select the location to save Disk images to.")
+        ToolTipMainForm.SetToolTip(btnResize, "Show log. Not very useful though!")
+        ToolTipMainForm.SetToolTip(chkExecuteScript, "Executes script after each read attempt.")
+        ToolTipMainForm.SetToolTip(chkSaveLog, "Writes the log to a file after each read/write attempt.")
+        ToolTipMainForm.SetToolTip(txtExecuteScript, "Location of program or batch file to execute")
+        ToolTipMainForm.SetToolTip(txtPythonLocation, "Location of python.exe. Python must be installed. Exe is in main python install folder.")
+        ToolTipMainForm.SetToolTip(txtGWLocation, "Location of gw.py. This is the script python.exe executes.")
+        ToolTipMainForm.SetToolTip(txtSaveLocation, "Location to save disk images to.")
+        ToolTipMainForm.SetToolTip(txtTitle, "Title of floppy disk image. This should not be blank.")
+        ToolTipMainForm.SetToolTip(txtPublisher, "Publisher of disk image. Seperated from title by underscore. May be blank if desired.")
+        ToolTipMainForm.SetToolTip(cmbSystem, "Computer system that the disk images belong to. eg PC, Amiga, ST etc.")
+        ToolTipMainForm.SetToolTip(cmbDisk, "Used to set the disk number in a set.")
+        ToolTipMainForm.SetToolTip(cmbDiskOf, "The total number of disks in a set. May be blank, if unknown. Useful to leave as 1 for single disks, to avoid confusion.")
+        ToolTipMainForm.SetToolTip(cmbDiskRevision, "Adds a revision string to a disk image. Usually blank.")
+        ToolTipMainForm.SetToolTip(cmbDump, "Disk read/write attempt number. Useful for read attempts. Many disks may need 2-5 attempts if there is dirt on the surface. (Or may need cleaning)")
+        ToolTipMainForm.SetToolTip(chkLoop, "Check this, and set the dump number dropdown list to automatically make this number of read attempts.")
+        ToolTipMainForm.SetToolTip(cmbSerialPorts, "Serial port GreaseWeazle is connected to. Should show all currently connected COM ports. Try removing old hidden ports if yours is not shown. Can type directly into this field. eg COM2")
+        ToolTipMainForm.SetToolTip(LinkLabelProjectName, "Opens main GreaseWeazle Github page")
+        ToolTipMainForm.SetToolTip(LinkLabelGWWiki, "Start here! Opens GreaseWeazle Wiki page. Setup and other usage documentation.")
+        ToolTipMainForm.SetToolTip(LinkLabelOpenLocation, "Opens Explorer in the Save folder on the HDD.")
+        ToolTipMainForm.SetToolTip(LinkLabelDLGW, "Opens the GreaseWeazle Github download page")
+        ToolTipMainForm.SetToolTip(LinkLabelDLPython, "Opens main Python download page")
+        ToolTipMainForm.SetToolTip(LinkLabelLaunchNow, "Executes exe/script from location below, with current disk image name.")
+        ToolTipMainForm.SetToolTip(chkF7, "Check this if you are writing to a STM32F7 device (rather than the usual 'Bluepill'.")
+        ToolTipMainForm.SetToolTip(cmbDriveSelect, "If using an F7 device, select the drive you want to read to/write from. Multiple drives may be connected at once. (F7 device only!!).")
+        ToolTipMainForm.SetToolTip(LinkLabelDriveSelect, "Opens the 'Drive Select' page of the Wiki.")
+        ToolTipMainForm.SetToolTip(ChkStartTrack, "Check to select a default start track other than track 0.")
+        ToolTipMainForm.SetToolTip(chkEndTrack, "Check to select a default end track. Number of tracks that a drive can read/write depends on the drive itself. Consult disk drive manual if unsure.")
+        ToolTipMainForm.SetToolTip(chkSingleSided, "Select this to read/write only on disk side 0 (the bottom on most drives)/ If unsure, leave unchecked. Maps to --single-sided argument.")
+        ToolTipMainForm.SetToolTip(chkAdjustSpeed, "If unsure, leave checked. Maps to --adjust-speed argument. Adjust write-flux times for drive speed.")
+        ToolTipMainForm.SetToolTip(cmbStartTrack, "Track to start read/write process on. Tracks are zero indexed. Actual number of tracks a drive supports varies. Consult disk drive manual if unsure.")
+        ToolTipMainForm.SetToolTip(cmbEndTrack, "Track to end read/write process on. Tracks are zero indexed. Actual number of tracks a drive supports varies. Consult disk drive manual if unsure.")
+        ToolTipMainForm.SetToolTip(chkRevolutions, "Check this to change the revolutions per read from the default 3. (Note, 5 revolutions is the norm for archival purposes).")
+        ToolTipMainForm.SetToolTip(cmbRevolutions, "Set the revolutions per read here. 5 is recommended.")
+
         Return True
     End Function
 
@@ -49,7 +89,7 @@ Public Class frmMain
     End Sub
 
     ''' <summary>
-    ''' Create a filename from the attributes onscreen. (Including
+    ''' Create a filename from the attributes onscreen. (Including checking if file exists, if necessary)
     ''' </summary>
     ''' <param name="CheckExists">Check to see if the file exists on the disk. If so, append an integer to prevent GreaseSeazle from overwriting.</param>
     ''' <returns></returns>
@@ -366,4 +406,5 @@ Public Class frmMain
             btnResize.Text = "<"
         End If
     End Sub
+
 End Class
