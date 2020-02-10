@@ -79,6 +79,7 @@ Partial Class frmMain
         Me.ChkStartTrack = New System.Windows.Forms.CheckBox()
         Me.btnResize = New System.Windows.Forms.Button()
         Me.ToolTipMainForm = New System.Windows.Forms.ToolTip(Me.components)
+        Me.btnUpdateFirmware = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'cmbSerialPorts
@@ -88,6 +89,7 @@ Partial Class frmMain
         Me.cmbSerialPorts.Name = "cmbSerialPorts"
         Me.cmbSerialPorts.Size = New System.Drawing.Size(75, 21)
         Me.cmbSerialPorts.TabIndex = 6
+        Me.cmbSerialPorts.Text = "auto"
         '
         'Label2
         '
@@ -102,7 +104,7 @@ Partial Class frmMain
         '
         Me.rtbOutput.Location = New System.Drawing.Point(513, 12)
         Me.rtbOutput.Name = "rtbOutput"
-        Me.rtbOutput.Size = New System.Drawing.Size(386, 430)
+        Me.rtbOutput.Size = New System.Drawing.Size(386, 385)
         Me.rtbOutput.TabIndex = 100
         Me.rtbOutput.Text = ""
         '
@@ -570,6 +572,16 @@ Partial Class frmMain
         Me.btnResize.Text = "<"
         Me.btnResize.UseVisualStyleBackColor = True
         '
+        'btnUpdateFirmware
+        '
+        Me.btnUpdateFirmware.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnUpdateFirmware.Location = New System.Drawing.Point(659, 413)
+        Me.btnUpdateFirmware.Name = "btnUpdateFirmware"
+        Me.btnUpdateFirmware.Size = New System.Drawing.Size(240, 29)
+        Me.btnUpdateFirmware.TabIndex = 98
+        Me.btnUpdateFirmware.Text = "Update Firmware"
+        Me.btnUpdateFirmware.UseVisualStyleBackColor = True
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -599,6 +611,7 @@ Partial Class frmMain
         Me.Controls.Add(Me.cmbDriveSelect)
         Me.Controls.Add(Me.chkF7)
         Me.Controls.Add(Me.LinkLabelGWWiki)
+        Me.Controls.Add(Me.btnUpdateFirmware)
         Me.Controls.Add(Me.btnWrite)
         Me.Controls.Add(Me.LinkLabelProjectName)
         Me.Controls.Add(Me.cmbDiskOf)
@@ -691,4 +704,5 @@ Partial Class frmMain
     Friend WithEvents ChkStartTrack As CheckBox
     Friend WithEvents btnResize As Button
     Friend WithEvents ToolTipMainForm As ToolTip
+    Friend WithEvents btnUpdateFirmware As Button
 End Class

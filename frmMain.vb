@@ -52,7 +52,7 @@ Public Class frmMain
         ToolTipMainForm.SetToolTip(cmbDiskRevision, "Adds a revision string to a disk image. Usually blank.")
         ToolTipMainForm.SetToolTip(cmbDump, "Disk read/write attempt number. Useful for read attempts. Many disks may need 2-5 attempts if there is dirt on the surface. (Or may need cleaning)")
         ToolTipMainForm.SetToolTip(chkLoop, "Check this, and set the dump number dropdown list to automatically make this number of read attempts.")
-        ToolTipMainForm.SetToolTip(cmbSerialPorts, "Serial port GreaseWeazle is connected to. Should show all currently connected COM ports. Try removing old hidden ports if yours is not shown. Can type directly into this field. eg COM2")
+        ToolTipMainForm.SetToolTip(cmbSerialPorts, "Serial port GreaseWeazle is connected to. Should show all currently connected COM ports. Try removing old hidden ports if yours is not shown. Can type directly into this field. eg COM2. As of v0.11, auto is supported.")
         ToolTipMainForm.SetToolTip(LinkLabelProjectName, "Opens main GreaseWeazle Github page")
         ToolTipMainForm.SetToolTip(LinkLabelGWWiki, "Start here! Opens GreaseWeazle Wiki page. Setup and other usage documentation.")
         ToolTipMainForm.SetToolTip(LinkLabelOpenLocation, "Opens Explorer in the Save folder on the HDD.")
@@ -70,6 +70,7 @@ Public Class frmMain
         ToolTipMainForm.SetToolTip(cmbEndTrack, "Track to end read/write process on. Tracks are zero indexed. Actual number of tracks a drive supports varies. Consult disk drive manual if unsure.")
         ToolTipMainForm.SetToolTip(chkRevolutions, "Check this to change the revolutions per read from the default 3. (Note, 5 revolutions is the norm for archival purposes).")
         ToolTipMainForm.SetToolTip(cmbRevolutions, "Set the revolutions per read here. 5 is recommended.")
+        ToolTipMainForm.SetToolTip(btnUpdateFirmware, "Begin GreaseWeazle read process. Bridge the two pins: DCLK + DCIO and select update file.")
 
         Return True
     End Function
@@ -178,7 +179,17 @@ Public Class frmMain
         Replace(cmbDiskRevision.Text, " ", "_")
     End Sub
 
-    Private Function CallGreaseWeazel(ByVal PythonEXE As String, ByVal gwLoc As String, ByVal ReadFromGW As Boolean, ByVal fName As String, ByVal ComPort As String) As Boolean
+    ''' <summary>
+    ''' Calls python.exe to run the gw.py script
+    ''' </summary>
+    ''' <param name="PythonEXE">Path to the python.exe. Python install folder must be in PATH variable.</param>
+    ''' <param name="gwLoc">Path to gw.py</param>
+    ''' <param name="ReadFromGW">Set to true to read to disk image, false writes disk image.</param>
+    ''' <param name="UpdateGWFirmware">Set to true to update GreaseWeazle hardware. Must have jumper set on []</param>
+    ''' <param name="fName">Path to file to read/write</param>
+    ''' <param name="ComPort">COM port to talk to GreaseWeazle hardware on. v0.11+ supports 'auto'.</param>
+    ''' <returns></returns>
+    Private Function CallGreaseWeazel(ByVal PythonEXE As String, ByVal gwLoc As String, ByVal ReadFromGW As Boolean, ByVal UpdateGWFirmware As Boolean, ByVal fName As String, ByVal ComPort As String) As Boolean
         Dim CMD As New Process
 
         Dim SW As System.IO.StreamWriter
@@ -189,34 +200,39 @@ Public Class frmMain
 
         Dim str As String = gwLoc
 
-        If ReadFromGW = True Then
-            str = str + " read "
+        If UpdateGWFirmware = True Then
+            str = str + " update "
         Else
-            str = str + " write "
-            If chkAdjustSpeed.Checked Then
-                str = str + "--adjust-speed "
+            If ReadFromGW = True Then
+                str = str + " read "
+            Else
+                str = str + " write "
+                If chkAdjustSpeed.Checked Then
+                    str = str + "--adjust-speed "
+                End If
+            End If
+
+            If chkSingleSided.Checked Then
+                str = str + "--single-sided "
+            End If
+
+            If ChkStartTrack.Checked Then
+                str = str + "--scyl=" + cmbStartTrack.Text + " "
+            End If
+
+            If chkEndTrack.Checked Then
+                str = str + "--ecyl=" + cmbEndTrack.Text + " "
+            End If
+
+            If chkRevolutions.Checked Then
+                str = str + "--revs=" + cmbRevolutions.Text + " "
+            End If
+
+            If chkF7.Checked Then
+                str = str + "--drive " + cmbDriveSelect.Text
             End If
         End If
 
-        If chkSingleSided.Checked Then
-            str = str + "--single-sided "
-        End If
-
-        If ChkStartTrack.Checked Then
-            str = str + "--scyl=" + cmbStartTrack.Text + " "
-        End If
-
-        If chkEndTrack.Checked Then
-            str = str + "--ecyl=" + cmbEndTrack.Text + " "
-        End If
-
-        If chkRevolutions.Checked Then
-            str = str + "--revs=" + cmbRevolutions.Text + " "
-        End If
-
-        If chkF7.Checked Then
-            str = str + "--drive " + cmbDriveSelect.Text
-        End If
         str = str + fName + " " + ComPort
 
         CMD.StartInfo.Arguments = str
@@ -270,27 +286,27 @@ Public Class frmMain
 
     Private Sub BtnRead_Click(sender As Object, e As EventArgs) Handles btnRead.Click
         If CheckForErrors() = False Then
-            If chkLoop.Checked Then
+            If chkLoop.Checked Then     'If running gw.py on a loop, to dump a disk multiple times
                 Dim loopc As Integer
                 For loopc = 0 To CInt(cmbDump.Text)
                     cmbDump.Text = CStr(loopc)
                     Dim fileGW As String = CreateFileName(True)
                     rtbOutput.Clear()
-                    rtbOutput.Text &= "Reading from Greaseweazel on " + cmbSerialPorts.Text
+                    rtbOutput.Text &= "Reading from Greaseweazel on port " + cmbSerialPorts.Text
                     rtbOutput.Text &= Environment.NewLine
                     rtbOutput.Text &= "to file: " + fileGW
                     rtbOutput.Text &= Environment.NewLine + Environment.NewLine
-                    CallGreaseWeazel(txtPythonLocation.Text, txtGWLocation.Text, True, txtSaveLocation.Text + fileGW, cmbSerialPorts.Text)
-                Next
-            Else
+                    CallGreaseWeazel(txtPythonLocation.Text, txtGWLocation.Text, True, False, txtSaveLocation.Text + fileGW, cmbSerialPorts.Text)
+                Next                    'If running gw.py on a loop, to dump a disk multiple times
+            Else    'Run gw.py once only
                 Dim fileGW As String = CreateFileName(True)
                 rtbOutput.Clear()
-                rtbOutput.Text &= "Reading from Greaseweazel on " + cmbSerialPorts.Text
+                rtbOutput.Text &= "Reading from Greaseweazel on port " + cmbSerialPorts.Text
                 rtbOutput.Text &= Environment.NewLine
                 rtbOutput.Text &= "to file: " + fileGW
                 rtbOutput.Text &= Environment.NewLine + Environment.NewLine
-                CallGreaseWeazel(txtPythonLocation.Text, txtGWLocation.Text, True, txtSaveLocation.Text + fileGW, cmbSerialPorts.Text)
-            End If
+                CallGreaseWeazel(txtPythonLocation.Text, txtGWLocation.Text, True, False, txtSaveLocation.Text + fileGW, cmbSerialPorts.Text)
+            End If  'Run gw.py once only
         Else
 
         End If
@@ -313,6 +329,8 @@ Public Class frmMain
         OpenFileDialogMain.Title = "Select 'gw.py' in Greaseweazel Directory"
         OpenFileDialogMain.Multiselect = False
         OpenFileDialogMain.FileName = "gw.py"
+        OpenFileDialogMain.DefaultExt = "py"
+        OpenFileDialogMain.Filter = "Python files (*.py)|*.py|All files (*.*)|*.*"
 
         If (OpenFileDialogMain.ShowDialog() = DialogResult.OK) Then
             txtGWLocation.Text = OpenFileDialogMain.FileName
@@ -323,6 +341,8 @@ Public Class frmMain
         OpenFileDialogMain.Title = "Select 'python.exe' in Python Directory"
         OpenFileDialogMain.Multiselect = False
         OpenFileDialogMain.FileName = "python.exe"
+        OpenFileDialogMain.DefaultExt = "exe"
+        OpenFileDialogMain.Filter = "Program files (*.exe)|*.exe|All files (*.*)|*.*"
 
         If (OpenFileDialogMain.ShowDialog() = DialogResult.OK) Then
             txtPythonLocation.Text = OpenFileDialogMain.FileName
@@ -330,7 +350,7 @@ Public Class frmMain
     End Sub
 
     Private Sub BtnWrite_Click(sender As Object, e As EventArgs) Handles btnWrite.Click
-        If CheckForErrors() = False
+        If CheckForErrors() = False Then
             OpenFileDialogMain.Title = "Select SuperCard Pro file to write to floppy"
             OpenFileDialogMain.Multiselect = False
             OpenFileDialogMain.FileName = ""
@@ -342,7 +362,7 @@ Public Class frmMain
                 rtbOutput.Text &= Environment.NewLine
                 rtbOutput.Text &= "using: " + fileGW
                 rtbOutput.Text &= Environment.NewLine + Environment.NewLine
-                CallGreaseWeazel(txtPythonLocation.Text, txtGWLocation.Text, False, fileGW, cmbSerialPorts.Text)
+                CallGreaseWeazel(txtPythonLocation.Text, txtGWLocation.Text, False, False, fileGW, cmbSerialPorts.Text)
             Else
 
             End If
@@ -377,6 +397,8 @@ Public Class frmMain
         OpenFileDialogMain.Title = "Select script/exe to execute after read/write"
         OpenFileDialogMain.Multiselect = False
         OpenFileDialogMain.FileName = ""
+        OpenFileDialogMain.DefaultExt = ""
+        OpenFileDialogMain.Filter = "All files (*.*)|*.*"
 
         If (OpenFileDialogMain.ShowDialog() = DialogResult.OK) Then
             txtExecuteScript.Text = OpenFileDialogMain.FileName
@@ -407,4 +429,26 @@ Public Class frmMain
         End If
     End Sub
 
+    Private Sub BtnUpdateFirmware_Click(sender As Object, e As EventArgs) Handles btnUpdateFirmware.Click
+        OpenFileDialogMain.Title = "Select 'Greaseweazle-v????.upd' in Greaseweazel Directory"
+        OpenFileDialogMain.Multiselect = False
+        OpenFileDialogMain.FileName = ""
+        OpenFileDialogMain.DefaultExt = "upd"
+        OpenFileDialogMain.Filter = "Update files (*.upd)|*.upd|All files (*.*)|*.*"
+
+        Dim fileGW As String
+        If (OpenFileDialogMain.ShowDialog() = DialogResult.OK) Then
+            fileGW = OpenFileDialogMain.FileName
+            rtbOutput.Clear()
+            rtbOutput.Text &= "Updating Greaseweazel firmware on port " + cmbSerialPorts.Text
+            rtbOutput.Text &= Environment.NewLine
+            rtbOutput.Text &= "using: " + fileGW
+            rtbOutput.Text &= Environment.NewLine + Environment.NewLine
+            rtbOutput.Text &= "Please ensure DCLK + DCIO are bridged with a jumper before the process starts."
+            rtbOutput.Text &= Environment.NewLine + Environment.NewLine
+            If MessageBox.Show("Continue with flashing process?" + vbNewLine + vbNewLine + "Are DCLK + DCIO are bridged with a jumper also?", "Flash Greaseweazle", MessageBoxButtons.OKCancel) = DialogResult.OK Then
+                CallGreaseWeazel(txtPythonLocation.Text, txtGWLocation.Text, False, True, fileGW, cmbSerialPorts.Text)
+            End If
+        End If
+    End Sub
 End Class
