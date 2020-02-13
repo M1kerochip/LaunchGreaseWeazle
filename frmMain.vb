@@ -269,7 +269,7 @@ Public Class frmMain
         End If
 
         If chkSaveLog.Checked = True Then
-            Dim StreamWriter As New IO.StreamWriter(fName + ".log")
+            Dim StreamWriter As New IO.StreamWriter(System.IO.Path.ChangeExtension(fName, ".log")) 'Export rich text box as a .log file.
             StreamWriter.Write(rtbOutput.Text)
             StreamWriter.Close()
         End If
