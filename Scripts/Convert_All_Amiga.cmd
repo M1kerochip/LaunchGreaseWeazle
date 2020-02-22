@@ -50,20 +50,22 @@ REM FOR AMIGA:
 REM-==========-
 
 REM Convert to Amiga .ADF (Unprotected)
-F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.adf -conv:AMIGA_ADF
+REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.adf -conv:AMIGA_ADF
 
 REM Convert to Amiga Extended .ADF (Protected) 
 REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.ext.adf -conv:AMIGA_EXTADF 
 
 
-
 REM FOR ATARI ST:
 REM-=============-
 
-REM Convert to Atari .ST image (Unprotected)
-REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.st -conv:ATARIST_ST
+REM Aufit: Create .stx, create protections.txt and create disk surface image:
+REM "D:\Program Files\Atari\Aufit\Aufit.exe" -suffix aufit.1.3 -scale 1.4 -disk -protections -save stx %1
 
 REM Convert to Atari .STX image (Protected)
 REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.stx -conv:ATARIST_STX
+
+REM Convert to Atari .ST image (Unprotected)
+REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.st -conv:ATARIST_ST
 
 REM pause

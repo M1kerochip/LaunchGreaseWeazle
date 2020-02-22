@@ -37,16 +37,20 @@ F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finp
 REM Convert to Atari .STX image (Protected)
 F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.stx -conv:ATARIST_STX
 
-REM Do The .STX first, since creating a .st from a protected disk often hangs hxcfe
+REM Convert to Amiga .ADF (Unprotected)
+F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.adf -conv:AMIGA_ADF
 
-REM Convert to Atari .ST image (Unprotected)
-F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.st -conv:ATARIST_ST
+REM Convert to Amiga Extended .ADF (Protected) 
+REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.ext.adf -conv:AMIGA_EXTADF 
 
 REM Convert to .IPF
 REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.ipf -conv:SPS_IPF
 
 REM Show Info
 REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.info_HxC.txt -infos
+
+REM Convert to Atari .ST image (Unprotected)
+F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.st -conv:ATARIST_ST
 
 
 
@@ -67,10 +71,10 @@ REM-=============-
 REM Aufit: Create .stx, create protections.txt and create disk surface image:
 REM "D:\Program Files\Atari\Aufit\Aufit.exe" -suffix aufit.1.3 -scale 1.4 -disk -protections -save stx %1
 
-REM Convert to Atari .STX image (Protected)
-REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.stx -conv:ATARIST_STX
-
 REM Convert to Atari .ST image (Unprotected)
 REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.st -conv:ATARIST_ST
+
+REM Convert to Atari .STX image (Protected)
+REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.stx -conv:ATARIST_STX
 
 REM pause

@@ -9,4 +9,4 @@ REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe.e
 REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe.exe -finput:%1 -foutput:%1.stx -conv:ATARIST_STX
 
 echo.
-pause
+REM pause
