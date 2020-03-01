@@ -25,7 +25,7 @@ Public Class frmMain
         cmbDiskOf.Text = My.Settings.DiskOf
         chkExecuteScript.Checked = My.Settings.ExecuteScript
         chkLoop.Checked = My.Settings.LoopDump
-
+        cmbDump.Text = My.Settings.LoopDumpCount
         cmbSystem.Text = My.Settings.System
         txtTitle.Text = My.Settings.Title
         txtPublisher.Text = My.Settings.Company
@@ -94,6 +94,7 @@ Public Class frmMain
         My.Settings.DiskOf = cmbDiskOf.Text
         My.Settings.ExecuteScript = chkExecuteScript.Checked
         My.Settings.LoopDump = chkLoop.Checked
+        My.Settings.LoopDumpCount = cmbDump.Text
         My.Settings.Save()
     End Sub
 

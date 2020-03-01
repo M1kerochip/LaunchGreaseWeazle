@@ -224,10 +224,10 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property LoopDump() As String
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property LoopDump() As Boolean
             Get
-                Return CType(Me("LoopDump"),String)
+                Return CType(Me("LoopDump"),Boolean)
             End Get
             Set
                 Me("LoopDump") = value
@@ -243,6 +243,18 @@ Namespace My
             End Get
             Set
                 Me("ExecuteScript") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property LoopDumpCount() As String
+            Get
+                Return CType(Me("LoopDumpCount"),String)
+            End Get
+            Set
+                Me("LoopDumpCount") = value
             End Set
         End Property
     End Class
