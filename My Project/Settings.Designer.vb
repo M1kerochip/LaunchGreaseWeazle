@@ -173,6 +173,78 @@ Namespace My
                 Me("Script") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property Disk() As String
+            Get
+                Return CType(Me("Disk"),String)
+            End Get
+            Set
+                Me("Disk") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property DiskOf() As String
+            Get
+                Return CType(Me("DiskOf"),String)
+            End Get
+            Set
+                Me("DiskOf") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property Rev() As String
+            Get
+                Return CType(Me("Rev"),String)
+            End Get
+            Set
+                Me("Rev") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property Multi() As String
+            Get
+                Return CType(Me("Multi"),String)
+            End Get
+            Set
+                Me("Multi") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LoopDump() As String
+            Get
+                Return CType(Me("LoopDump"),String)
+            End Get
+            Set
+                Me("LoopDump") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property ExecuteScript() As Boolean
+            Get
+                Return CType(Me("ExecuteScript"),Boolean)
+            End Get
+            Set
+                Me("ExecuteScript") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

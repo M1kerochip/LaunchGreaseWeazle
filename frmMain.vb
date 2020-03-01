@@ -21,6 +21,10 @@ Public Class frmMain
         cmbDriveSelect.Enabled = chkF7.Checked
         cmbEndTrack.Enabled = chkEndTrack.Checked
         cmbStartTrack.Enabled = ChkStartTrack.Checked
+        cmbDisk.Text = My.Settings.Disk
+        cmbDiskOf.Text = My.Settings.DiskOf
+        chkExecuteScript.Checked = My.Settings.ExecuteScript
+        chkLoop.Checked = My.Settings.LoopDump
 
         cmbSystem.Text = My.Settings.System
         txtTitle.Text = My.Settings.Title
@@ -86,6 +90,10 @@ Public Class frmMain
         My.Settings.Company = txtPublisher.Text.Trim
         My.Settings.System = cmbSystem.Text.Trim
         My.Settings.Script = txtExecuteScript.Text.Trim
+        My.Settings.Disk = cmbDisk.Text
+        My.Settings.DiskOf = cmbDiskOf.Text
+        My.Settings.ExecuteScript = chkExecuteScript.Checked
+        My.Settings.LoopDump = chkLoop.Checked
         My.Settings.Save()
     End Sub
 
