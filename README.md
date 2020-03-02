@@ -11,3 +11,5 @@ Download and install Python for windows.
 Select the gw.py in the greaseweazle folder, the python.exe, and your save folder.
 
 Set your com port, your disk name, and click read.
+
+![Alt Text](LaunchGW.png)
