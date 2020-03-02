@@ -109,11 +109,11 @@ Public Class frmMain
         filen = txtTitle.Text.Trim + "_"                                            'Set initial name to Title + "_" (assuming no one won't set a title!)
 
         If txtPublisher.Text.Trim <> "" Then
-            filen = filen + txtPublisher.Text.Trim + "_"                                   'Add Publisher, if one set
+            filen = filen + txtPublisher.Text.Trim + "_"                            'Add publisher + underscore, if a publisher is set
         End If
 
         If cmbDiskOf.Text.Trim <> "" Then
-            cmbDisk.Text = cmbDisk.Text.Trim.PadLeft(cmbDisk.Text.Length, "0")      'Pad disk number to length of "diskof" field
+            cmbDisk.Text = cmbDisk.Text.Trim.PadLeft(cmbDiskOf.Text.Length, "0")    'Pad disk number to length of "diskof" field
         End If
 
         If cmbDisk.Text.Trim <> "" Then
