@@ -75,6 +75,7 @@ Public Class frmMain
         ToolTipMainForm.SetToolTip(chkRevolutions, "Check this to change the revolutions per read from the default 3. (Note, 5 revolutions is the norm for archival purposes).")
         ToolTipMainForm.SetToolTip(cmbRevolutions, "Set the revolutions per read here. 5 is recommended.")
         ToolTipMainForm.SetToolTip(btnUpdateFirmware, "Begin GreaseWeazle read process. Bridge the two pins: DCLK + DCIO and select update file.")
+        ToolTipMainForm.SetToolTip(LinkLabelLaunchGW, "The Github repository for this program. Get the latest versions here.")
 
         Return True
     End Function
@@ -109,6 +110,7 @@ Public Class frmMain
         filen = txtTitle.Text.Trim + "_"                                            'Set initial name to Title + "_" (assuming no one won't set a title!)
 
         If txtPublisher.Text.Trim <> "" Then
+            filen = filen + txtPublisher.Text.Trim + "_"                            'Add publisher + underscore, if a publisher is set
             filen = filen + txtPublisher.Text.Trim + "_"                            'Add publisher + underscore, if a publisher is set
         End If
 
@@ -422,10 +424,6 @@ Public Class frmMain
         cmbStartTrack.Enabled = ChkStartTrack.Checked
     End Sub
 
-    Private Sub ChkSaveLog_CheckedChanged(sender As Object, e As EventArgs) Handles chkSaveLog.CheckedChanged
-
-    End Sub
-
     Private Sub BtnResize_Click(sender As Object, e As EventArgs) Handles btnResize.Click
         If rtbOutput.Visible Then
             rtbOutput.Visible = False
@@ -460,4 +458,21 @@ Public Class frmMain
             End If
         End If
     End Sub
+
+    Private Sub LinkLabelLaunchGW_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabelLaunchGW.LinkClicked
+        System.Diagnostics.Process.Start("https://github.com/M1kerochip/LaunchGreaseWeazle")
+    End Sub
+
+    Private Sub CmbDisk_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbDisk.SelectedIndexChanged, cmbDisk.TextChanged
+        If cmbDiskOf.Text.Trim <> "" Then
+            cmbDisk.Text = cmbDisk.Text.Trim.PadLeft(cmbDiskOf.Text.Length, "0")    'Pad disk number to length of "diskof" field
+        End If
+    End Sub
+
+    Private Sub CmbDiskOf_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbDiskOf.SelectedIndexChanged, cmbDiskOf.TextChanged
+        If cmbDiskOf.Text.Trim <> "" Then
+            cmbDisk.Text = cmbDisk.Text.Trim.PadLeft(cmbDiskOf.Text.Length, "0")    'Pad disk number to length of "diskof" field
+        End If
+    End Sub
+
 End Class

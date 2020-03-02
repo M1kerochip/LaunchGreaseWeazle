@@ -22,5 +22,24 @@ RunGreaseWeazel
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="M:RunGreaseWeazel.frmMain.CreateFileName(System.Boolean)">
+ <summary>
+ Create a filename from the attributes onscreen. (Including checking if file exists, if necessary)
+ </summary>
+ <param name="CheckExists">Check to see if the file exists on the disk. If so, append an integer to prevent GreaseSeazle from overwriting.</param>
+ <returns></returns>
+</member>
+<member name="M:RunGreaseWeazel.frmMain.CallGreaseWeazel(System.String,System.String,System.Boolean,System.Boolean,System.String,System.String)">
+ <summary>
+ Calls python.exe to run the gw.py script
+ </summary>
+ <param name="PythonEXE">Path to the python.exe. Python install folder must be in PATH variable.</param>
+ <param name="gwLoc">Path to gw.py</param>
+ <param name="ReadFromGW">Set to true to read to disk image, false writes disk image.</param>
+ <param name="UpdateGWFirmware">Set to true to update GreaseWeazle hardware. Must have jumper set on []</param>
+ <param name="fName">Path to file to read/write</param>
+ <param name="ComPort">COM port to talk to GreaseWeazle hardware on. v0.11+ supports 'auto'.</param>
+ <returns></returns>
+</member>
 </members>
 </doc>

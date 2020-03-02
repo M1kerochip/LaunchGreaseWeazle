@@ -80,6 +80,7 @@ Partial Class frmMain
         Me.btnResize = New System.Windows.Forms.Button()
         Me.ToolTipMainForm = New System.Windows.Forms.ToolTip(Me.components)
         Me.btnUpdateFirmware = New System.Windows.Forms.Button()
+        Me.LinkLabelLaunchGW = New System.Windows.Forms.LinkLabel()
         Me.SuspendLayout()
         '
         'cmbSerialPorts
@@ -315,7 +316,7 @@ Partial Class frmMain
         'LinkLabelGWWiki
         '
         Me.LinkLabelGWWiki.AutoSize = True
-        Me.LinkLabelGWWiki.Location = New System.Drawing.Point(267, 14)
+        Me.LinkLabelGWWiki.Location = New System.Drawing.Point(224, 15)
         Me.LinkLabelGWWiki.Name = "LinkLabelGWWiki"
         Me.LinkLabelGWWiki.Size = New System.Drawing.Size(28, 13)
         Me.LinkLabelGWWiki.TabIndex = 2
@@ -582,11 +583,22 @@ Partial Class frmMain
         Me.btnUpdateFirmware.Text = "Update Firmware"
         Me.btnUpdateFirmware.UseVisualStyleBackColor = True
         '
+        'LinkLabelLaunchGW
+        '
+        Me.LinkLabelLaunchGW.AutoSize = True
+        Me.LinkLabelLaunchGW.Location = New System.Drawing.Point(264, 15)
+        Me.LinkLabelLaunchGW.Name = "LinkLabelLaunchGW"
+        Me.LinkLabelLaunchGW.Size = New System.Drawing.Size(62, 13)
+        Me.LinkLabelLaunchGW.TabIndex = 101
+        Me.LinkLabelLaunchGW.TabStop = True
+        Me.LinkLabelLaunchGW.Text = "LaunchGW"
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(908, 452)
+        Me.Controls.Add(Me.LinkLabelLaunchGW)
         Me.Controls.Add(Me.btnResize)
         Me.Controls.Add(Me.rtbOutput)
         Me.Controls.Add(Me.cmbStartTrack)
@@ -705,4 +717,5 @@ Partial Class frmMain
     Friend WithEvents btnResize As Button
     Friend WithEvents ToolTipMainForm As ToolTip
     Friend WithEvents btnUpdateFirmware As Button
+    Friend WithEvents LinkLabelLaunchGW As LinkLabel
 End Class
