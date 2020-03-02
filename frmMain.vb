@@ -111,7 +111,6 @@ Public Class frmMain
 
         If txtPublisher.Text.Trim <> "" Then
             filen = filen + txtPublisher.Text.Trim + "_"                            'Add publisher + underscore, if a publisher is set
-            filen = filen + txtPublisher.Text.Trim + "_"                            'Add publisher + underscore, if a publisher is set
         End If
 
         If cmbDiskOf.Text.Trim <> "" Then
