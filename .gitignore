@@ -1,7 +1,0 @@
-# .gitignore File
-
-*.exe
-*.pdb
-*.config.exe
-
-obj/
