@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports System.Text.RegularExpressions
 
 Public Class frmMain
     Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -105,12 +106,13 @@ Public Class frmMain
     ''' <param name="CheckExists">Check to see if the file exists on the disk. If so, append an integer to prevent GreaseSeazle from overwriting.</param>
     ''' <returns></returns>
     Function CreateFileName(ByVal CheckExists As Boolean) As String
+        Dim regWhitespace As New Regex("\s")
 
         Dim filen As String
-        filen = txtTitle.Text.Trim + "_"                                            'Set initial name to Title + "_" (assuming no one won't set a title!)
+        filen = regWhitespace.Replace(txtTitle.Text, String.Empty) + "_"                                            'Set initial name to Title + "_" (assuming no one won't set a title!)
 
         If txtPublisher.Text.Trim <> "" Then
-            filen = filen + txtPublisher.Text.Trim + "_"                            'Add publisher + underscore, if a publisher is set
+            filen = filen + regWhitespace.Replace(txtPublisher.Text, String.Empty) + "_"                            'Add publisher + underscore, if a publisher is set
         End If
 
         If cmbDiskOf.Text.Trim <> "" Then
@@ -195,7 +197,7 @@ Public Class frmMain
     ''' <param name="PythonEXE">Path to the python.exe. Python install folder must be in PATH variable.</param>
     ''' <param name="gwLoc">Path to gw.py</param>
     ''' <param name="ReadFromGW">Set to true to read to disk image, false writes disk image.</param>
-    ''' <param name="UpdateGWFirmware">Set to true to update GreaseWeazle hardware. Must have jumper set on []</param>
+    ''' <param name="UpdateGWFirmware">Set to true to update GreaseWeazle hardware. Must have jumper set on [DCLK] + [DCIO]</param>
     ''' <param name="fName">Path to file to read/write</param>
     ''' <param name="ComPort">COM port to talk to GreaseWeazle hardware on. v0.11+ supports 'auto'.</param>
     ''' <returns></returns>
