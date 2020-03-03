@@ -6,4 +6,4 @@ REM Convert BMP to PNG
 F:\gw\nconvert\nconvert.exe -out png -o "%1".01_disk_HxC.png "%1".01_disk_HxC.bmp
 
 REM Delete BMP
-del "%1".01_disk.bmp /F /Q
+del "%1".01_disk_HxC.bmp /F /Q

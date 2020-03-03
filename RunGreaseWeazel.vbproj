@@ -137,6 +137,7 @@
     </None>
     <None Include="Scripts\00_Convert_BMP_%28Disk%29.cmd" />
     <None Include="Scripts\01_Convert_BMP_%28Data%29.cmd" />
+    <None Include="Scripts\02_Convert_IPF.cmd" />
     <None Include="Scripts\03_Convert_HFEv3.cmd" />
     <None Include="Scripts\04_Convert_ST.cmd" />
     <None Include="Scripts\05_Convert_STX.cmd" />
