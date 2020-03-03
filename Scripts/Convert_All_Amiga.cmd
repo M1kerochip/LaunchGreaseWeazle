@@ -11,35 +11,35 @@ Echo BMP to PNG conversion is with nConvert, from XnSoft, makers of XnView and X
 Echo.
 
 REM Create BMP of disk data
-F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.01_disk.bmp -conv:BMP_DISK_IMAGE
+F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.01_disk_HxC.bmp -conv:BMP_DISK_IMAGE
 
 REM Convert BMP to PNG
-F:\gw\nconvert\nconvert.exe -out png -o "%1".01_disk.png "%1".01_disk.bmp
+F:\gw\nconvert\nconvert.exe -out png -o "%1".01_disk_HxC.png "%1".01_disk_HxC.bmp
 
 REM Delete BMP  (Remove these lines if nConvert isn't installed!!!)
 del "%1".01_disk.bmp /F /Q
 
 REM Create BMP of disk data
-F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.02_data.bmp -conv:BMP_IMAGE
+F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.02_data_HxC.bmp -conv:BMP_IMAGE
 
 REM Convert BMP to PNG
-F:\gw\nconvert\nconvert.exe -out png -o "%1".02_data.png "%1".02_data.bmp
+F:\gw\nconvert\nconvert.exe -out png -o "%1".02_data_HxC.png "%1".02_data_HxC.bmp
 
 REM Delete BMP (Remove these lines if nConvert isn't installed!!!)
 del "%1".02_data.bmp /F /Q
 
 REM Convert to HFE v3 .hfe image (For Gotek etc running Flash Floppy, HxC etc)
-F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.HFEv3.hfe -conv:HXC_HFEV3
+F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.HxC_HFEv3.hfe -conv:HXC_HFEV3
 
 REM Convert to Amiga .ADF (Unprotected)
-F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.adf -conv:AMIGA_ADF
+F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.HxC.adf -conv:AMIGA_ADF
 
 REM Convert to Amiga Extended .ADF (Protected)
-REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.ext.adf -conv:AMIGA_EXTADF 
+REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.HxC.extended.adf -conv:AMIGA_EXTADF 
 
 
 REM Convert to .IPF
-REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.ipf -conv:SPS_IPF
+REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.HxC.ipf -conv:SPS_IPF
 
 REM Show Info
 REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.info_HxC.txt -infos
@@ -50,10 +50,10 @@ REM FOR AMIGA:
 REM-==========-
 
 REM Convert to Amiga .ADF (Unprotected)
-REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.adf -conv:AMIGA_ADF
+REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.HxC.adf -conv:AMIGA_ADF
 
 REM Convert to Amiga Extended .ADF (Protected) 
-REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.ext.adf -conv:AMIGA_EXTADF 
+REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.HxC.extended.adf -conv:AMIGA_EXTADF 
 
 
 REM FOR ATARI ST:
@@ -63,9 +63,9 @@ REM Aufit: Create .stx, create protections.txt and create disk surface image:
 REM "D:\Program Files\Atari\Aufit\Aufit.exe" -suffix aufit.1.3 -scale 1.4 -disk -protections -save stx %1
 
 REM Convert to Atari .STX image (Protected)
-REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.stx -conv:ATARIST_STX
+REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.HxC.stx -conv:ATARIST_STX
 
 REM Convert to Atari .ST image (Unprotected)
-REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.st -conv:ATARIST_ST
+REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.HxC.st -conv:ATARIST_ST
 
 REM pause
