@@ -257,6 +257,30 @@ Namespace My
                 Me("LoopDumpCount") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property DoubleStep() As Boolean
+            Get
+                Return CType(Me("DoubleStep"),Boolean)
+            End Get
+            Set
+                Me("DoubleStep") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property WideForm() As Boolean
+            Get
+                Return CType(Me("WideForm"),Boolean)
+            End Get
+            Set
+                Me("WideForm") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

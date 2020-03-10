@@ -9,7 +9,7 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("RunGreaseWeazel")>
-<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyDescription("Executes a python script to read or write a disk image.")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("RunGreaseWeazel")>
 <Assembly: AssemblyCopyright("Copyright © 2020")>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.3.1.0")>
-<Assembly: AssemblyFileVersion("1.3.1.0")>
+<Assembly: AssemblyVersion("1.4.0.0")>
+<Assembly: AssemblyFileVersion("1.4.0.0")>

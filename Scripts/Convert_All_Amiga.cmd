@@ -41,6 +41,9 @@ REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -
 REM Convert to .IPF
 REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.HxC.ipf -conv:SPS_IPF
 
+REM Convert to .IPF (disk-analyse)
+REM wsl.exe -d Ubuntu disk-analyse -v -fprobe_amiga %1 %1.libdisk.ipf > %1.libdisk.txt
+
 REM Show Info
 REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.info_HxC.txt -infos
 

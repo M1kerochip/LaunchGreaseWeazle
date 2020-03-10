@@ -81,6 +81,13 @@ Partial Class frmMain
         Me.ToolTipMainForm = New System.Windows.Forms.ToolTip(Me.components)
         Me.btnUpdateFirmware = New System.Windows.Forms.Button()
         Me.LinkLabelLaunchGW = New System.Windows.Forms.LinkLabel()
+        Me.btnResetDevice = New System.Windows.Forms.Button()
+        Me.cmbLowHigh = New System.Windows.Forms.ComboBox()
+        Me.cmbPIN = New System.Windows.Forms.ComboBox()
+        Me.btnSetPin = New System.Windows.Forms.Button()
+        Me.lblPin = New System.Windows.Forms.Label()
+        Me.lblState = New System.Windows.Forms.Label()
+        Me.chkDoubleStep = New System.Windows.Forms.CheckBox()
         Me.SuspendLayout()
         '
         'cmbSerialPorts
@@ -105,13 +112,13 @@ Partial Class frmMain
         '
         Me.rtbOutput.Location = New System.Drawing.Point(513, 12)
         Me.rtbOutput.Name = "rtbOutput"
-        Me.rtbOutput.Size = New System.Drawing.Size(386, 385)
+        Me.rtbOutput.Size = New System.Drawing.Size(386, 429)
         Me.rtbOutput.TabIndex = 100
         Me.rtbOutput.Text = ""
         '
         'txtGWLocation
         '
-        Me.txtGWLocation.Location = New System.Drawing.Point(12, 281)
+        Me.txtGWLocation.Location = New System.Drawing.Point(12, 325)
         Me.txtGWLocation.Name = "txtGWLocation"
         Me.txtGWLocation.Size = New System.Drawing.Size(465, 20)
         Me.txtGWLocation.TabIndex = 70
@@ -119,7 +126,7 @@ Partial Class frmMain
         'lblGWLocation
         '
         Me.lblGWLocation.AutoSize = True
-        Me.lblGWLocation.Location = New System.Drawing.Point(9, 265)
+        Me.lblGWLocation.Location = New System.Drawing.Point(9, 309)
         Me.lblGWLocation.Name = "lblGWLocation"
         Me.lblGWLocation.Size = New System.Drawing.Size(151, 13)
         Me.lblGWLocation.TabIndex = 68
@@ -127,7 +134,7 @@ Partial Class frmMain
         '
         'btnGWLocation
         '
-        Me.btnGWLocation.Location = New System.Drawing.Point(483, 281)
+        Me.btnGWLocation.Location = New System.Drawing.Point(483, 325)
         Me.btnGWLocation.Name = "btnGWLocation"
         Me.btnGWLocation.Size = New System.Drawing.Size(24, 20)
         Me.btnGWLocation.TabIndex = 74
@@ -136,7 +143,7 @@ Partial Class frmMain
         '
         'txtPythonLocation
         '
-        Me.txtPythonLocation.Location = New System.Drawing.Point(12, 330)
+        Me.txtPythonLocation.Location = New System.Drawing.Point(12, 374)
         Me.txtPythonLocation.Name = "txtPythonLocation"
         Me.txtPythonLocation.Size = New System.Drawing.Size(465, 20)
         Me.txtPythonLocation.TabIndex = 78
@@ -144,7 +151,7 @@ Partial Class frmMain
         'lblPythonLocation
         '
         Me.lblPythonLocation.AutoSize = True
-        Me.lblPythonLocation.Location = New System.Drawing.Point(9, 314)
+        Me.lblPythonLocation.Location = New System.Drawing.Point(9, 358)
         Me.lblPythonLocation.Name = "lblPythonLocation"
         Me.lblPythonLocation.Size = New System.Drawing.Size(104, 13)
         Me.lblPythonLocation.TabIndex = 76
@@ -152,7 +159,7 @@ Partial Class frmMain
         '
         'btnPythonLocation
         '
-        Me.btnPythonLocation.Location = New System.Drawing.Point(483, 330)
+        Me.btnPythonLocation.Location = New System.Drawing.Point(483, 374)
         Me.btnPythonLocation.Name = "btnPythonLocation"
         Me.btnPythonLocation.Size = New System.Drawing.Size(24, 20)
         Me.btnPythonLocation.TabIndex = 82
@@ -162,7 +169,7 @@ Partial Class frmMain
         'btnRead
         '
         Me.btnRead.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnRead.Location = New System.Drawing.Point(12, 413)
+        Me.btnRead.Location = New System.Drawing.Point(12, 457)
         Me.btnRead.Name = "btnRead"
         Me.btnRead.Size = New System.Drawing.Size(240, 29)
         Me.btnRead.TabIndex = 96
@@ -248,7 +255,7 @@ Partial Class frmMain
         'cmbDump
         '
         Me.cmbDump.FormattingEnabled = True
-        Me.cmbDump.Items.AddRange(New Object() {"0", "1", "2", "3", "4"})
+        Me.cmbDump.Items.AddRange(New Object() {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"})
         Me.cmbDump.Location = New System.Drawing.Point(475, 102)
         Me.cmbDump.Name = "cmbDump"
         Me.cmbDump.Size = New System.Drawing.Size(32, 21)
@@ -286,7 +293,7 @@ Partial Class frmMain
         'cmbDiskOf
         '
         Me.cmbDiskOf.FormattingEnabled = True
-        Me.cmbDiskOf.Items.AddRange(New Object() {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"})
+        Me.cmbDiskOf.Items.AddRange(New Object() {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "30", "40", "50", "60", "70", "80", "90", "100", "150", "200"})
         Me.cmbDiskOf.Location = New System.Drawing.Point(315, 102)
         Me.cmbDiskOf.Name = "cmbDiskOf"
         Me.cmbDiskOf.Size = New System.Drawing.Size(42, 21)
@@ -306,7 +313,7 @@ Partial Class frmMain
         'btnWrite
         '
         Me.btnWrite.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnWrite.Location = New System.Drawing.Point(267, 413)
+        Me.btnWrite.Location = New System.Drawing.Point(267, 457)
         Me.btnWrite.Name = "btnWrite"
         Me.btnWrite.Size = New System.Drawing.Size(240, 29)
         Me.btnWrite.TabIndex = 98
@@ -361,7 +368,7 @@ Partial Class frmMain
         Me.chkSaveLog.AutoSize = True
         Me.chkSaveLog.Checked = True
         Me.chkSaveLog.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkSaveLog.Location = New System.Drawing.Point(176, 360)
+        Me.chkSaveLog.Location = New System.Drawing.Point(176, 404)
         Me.chkSaveLog.Name = "chkSaveLog"
         Me.chkSaveLog.Size = New System.Drawing.Size(76, 17)
         Me.chkSaveLog.TabIndex = 88
@@ -401,7 +408,7 @@ Partial Class frmMain
         'LinkLabelDLPython
         '
         Me.LinkLabelDLPython.AutoSize = True
-        Me.LinkLabelDLPython.Location = New System.Drawing.Point(386, 314)
+        Me.LinkLabelDLPython.Location = New System.Drawing.Point(386, 358)
         Me.LinkLabelDLPython.Name = "LinkLabelDLPython"
         Me.LinkLabelDLPython.Size = New System.Drawing.Size(91, 13)
         Me.LinkLabelDLPython.TabIndex = 80
@@ -411,7 +418,7 @@ Partial Class frmMain
         'LinkLabelDLGW
         '
         Me.LinkLabelDLGW.AutoSize = True
-        Me.LinkLabelDLGW.Location = New System.Drawing.Point(346, 265)
+        Me.LinkLabelDLGW.Location = New System.Drawing.Point(346, 309)
         Me.LinkLabelDLGW.Name = "LinkLabelDLGW"
         Me.LinkLabelDLGW.Size = New System.Drawing.Size(131, 13)
         Me.LinkLabelDLGW.TabIndex = 72
@@ -421,7 +428,7 @@ Partial Class frmMain
         'LinkLabelOpenLocation
         '
         Me.LinkLabelOpenLocation.AutoSize = True
-        Me.LinkLabelOpenLocation.Location = New System.Drawing.Point(400, 214)
+        Me.LinkLabelOpenLocation.Location = New System.Drawing.Point(400, 258)
         Me.LinkLabelOpenLocation.Name = "LinkLabelOpenLocation"
         Me.LinkLabelOpenLocation.Size = New System.Drawing.Size(77, 13)
         Me.LinkLabelOpenLocation.TabIndex = 64
@@ -442,7 +449,7 @@ Partial Class frmMain
         '
         'btnSaveLocation
         '
-        Me.btnSaveLocation.Location = New System.Drawing.Point(483, 230)
+        Me.btnSaveLocation.Location = New System.Drawing.Point(483, 274)
         Me.btnSaveLocation.Name = "btnSaveLocation"
         Me.btnSaveLocation.Size = New System.Drawing.Size(24, 20)
         Me.btnSaveLocation.TabIndex = 66
@@ -452,7 +459,7 @@ Partial Class frmMain
         'lblSaveLocation
         '
         Me.lblSaveLocation.AutoSize = True
-        Me.lblSaveLocation.Location = New System.Drawing.Point(9, 214)
+        Me.lblSaveLocation.Location = New System.Drawing.Point(9, 258)
         Me.lblSaveLocation.Name = "lblSaveLocation"
         Me.lblSaveLocation.Size = New System.Drawing.Size(76, 13)
         Me.lblSaveLocation.TabIndex = 60
@@ -460,14 +467,14 @@ Partial Class frmMain
         '
         'txtSaveLocation
         '
-        Me.txtSaveLocation.Location = New System.Drawing.Point(12, 230)
+        Me.txtSaveLocation.Location = New System.Drawing.Point(12, 274)
         Me.txtSaveLocation.Name = "txtSaveLocation"
         Me.txtSaveLocation.Size = New System.Drawing.Size(465, 20)
         Me.txtSaveLocation.TabIndex = 62
         '
         'txtExecuteScript
         '
-        Me.txtExecuteScript.Location = New System.Drawing.Point(12, 377)
+        Me.txtExecuteScript.Location = New System.Drawing.Point(12, 421)
         Me.txtExecuteScript.Name = "txtExecuteScript"
         Me.txtExecuteScript.Size = New System.Drawing.Size(465, 20)
         Me.txtExecuteScript.TabIndex = 86
@@ -475,7 +482,7 @@ Partial Class frmMain
         'lblExecuteScript
         '
         Me.lblExecuteScript.AutoSize = True
-        Me.lblExecuteScript.Location = New System.Drawing.Point(9, 361)
+        Me.lblExecuteScript.Location = New System.Drawing.Point(9, 405)
         Me.lblExecuteScript.Name = "lblExecuteScript"
         Me.lblExecuteScript.Size = New System.Drawing.Size(102, 13)
         Me.lblExecuteScript.TabIndex = 84
@@ -483,7 +490,7 @@ Partial Class frmMain
         '
         'btnExecuteScript
         '
-        Me.btnExecuteScript.Location = New System.Drawing.Point(483, 377)
+        Me.btnExecuteScript.Location = New System.Drawing.Point(483, 421)
         Me.btnExecuteScript.Name = "btnExecuteScript"
         Me.btnExecuteScript.Size = New System.Drawing.Size(24, 20)
         Me.btnExecuteScript.TabIndex = 94
@@ -493,7 +500,7 @@ Partial Class frmMain
         'chkExecuteScript
         '
         Me.chkExecuteScript.AutoSize = True
-        Me.chkExecuteScript.Location = New System.Drawing.Point(267, 360)
+        Me.chkExecuteScript.Location = New System.Drawing.Point(267, 404)
         Me.chkExecuteScript.Name = "chkExecuteScript"
         Me.chkExecuteScript.Size = New System.Drawing.Size(144, 17)
         Me.chkExecuteScript.TabIndex = 90
@@ -503,7 +510,7 @@ Partial Class frmMain
         'LinkLabelLaunchNow
         '
         Me.LinkLabelLaunchNow.AutoSize = True
-        Me.LinkLabelLaunchNow.Location = New System.Drawing.Point(406, 361)
+        Me.LinkLabelLaunchNow.Location = New System.Drawing.Point(406, 405)
         Me.LinkLabelLaunchNow.Name = "LinkLabelLaunchNow"
         Me.LinkLabelLaunchNow.Size = New System.Drawing.Size(71, 13)
         Me.LinkLabelLaunchNow.TabIndex = 92
@@ -576,7 +583,7 @@ Partial Class frmMain
         'btnUpdateFirmware
         '
         Me.btnUpdateFirmware.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnUpdateFirmware.Location = New System.Drawing.Point(659, 413)
+        Me.btnUpdateFirmware.Location = New System.Drawing.Point(656, 457)
         Me.btnUpdateFirmware.Name = "btnUpdateFirmware"
         Me.btnUpdateFirmware.Size = New System.Drawing.Size(240, 29)
         Me.btnUpdateFirmware.TabIndex = 98
@@ -593,11 +600,82 @@ Partial Class frmMain
         Me.LinkLabelLaunchGW.TabStop = True
         Me.LinkLabelLaunchGW.Text = "LaunchGW"
         '
+        'btnResetDevice
+        '
+        Me.btnResetDevice.Location = New System.Drawing.Point(528, 457)
+        Me.btnResetDevice.Name = "btnResetDevice"
+        Me.btnResetDevice.Size = New System.Drawing.Size(109, 29)
+        Me.btnResetDevice.TabIndex = 102
+        Me.btnResetDevice.Text = "Reset Device"
+        Me.btnResetDevice.UseVisualStyleBackColor = True
+        '
+        'cmbLowHigh
+        '
+        Me.cmbLowHigh.FormattingEnabled = True
+        Me.cmbLowHigh.Items.AddRange(New Object() {"Low (0v)", "High (5v)"})
+        Me.cmbLowHigh.Location = New System.Drawing.Point(221, 212)
+        Me.cmbLowHigh.Name = "cmbLowHigh"
+        Me.cmbLowHigh.Size = New System.Drawing.Size(88, 21)
+        Me.cmbLowHigh.TabIndex = 103
+        '
+        'cmbPIN
+        '
+        Me.cmbPIN.FormattingEnabled = True
+        Me.cmbPIN.Items.AddRange(New Object() {"2"})
+        Me.cmbPIN.Location = New System.Drawing.Point(123, 212)
+        Me.cmbPIN.Name = "cmbPIN"
+        Me.cmbPIN.Size = New System.Drawing.Size(40, 21)
+        Me.cmbPIN.TabIndex = 104
+        '
+        'btnSetPin
+        '
+        Me.btnSetPin.Location = New System.Drawing.Point(12, 212)
+        Me.btnSetPin.Name = "btnSetPin"
+        Me.btnSetPin.Size = New System.Drawing.Size(76, 23)
+        Me.btnSetPin.TabIndex = 105
+        Me.btnSetPin.Text = "Set Level"
+        Me.btnSetPin.UseVisualStyleBackColor = True
+        '
+        'lblPin
+        '
+        Me.lblPin.AutoSize = True
+        Me.lblPin.Location = New System.Drawing.Point(94, 217)
+        Me.lblPin.Name = "lblPin"
+        Me.lblPin.Size = New System.Drawing.Size(25, 13)
+        Me.lblPin.TabIndex = 106
+        Me.lblPin.Text = "Pin:"
+        '
+        'lblState
+        '
+        Me.lblState.AutoSize = True
+        Me.lblState.Location = New System.Drawing.Point(182, 215)
+        Me.lblState.Name = "lblState"
+        Me.lblState.Size = New System.Drawing.Size(36, 13)
+        Me.lblState.TabIndex = 107
+        Me.lblState.Text = "Level:"
+        '
+        'chkDoubleStep
+        '
+        Me.chkDoubleStep.AutoSize = True
+        Me.chkDoubleStep.Location = New System.Drawing.Point(363, 216)
+        Me.chkDoubleStep.Name = "chkDoubleStep"
+        Me.chkDoubleStep.Size = New System.Drawing.Size(85, 17)
+        Me.chkDoubleStep.TabIndex = 108
+        Me.chkDoubleStep.Text = "Double Step"
+        Me.chkDoubleStep.UseVisualStyleBackColor = True
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(908, 452)
+        Me.ClientSize = New System.Drawing.Size(908, 498)
+        Me.Controls.Add(Me.chkDoubleStep)
+        Me.Controls.Add(Me.lblState)
+        Me.Controls.Add(Me.lblPin)
+        Me.Controls.Add(Me.btnSetPin)
+        Me.Controls.Add(Me.cmbPIN)
+        Me.Controls.Add(Me.cmbLowHigh)
+        Me.Controls.Add(Me.btnResetDevice)
         Me.Controls.Add(Me.LinkLabelLaunchGW)
         Me.Controls.Add(Me.btnResize)
         Me.Controls.Add(Me.rtbOutput)
@@ -718,4 +796,11 @@ Partial Class frmMain
     Friend WithEvents ToolTipMainForm As ToolTip
     Friend WithEvents btnUpdateFirmware As Button
     Friend WithEvents LinkLabelLaunchGW As LinkLabel
+    Friend WithEvents btnResetDevice As Button
+    Friend WithEvents cmbLowHigh As ComboBox
+    Friend WithEvents cmbPIN As ComboBox
+    Friend WithEvents btnSetPin As Button
+    Friend WithEvents lblPin As Label
+    Friend WithEvents lblState As Label
+    Friend WithEvents chkDoubleStep As CheckBox
 End Class
