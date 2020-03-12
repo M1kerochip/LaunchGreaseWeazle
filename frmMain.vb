@@ -309,7 +309,7 @@ Public Class frmMain
 
         SR.Dispose()
 
-        If chkExecuteScript.Checked Then
+        If chkExecuteScript.Checked And Not (ResetGW = True Or SetPinLevel = True Or UpdateGWFirmware = True) Then
             If txtExecuteScript.Text.Trim <> "" Then
                 System.Diagnostics.Process.Start(txtExecuteScript.Text.Trim, fName)
             End If
