@@ -25,7 +25,7 @@ Partial Class frmMain
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
         Me.cmbSerialPorts = New System.Windows.Forms.ComboBox()
-        Me.Label2 = New System.Windows.Forms.Label()
+        Me.lblComPort = New System.Windows.Forms.Label()
         Me.rtbOutput = New System.Windows.Forms.RichTextBox()
         Me.txtGWLocation = New System.Windows.Forms.TextBox()
         Me.lblGWLocation = New System.Windows.Forms.Label()
@@ -101,14 +101,14 @@ Partial Class frmMain
         Me.cmbSerialPorts.TabIndex = 6
         Me.cmbSerialPorts.Text = "auto"
         '
-        'Label2
+        'lblComPort
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(368, 15)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(58, 13)
-        Me.Label2.TabIndex = 4
-        Me.Label2.Text = "COM Ports"
+        Me.lblComPort.AutoSize = True
+        Me.lblComPort.Location = New System.Drawing.Point(368, 15)
+        Me.lblComPort.Name = "lblComPort"
+        Me.lblComPort.Size = New System.Drawing.Size(58, 13)
+        Me.lblComPort.TabIndex = 4
+        Me.lblComPort.Text = "COM Ports"
         '
         'rtbOutput
         '
@@ -738,7 +738,7 @@ Partial Class frmMain
         Me.Controls.Add(Me.lblGWLocation)
         Me.Controls.Add(Me.btnGWLocation)
         Me.Controls.Add(Me.txtSaveLocation)
-        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.lblComPort)
         Me.Controls.Add(Me.lblSaveLocation)
         Me.Controls.Add(Me.cmbSerialPorts)
         Me.Controls.Add(Me.btnSaveLocation)
@@ -754,7 +754,7 @@ Partial Class frmMain
 
     End Sub
     Friend WithEvents cmbSerialPorts As ComboBox
-    Friend WithEvents Label2 As Label
+    Friend WithEvents lblComPort As Label
     Friend WithEvents rtbOutput As RichTextBox
     Friend WithEvents txtGWLocation As TextBox
     Friend WithEvents lblGWLocation As Label

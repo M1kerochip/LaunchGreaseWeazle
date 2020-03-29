@@ -93,6 +93,137 @@ Public Class frmMain
         Return True
     End Function
 
+    Public Function EnableDarkTheme(ByVal EnableDark As Boolean) As Boolean
+        Dim w1 As Color = Color.FromArgb(244, 244, 244)
+        Dim w2 As Color = Color.FromArgb(232, 232, 232)
+        Dim w3 As Color = Color.FromArgb(220, 220, 220)
+
+        Dim b1 As Color = Color.FromArgb(12, 12, 12)
+        Dim b2 As Color = Color.FromArgb(24, 24, 24)
+        Dim b3 As Color = Color.FromArgb(36, 36, 36)
+
+        Dim hl As Color = Color.FromArgb(140, 140, 254)
+        Dim hll As Color = Color.FromArgb(24, 232, 24)
+
+        If EnableDark = True Then
+            Me.ForeColor = w1
+            Me.BackColor = b1
+
+            rtbOutput.ForeColor = w3
+            rtbOutput.BackColor = b2
+
+            'lblComPort.ForeColor = w2
+            'lblTitle.ForeColor = w2
+
+            cmbSerialPorts.ForeColor = w2
+            cmbSerialPorts.BackColor = b2
+
+            LinkLabelProjectName.ForeColor = w2
+            LinkLabelProjectName.LinkColor = hl
+            LinkLabelProjectName.VisitedLinkColor = hll
+
+            btnWrite.ForeColor = w2
+            btnWrite.BackColor = b2
+        Else
+            Me.ForeColor = System.Drawing.SystemColors.ControlText
+            Me.BackColor = System.Drawing.SystemColors.Control
+
+            rtbOutput.ForeColor = System.Drawing.SystemColors.WindowText
+            rtbOutput.BackColor = System.Drawing.SystemColors.Window
+
+            'lblComPort.ForeColor = System.Drawing.SystemColors.ControlText
+            'lblTitle.ForeColor = System.Drawing.SystemColors.ControlText
+
+            cmbSerialPorts.ForeColor = System.Drawing.SystemColors.WindowText
+            cmbSerialPorts.BackColor = System.Drawing.SystemColors.Window
+
+            LinkLabelProjectName.ForeColor = System.Drawing.SystemColors.ControlText
+            LinkLabelProjectName.LinkColor = hl
+            LinkLabelProjectName.VisitedLinkColor = hll
+
+            btnWrite.ForeColor = System.Drawing.SystemColors.ControlText
+            btnWrite.BackColor = System.Drawing.SystemColors.Control
+        End If
+
+        txtTitle.ForeColor = rtbOutput.ForeColor
+        txtTitle.BackColor = rtbOutput.BackColor
+        txtPublisher.ForeColor = rtbOutput.ForeColor
+        txtPublisher.BackColor = rtbOutput.BackColor
+        txtSaveLocation.ForeColor = rtbOutput.ForeColor
+        txtSaveLocation.BackColor = rtbOutput.BackColor
+        txtGWLocation.ForeColor = rtbOutput.ForeColor
+        txtGWLocation.BackColor = rtbOutput.BackColor
+        txtPythonLocation.ForeColor = rtbOutput.ForeColor
+        txtPythonLocation.BackColor = rtbOutput.BackColor
+        txtExecuteScript.ForeColor = rtbOutput.ForeColor
+        txtExecuteScript.BackColor = rtbOutput.BackColor
+
+        cmbDisk.ForeColor = cmbSerialPorts.ForeColor
+        cmbDisk.BackColor = cmbSerialPorts.BackColor
+        cmbDiskOf.ForeColor = cmbSerialPorts.ForeColor
+        cmbDiskOf.BackColor = cmbSerialPorts.BackColor
+        cmbDiskRevision.ForeColor = cmbSerialPorts.ForeColor
+        cmbDiskRevision.BackColor = cmbSerialPorts.BackColor
+        cmbDiskRevision.ForeColor = cmbSerialPorts.ForeColor
+        cmbDiskRevision.BackColor = cmbSerialPorts.BackColor
+        cmbDump.ForeColor = cmbSerialPorts.ForeColor
+        cmbDump.BackColor = cmbSerialPorts.BackColor
+        cmbSystem.ForeColor = cmbSerialPorts.ForeColor
+        cmbSystem.BackColor = cmbSerialPorts.BackColor
+        cmbPIN.ForeColor = cmbSerialPorts.ForeColor
+        cmbPIN.BackColor = cmbSerialPorts.BackColor
+        cmbDriveSelect.ForeColor = cmbSerialPorts.ForeColor
+        cmbDriveSelect.BackColor = cmbSerialPorts.BackColor
+        cmbRevolutions.ForeColor = cmbSerialPorts.ForeColor
+        cmbRevolutions.BackColor = cmbSerialPorts.BackColor
+        cmbStartTrack.ForeColor = cmbSerialPorts.ForeColor
+        cmbStartTrack.BackColor = cmbSerialPorts.BackColor
+        cmbEndTrack.ForeColor = cmbSerialPorts.ForeColor
+        cmbEndTrack.BackColor = cmbSerialPorts.BackColor
+
+        LinkLabelGWWiki.ForeColor = LinkLabelProjectName.ForeColor
+        LinkLabelGWWiki.LinkColor = LinkLabelProjectName.LinkColor
+        LinkLabelGWWiki.VisitedLinkColor = LinkLabelProjectName.VisitedLinkColor
+        LinkLabelLaunchGW.ForeColor = LinkLabelProjectName.ForeColor
+        LinkLabelLaunchGW.LinkColor = LinkLabelProjectName.LinkColor
+        LinkLabelLaunchGW.VisitedLinkColor = LinkLabelProjectName.VisitedLinkColor
+        LinkLabelDriveSelect.ForeColor = LinkLabelProjectName.ForeColor
+        LinkLabelDriveSelect.LinkColor = LinkLabelProjectName.LinkColor
+        LinkLabelDriveSelect.VisitedLinkColor = LinkLabelProjectName.VisitedLinkColor
+        LinkLabelOpenLocation.ForeColor = LinkLabelProjectName.ForeColor
+        LinkLabelOpenLocation.LinkColor = LinkLabelProjectName.LinkColor
+        LinkLabelOpenLocation.VisitedLinkColor = LinkLabelProjectName.VisitedLinkColor
+        LinkLabelDLGW.ForeColor = LinkLabelProjectName.ForeColor
+        LinkLabelDLGW.LinkColor = LinkLabelProjectName.LinkColor
+        LinkLabelDLGW.VisitedLinkColor = LinkLabelProjectName.VisitedLinkColor
+        LinkLabelDLPython.ForeColor = LinkLabelProjectName.ForeColor
+        LinkLabelDLPython.LinkColor = LinkLabelProjectName.LinkColor
+        LinkLabelDLPython.VisitedLinkColor = LinkLabelProjectName.VisitedLinkColor
+        LinkLabelLaunchNow.ForeColor = LinkLabelProjectName.ForeColor
+        LinkLabelLaunchNow.LinkColor = LinkLabelProjectName.LinkColor
+        LinkLabelLaunchNow.VisitedLinkColor = LinkLabelProjectName.VisitedLinkColor
+
+        btnRead.ForeColor = btnWrite.ForeColor
+        btnRead.BackColor = btnWrite.BackColor
+        btnResetDevice.ForeColor = btnWrite.ForeColor
+        btnResetDevice.BackColor = btnWrite.BackColor
+        btnUpdateFirmware.ForeColor = btnWrite.ForeColor
+        btnUpdateFirmware.BackColor = btnWrite.BackColor
+        btnSetPin.ForeColor = btnWrite.ForeColor
+        btnSetPin.BackColor = btnWrite.BackColor
+        btnExecuteScript.ForeColor = btnWrite.ForeColor
+        btnExecuteScript.BackColor = btnWrite.BackColor
+        btnPythonLocation.ForeColor = btnWrite.ForeColor
+        btnPythonLocation.BackColor = btnWrite.BackColor
+        btnGWLocation.ForeColor = btnWrite.ForeColor
+        btnGWLocation.BackColor = btnWrite.BackColor
+        btnSaveLocation.ForeColor = btnWrite.ForeColor
+        btnSaveLocation.BackColor = btnWrite.BackColor
+        btnResize.ForeColor = btnWrite.ForeColor
+        btnResize.BackColor = btnWrite.BackColor
+        Return True
+    End Function
+
     Public Sub SaveSettings()
         My.Settings.SaveLoc = txtSaveLocation.Text.Trim
         My.Settings.GW = txtGWLocation.Text.Trim
@@ -138,7 +269,7 @@ Public Class frmMain
         End If
 
         If cmbDiskOf.Text.Trim <> "" Then
-            filen = filen + "of" + cmbDiskOf.Text.Trim
+            filen = filen + "Of" + cmbDiskOf.Text.Trim
         End If
         If ((cmbDisk.Text.Trim <> "") Or (cmbDiskOf.Text.Trim <> "")) Then
             filen = filen + "_"
@@ -184,14 +315,14 @@ Public Class frmMain
                 errstr &= "Save directory cannot be blank!" + Environment.NewLine
             Else
                 If Not IO.Directory.Exists(txtSaveLocation.Text.Trim) Then
-                    errstr &= "Save directory does not exist!" + Environment.NewLine
+                    errstr &= "Save directory does Not exist!" + Environment.NewLine
                 End If
             End If
             If Not IO.File.Exists(txtGWLocation.Text.Trim) Then
-                errstr &= "Greaseweazel script not found!" + Environment.NewLine
+                errstr &= "Greaseweazel script Not found!" + Environment.NewLine
             End If
             If Not IO.File.Exists(txtPythonLocation.Text.Trim) Then
-                errstr &= "Python.exe not found!" + Environment.NewLine
+                errstr &= "Python.exe Not found!" + Environment.NewLine
             End If
             rtbOutput.Text &= errstr
             Return True
@@ -215,10 +346,10 @@ Public Class frmMain
     ''' <param name="fName">Path to file to read/write</param>
     ''' <param name="ComPort">COM port to talk to GreaseWeazle hardware on. v0.11+ supports 'auto'.</param>
     ''' <param name="ResetGW">Reset the Greaseweazle device to power-on settings: Motors off, drives deselected, power-on pin levels And delay values</param>
-    ''' <param name="DoubleStep"></param>
-    ''' <param name="SetPinLevel">If true, change the value of the pin with PinToSet and PinLevel</param>
+    ''' <param name="DoubleStep">Move the head twice for every track move indicated. Allows usage of a 40 track disk on an 80 track drive</param>
+    ''' <param name="SetPinLevel">If true, change the value of the pin (PinToSet) to a the set level (PinLevel)- On or off.</param>
     ''' <param name="PinToSet">The pin number (on the back of the floppy drive) to change value</param>
-    ''' <param name="PinLevel">(L)ow 0v, or (H)igh 5v</param>
+    ''' <param name="PinLevel">Char: L or H denotes (L)ow 0v, or (H)igh 5v</param>
     ''' <returns></returns>
     Private Function CallGreaseWeazel(ByVal PythonEXE As String, ByVal gwLoc As String, ByVal ReadFromGW As Boolean,
                                       ByVal UpdateGWFirmware As Boolean, ByVal fName As String, ByVal ComPort As String,
@@ -226,9 +357,9 @@ Public Class frmMain
                                       ByVal SetPinLevel As Boolean, ByVal PinToSet As Integer, ByVal PinLevel As Char) As Boolean
         Dim CMD As New Process
 
-        Dim SW As System.IO.StreamWriter
+        Dim SW As IO.StreamWriter
 
-        Dim SR As System.IO.StreamReader
+        Dim SR As IO.StreamReader
 
         CMD.StartInfo.FileName = PythonEXE
 
@@ -269,7 +400,7 @@ Public Class frmMain
                     End If
 
                     If DoubleStep = True Then
-                        str = str + "--double-step "
+                        str = str + "--Double-Step "
                     End If
 
                     If chkF7.Checked Then
@@ -309,14 +440,16 @@ Public Class frmMain
 
         SR.Dispose()
 
-        If chkExecuteScript.Checked And Not (ResetGW = True Or SetPinLevel = True Or UpdateGWFirmware = True) Then
-            If txtExecuteScript.Text.Trim <> "" Then
-                System.Diagnostics.Process.Start(txtExecuteScript.Text.Trim, fName)
+        If chkExecuteScript.Checked And Not (ResetGW = True Or SetPinLevel = True Or UpdateGWFirmware = True) Then  'Only execute script on read/write, not update/set pin/reset
+            If System.IO.File.Exists(fName) Then    'Check file exists (or has been created, if reading from GW)
+                If txtExecuteScript.Text.Trim <> "" Then    'Check script exists
+                    System.Diagnostics.Process.Start(txtExecuteScript.Text.Trim, fName)
+                End If
             End If
         End If
 
         If chkSaveLog.Checked = True Then
-            If fName <> "" Then
+            If System.IO.File.Exists(fName) Then    'Check file exists
                 Dim StreamWriter As New IO.StreamWriter(System.IO.Path.ChangeExtension(fName, ".log")) 'Export rich text box as a .log file.
                 StreamWriter.Write(rtbOutput.Text)
                 StreamWriter.Close()
@@ -357,7 +490,6 @@ Public Class frmMain
                 CallGreaseWeazel(txtPythonLocation.Text, txtGWLocation.Text, True, False, txtSaveLocation.Text + fileGW, cmbSerialPorts.Text, False, chkDoubleStep.Checked, False, 0, "")
             End If  'Run gw.py once only
         Else
-
         End If
     End Sub
 
@@ -504,23 +636,6 @@ Public Class frmMain
         System.Diagnostics.Process.Start("https://github.com/M1kerochip/LaunchGreaseWeazle")
     End Sub
 
-    Private Sub CmbDisk_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbDisk.SelectedIndexChanged, cmbDisk.TextChanged
-        'If cmbDiskOf.Text.Trim <> "" Then
-        '    cmbDisk.Text = cmbDisk.Text.Trim.PadLeft(cmbDiskOf.Text.Length, "0")    'Pad disk number to length of "diskof" field
-        'End If
-    End Sub
-
-    Private Sub CmbDiskOf_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbDiskOf.SelectedIndexChanged, cmbDiskOf.TextChanged
-        If cmbDiskOf.Text.Trim <> "" Then
-            If cmbDisk.Text.Length < cmbDiskOf.Text.Length Then
-                cmbDisk.Text = cmbDisk.Text.Trim.PadLeft(cmbDiskOf.Text.Length, "0")                'Pad disk number to length of "diskof" field with leading zeros
-            End If
-            If cmbDisk.Text.Length > cmbDiskOf.Text.Length Then
-                cmbDisk.Text = Microsoft.VisualBasic.Right(cmbDisk.Text, cmbDiskOf.Text.Length)     'Trim disk number to length of "diskof" field
-            End If
-        End If
-    End Sub
-
     Private Sub BtnSetPin_Click(sender As Object, e As EventArgs) Handles btnSetPin.Click
         If IsNumeric(cmbPIN.Text) = True Then
             rtbOutput.Text &= "Setting pin level:"
@@ -536,5 +651,33 @@ Public Class frmMain
         rtbOutput.Text &= "Issuing device reset:"
         rtbOutput.Text &= Environment.NewLine + Environment.NewLine
         CallGreaseWeazel(txtPythonLocation.Text, txtGWLocation.Text, False, False, "", cmbSerialPorts.Text, True, False, False, 0, "")
+    End Sub
+
+    Private Sub cmbDiskOf_LostFocus(sender As Object, e As EventArgs) Handles cmbDiskOf.LostFocus
+        If cmbDiskOf.Text.Trim <> "" Then
+            If cmbDisk.Text.Length < cmbDiskOf.Text.Length Then
+                cmbDisk.Text = cmbDisk.Text.Trim.PadLeft(cmbDiskOf.Text.Length, "0")                'Pad disk number to length of "diskof" field with leading zeros
+            End If
+            If cmbDisk.Text.Length > cmbDiskOf.Text.Length Then
+                cmbDisk.Text = Microsoft.VisualBasic.Right(cmbDisk.Text, cmbDiskOf.Text.Length)     'Trim disk number to length of "diskof" field
+            End If
+        End If
+    End Sub
+
+    Private Sub txtTitle_GotFocus(sender As Object, e As EventArgs) Handles txtTitle.GotFocus
+        txtTitle.SelectAll()
+    End Sub
+
+    Private Sub txtPublisher_GotFocus(sender As Object, e As EventArgs) Handles txtPublisher.GotFocus
+        txtPublisher.SelectAll()
+    End Sub
+
+    Private Sub lblSystem_Click(sender As Object, e As EventArgs) Handles lblSystem.Click
+        If Me.BackColor = System.Drawing.SystemColors.Control Then
+            EnableDarkTheme(True)
+        Else
+            EnableDarkTheme(False)
+        End If
+
     End Sub
 End Class

@@ -40,10 +40,10 @@ RunGreaseWeazel
  <param name="fName">Path to file to read/write</param>
  <param name="ComPort">COM port to talk to GreaseWeazle hardware on. v0.11+ supports 'auto'.</param>
  <param name="ResetGW">Reset the Greaseweazle device to power-on settings: Motors off, drives deselected, power-on pin levels And delay values</param>
- <param name="DoubleStep"></param>
- <param name="SetPinLevel">If true, change the value of the pin with PinToSet and PinLevel</param>
+ <param name="DoubleStep">Move the head twice for every track move indicated. Allows usage of a 40 track disk on an 80 track drive</param>
+ <param name="SetPinLevel">If true, change the value of the pin (PinToSet) to a the set level (PinLevel)- On or off.</param>
  <param name="PinToSet">The pin number (on the back of the floppy drive) to change value</param>
- <param name="PinLevel">(L)ow 0v, or (H)igh 5v</param>
+ <param name="PinLevel">Char: L or H denotes (L)ow 0v, or (H)igh 5v</param>
  <returns></returns>
 </member>
 </members>
