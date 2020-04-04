@@ -405,12 +405,14 @@ Public Class frmMain
                         str = str + "--ecyl=" + cmbEndTrack.Text + " "
                     End If
 
-                    If chkRevolutions.Checked Then
-                        str = str + "--revs=" + cmbRevolutions.Text + " "
+                    If ReadFromGW = True Then
+                        If chkRevolutions.Checked Then
+                            str = str + "--revs=" + cmbRevolutions.Text + " "
+                        End If
                     End If
 
                     If DoubleStep = True Then
-                        str = str + "--Double-Step "
+                        str = str + "--double-step "
                     End If
 
                     If chkF7.Checked Then
@@ -490,6 +492,7 @@ Public Class frmMain
                     rtbOutput.Text &= Environment.NewLine
                     rtbOutput.Text &= "to file: " + fileGW
                     rtbOutput.Text &= Environment.NewLine + Environment.NewLine
+                    Me.Refresh()
                     CallGreaseWeazel(txtPythonLocation.Text, txtGWLocation.Text, True, False, txtSaveLocation.Text + fileGW, cmbSerialPorts.Text, False, chkDoubleStep.Checked, False, 0, "")
                 Next                    'If running gw.py on a loop, to dump a disk multiple times
             Else    'Run gw.py once only
@@ -501,6 +504,7 @@ Public Class frmMain
                 rtbOutput.Text &= Environment.NewLine
                 rtbOutput.Text &= "to file: " + fileGW
                 rtbOutput.Text &= Environment.NewLine + Environment.NewLine
+                Me.Refresh()
                 CallGreaseWeazel(txtPythonLocation.Text, txtGWLocation.Text, True, False, txtSaveLocation.Text + fileGW, cmbSerialPorts.Text, False, chkDoubleStep.Checked, False, 0, "")
             End If  'Run gw.py once only
         Else
@@ -553,9 +557,11 @@ Public Class frmMain
             If (OpenFileDialogMain.ShowDialog() = DialogResult.OK) Then
                 fileGW = OpenFileDialogMain.FileName
                 rtbOutput.Clear()
-                rtbOutput.Text &= "Writing to Greaseweazel on " + cmbSerialPorts.Text
+                rtbOutput.Text &= "Writing to Greaseweazel on port " + cmbSerialPorts.Text
                 rtbOutput.Text &= Environment.NewLine
-                rtbOutput.Text &= "using: " + fileGW
+                rtbOutput.Text &= "Start: " + cmbStartTrack.Text + "  End: " + cmbEndTrack.Text + "  Revolutions: " + cmbRevolutions.Text + "  Sided: " + IIf(chkSingleSided.Checked, "Single", "Double")
+                rtbOutput.Text &= Environment.NewLine
+                rtbOutput.Text &= "using file: " + fileGW
                 rtbOutput.Text &= Environment.NewLine + Environment.NewLine
                 CallGreaseWeazel(txtPythonLocation.Text, txtGWLocation.Text, False, False, fileGW, cmbSerialPorts.Text, False, chkDoubleStep.Checked, False, 0, "")
             Else
