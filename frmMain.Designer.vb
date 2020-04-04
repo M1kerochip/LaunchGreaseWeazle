@@ -213,7 +213,7 @@ Partial Class frmMain
         'lblDiskRevision
         '
         Me.lblDiskRevision.AutoSize = True
-        Me.lblDiskRevision.Location = New System.Drawing.Point(360, 86)
+        Me.lblDiskRevision.Location = New System.Drawing.Point(357, 86)
         Me.lblDiskRevision.Name = "lblDiskRevision"
         Me.lblDiskRevision.Size = New System.Drawing.Size(79, 13)
         Me.lblDiskRevision.TabIndex = 28
@@ -222,7 +222,7 @@ Partial Class frmMain
         'cmbDiskRevision
         '
         Me.cmbDiskRevision.FormattingEnabled = True
-        Me.cmbDiskRevision.Location = New System.Drawing.Point(363, 102)
+        Me.cmbDiskRevision.Location = New System.Drawing.Point(360, 102)
         Me.cmbDiskRevision.Name = "cmbDiskRevision"
         Me.cmbDiskRevision.Size = New System.Drawing.Size(106, 21)
         Me.cmbDiskRevision.TabIndex = 30
@@ -258,16 +258,16 @@ Partial Class frmMain
         '
         Me.cmbDump.FormattingEnabled = True
         Me.cmbDump.Items.AddRange(New Object() {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"})
-        Me.cmbDump.Location = New System.Drawing.Point(475, 102)
+        Me.cmbDump.Location = New System.Drawing.Point(470, 102)
         Me.cmbDump.Name = "cmbDump"
-        Me.cmbDump.Size = New System.Drawing.Size(32, 21)
+        Me.cmbDump.Size = New System.Drawing.Size(37, 21)
         Me.cmbDump.TabIndex = 36
         Me.cmbDump.Text = "0"
         '
         'lblDiskOf
         '
         Me.lblDiskOf.AutoSize = True
-        Me.lblDiskOf.Location = New System.Drawing.Point(312, 86)
+        Me.lblDiskOf.Location = New System.Drawing.Point(309, 86)
         Me.lblDiskOf.Name = "lblDiskOf"
         Me.lblDiskOf.Size = New System.Drawing.Size(16, 13)
         Me.lblDiskOf.TabIndex = 24
@@ -288,7 +288,7 @@ Partial Class frmMain
         Me.cmbDisk.Items.AddRange(New Object() {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"})
         Me.cmbDisk.Location = New System.Drawing.Point(267, 102)
         Me.cmbDisk.Name = "cmbDisk"
-        Me.cmbDisk.Size = New System.Drawing.Size(42, 21)
+        Me.cmbDisk.Size = New System.Drawing.Size(41, 21)
         Me.cmbDisk.TabIndex = 22
         Me.cmbDisk.Text = "1"
         '
@@ -296,9 +296,9 @@ Partial Class frmMain
         '
         Me.cmbDiskOf.FormattingEnabled = True
         Me.cmbDiskOf.Items.AddRange(New Object() {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "30", "40", "50", "60", "70", "80", "90", "100", "150", "200"})
-        Me.cmbDiskOf.Location = New System.Drawing.Point(315, 102)
+        Me.cmbDiskOf.Location = New System.Drawing.Point(312, 102)
         Me.cmbDiskOf.Name = "cmbDiskOf"
-        Me.cmbDiskOf.Size = New System.Drawing.Size(42, 21)
+        Me.cmbDiskOf.Size = New System.Drawing.Size(41, 21)
         Me.cmbDiskOf.TabIndex = 26
         Me.cmbDiskOf.Text = "1"
         '
@@ -522,7 +522,7 @@ Partial Class frmMain
         'chkLoop
         '
         Me.chkLoop.AutoSize = True
-        Me.chkLoop.Location = New System.Drawing.Point(454, 86)
+        Me.chkLoop.Location = New System.Drawing.Point(451, 85)
         Me.chkLoop.Name = "chkLoop"
         Me.chkLoop.Size = New System.Drawing.Size(15, 14)
         Me.chkLoop.TabIndex = 32

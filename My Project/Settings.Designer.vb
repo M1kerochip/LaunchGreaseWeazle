@@ -281,6 +281,66 @@ Namespace My
                 Me("WideForm") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property StartTrack() As Boolean
+            Get
+                Return CType(Me("StartTrack"),Boolean)
+            End Get
+            Set
+                Me("StartTrack") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property StartTrackNo() As Integer
+            Get
+                Return CType(Me("StartTrackNo"),Integer)
+            End Get
+            Set
+                Me("StartTrackNo") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property EndTrack() As Boolean
+            Get
+                Return CType(Me("EndTrack"),Boolean)
+            End Get
+            Set
+                Me("EndTrack") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("79")>  _
+        Public Property EndTrackNo() As Integer
+            Get
+                Return CType(Me("EndTrackNo"),Integer)
+            End Get
+            Set
+                Me("EndTrackNo") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property SingleSided() As Boolean
+            Get
+                Return CType(Me("SingleSided"),Boolean)
+            End Get
+            Set
+                Me("SingleSided") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

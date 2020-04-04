@@ -32,6 +32,11 @@ Public Class frmMain
         txtPublisher.Text = My.Settings.Company
         txtExecuteScript.Text = My.Settings.Script
         chkDoubleStep.Checked = My.Settings.DoubleStep
+        chkSingleSided.Checked = My.Settings.SingleSided
+        ChkStartTrack.Checked = My.Settings.StartTrack
+        cmbStartTrack.Text = My.Settings.StartTrackNo
+        chkEndTrack.Checked = My.Settings.EndTrack
+        cmbEndTrack.Text = My.Settings.EndTrackNo
 
         rtbOutput.Visible = False
         Me.Size = New Size(534, Me.Size.Height)
@@ -241,6 +246,11 @@ Public Class frmMain
         My.Settings.LoopDump = chkLoop.Checked
         My.Settings.LoopDumpCount = cmbDump.Text
         My.Settings.DoubleStep = chkDoubleStep.Checked
+        My.Settings.StartTrack = ChkStartTrack.Checked
+        My.Settings.StartTrackNo = cmbStartTrack.Text
+        My.Settings.EndTrack = chkEndTrack.Checked
+        My.Settings.EndTrackNo = cmbEndTrack.Text
+        My.Settings.SingleSided = chkSingleSided.Checked
         If btnResize.Text = "<" Then My.Settings.WideForm = True Else My.Settings.WideForm = False
         My.Settings.Save()
     End Sub
@@ -475,6 +485,8 @@ Public Class frmMain
                     Dim fileGW As String = CreateFileName(True)
                     rtbOutput.Clear()
                     rtbOutput.Text &= "Reading from Greaseweazel on port " + cmbSerialPorts.Text
+                    rtbOutput.Text &= Environment.NewLine
+                    rtbOutput.Text &= "Start: " + cmbStartTrack.Text + "  End: " + cmbEndTrack.Text + "  Revolutions: " + cmbRevolutions.Text + "  Sided: " + IIf(chkSingleSided.Checked, "Single", "Double")
                     rtbOutput.Text &= Environment.NewLine
                     rtbOutput.Text &= "to file: " + fileGW
                     rtbOutput.Text &= Environment.NewLine + Environment.NewLine
