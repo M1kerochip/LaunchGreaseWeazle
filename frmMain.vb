@@ -264,34 +264,42 @@ Public Class frmMain
         Dim regWhitespace As New Regex("\s")
 
         Dim filen As String
-        filen = regWhitespace.Replace(txtTitle.Text, String.Empty) + "_"                        'Set initial name to Title + "_" (assuming no one won't set a title!)
-
-        If txtPublisher.Text.Trim <> "" Then
-            filen = filen + regWhitespace.Replace(txtPublisher.Text, String.Empty) + "_"        'Add publisher + underscore, if a publisher is set
+        If chkFilenameRreplaceSpaceWithUnderscore.Checked Then
+            filen = regWhitespace.Replace(txtTitle.Text, String.Empty) + "_"                    'Set initial name to Title + "_" (assuming no one won't set a title!)
+        Else
+            filen = txtTitle.Text                                                               'Set initial name to Title
         End If
-
+        If txtPublisher.Text.Trim <> "" Then
+            If chkFilenameRreplaceSpaceWithUnderscore.Checked Then
+                filen += regWhitespace.Replace(txtPublisher.Text, String.Empty) + "_"        'Add publisher + underscore, if a publisher is set
+            Else
+                filen += txtPublisher.Text                                                   'Add publisher
+            End If
+        End If
         If cmbDiskOf.Text.Trim <> "" Then
             cmbDisk.Text = cmbDisk.Text.Trim.PadLeft(cmbDiskOf.Text.Length, "0")                'Pad disk number to length of "diskof" field
         End If
-
         If cmbDisk.Text.Trim <> "" Then
-            filen = filen + "Disk" + cmbDisk.Text.Trim
+            filen += "Disk" + cmbDisk.Text.Trim
         End If
-
         If cmbDiskOf.Text.Trim <> "" Then
-            filen = filen + "Of" + cmbDiskOf.Text.Trim
+            filen += "Of" + cmbDiskOf.Text.Trim
         End If
         If ((cmbDisk.Text.Trim <> "") Or (cmbDiskOf.Text.Trim <> "")) Then
-            filen = filen + "_"
+            filen += "_"
         End If
         If cmbDiskRevision.Text.Trim <> "" Then
-            filen = filen + "Rev_" + cmbDiskRevision.Text.Trim + "_"
+            filen += "_" + cmbDiskRevision.Text.Trim + "_"
         End If
         If cmbSystem.Text.Trim <> "" Then
-            filen = filen + cmbSystem.Text.Trim + "_"
+            If chkFilenameRreplaceSpaceWithUnderscore.Checked Then
+                filen += regWhitespace.Replace(cmbSystem.Text, String.Empty) + "_"
+            Else
+                filen += cmbSystem.Text.Trim + "_"
+            End If
         End If
         If cmbDump.Text.Trim <> "" Then
-            filen = filen + "Dump" + cmbDump.Text.Trim
+            filen += "Dump" + cmbDump.Text.Trim
         End If
 
         Dim extst As String = ".scp"
@@ -302,12 +310,12 @@ Public Class frmMain
             If My.Computer.FileSystem.FileExists(txtSaveLocation.Text.Trim + filen + extst) Then
                 l = 1
                 While My.Computer.FileSystem.FileExists(txtSaveLocation.Text.Trim + filen + "_" + CStr(l) + extst) = True
-                    l = l + 1
+                    l += 1
                 End While
             End If
-            If l > 0 Then filen = filen + "_" + CStr(l)
+            If l > 0 Then filen += "_" + CStr(l)
         End If
-        filen = filen + extst
+        filen += extst
         Return filen
     End Function
 
@@ -373,7 +381,7 @@ Public Class frmMain
 
         CMD.StartInfo.FileName = PythonEXE
 
-        Dim str As String = gwLoc
+        Dim str As String = ControlChars.Quote + gwLoc + ControlChars.Quote
 
         If ResetGW = True Then
             str = str + " reset "
@@ -419,7 +427,7 @@ Public Class frmMain
                         str = str + "--drive " + cmbDriveSelect.Text
                     End If
                 End If
-                str = str + fName + " "
+                str = str + ControlChars.Quote + fName + ControlChars.Quote + " "
             End If
         End If
 
@@ -565,7 +573,9 @@ Public Class frmMain
                 rtbOutput.Text &= Environment.NewLine + Environment.NewLine
                 CallGreaseWeazel(txtPythonLocation.Text, txtGWLocation.Text, False, False, fileGW, cmbSerialPorts.Text, False, chkDoubleStep.Checked, False, 0, "")
             Else
-
+                rtbOutput.Text &= Environment.NewLine
+                rtbOutput.Text &= "Write image cancelled"
+                rtbOutput.Text &= Environment.NewLine
             End If
         End If
     End Sub
@@ -668,6 +678,7 @@ Public Class frmMain
     End Sub
 
     Private Sub BtnResetDevice_Click(sender As Object, e As EventArgs) Handles btnResetDevice.Click
+        rtbOutput.Text &= Environment.NewLine
         rtbOutput.Text &= "Issuing device reset:"
         rtbOutput.Text &= Environment.NewLine + Environment.NewLine
         CallGreaseWeazel(txtPythonLocation.Text, txtGWLocation.Text, False, False, "", cmbSerialPorts.Text, True, False, False, 0, "")

@@ -89,6 +89,7 @@ Partial Class frmMain
         Me.lblState = New System.Windows.Forms.Label()
         Me.chkDoubleStep = New System.Windows.Forms.CheckBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.chkFilenameRreplaceSpaceWithUnderscore = New System.Windows.Forms.CheckBox()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -669,6 +670,7 @@ Partial Class frmMain
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.chkFilenameRreplaceSpaceWithUnderscore)
         Me.GroupBox1.Controls.Add(Me.chkDoubleStep)
         Me.GroupBox1.Controls.Add(Me.cmbStartTrack)
         Me.GroupBox1.Controls.Add(Me.ChkStartTrack)
@@ -687,6 +689,18 @@ Partial Class frmMain
         Me.GroupBox1.Size = New System.Drawing.Size(495, 105)
         Me.GroupBox1.TabIndex = 109
         Me.GroupBox1.TabStop = False
+        '
+        'chkFilenameRreplaceSpaceWithUnderscore
+        '
+        Me.chkFilenameRreplaceSpaceWithUnderscore.AutoSize = True
+        Me.chkFilenameRreplaceSpaceWithUnderscore.Checked = True
+        Me.chkFilenameRreplaceSpaceWithUnderscore.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkFilenameRreplaceSpaceWithUnderscore.Location = New System.Drawing.Point(172, 78)
+        Me.chkFilenameRreplaceSpaceWithUnderscore.Name = "chkFilenameRreplaceSpaceWithUnderscore"
+        Me.chkFilenameRreplaceSpaceWithUnderscore.Size = New System.Drawing.Size(129, 17)
+        Me.chkFilenameRreplaceSpaceWithUnderscore.TabIndex = 59
+        Me.chkFilenameRreplaceSpaceWithUnderscore.Text = "Replace space with _"
+        Me.chkFilenameRreplaceSpaceWithUnderscore.UseVisualStyleBackColor = True
         '
         'frmMain
         '
@@ -818,4 +832,5 @@ Partial Class frmMain
     Friend WithEvents lblState As Label
     Friend WithEvents chkDoubleStep As CheckBox
     Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents chkFilenameRreplaceSpaceWithUnderscore As CheckBox
 End Class
