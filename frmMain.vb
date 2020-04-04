@@ -497,6 +497,8 @@ Public Class frmMain
                 rtbOutput.Clear()
                 rtbOutput.Text &= "Reading from Greaseweazel on port " + cmbSerialPorts.Text
                 rtbOutput.Text &= Environment.NewLine
+                rtbOutput.Text &= "Start: " + cmbStartTrack.Text + "  End: " + cmbEndTrack.Text + "  Revolutions: " + cmbRevolutions.Text + "  Sided: " + IIf(chkSingleSided.Checked, "Single", "Double")
+                rtbOutput.Text &= Environment.NewLine
                 rtbOutput.Text &= "to file: " + fileGW
                 rtbOutput.Text &= Environment.NewLine + Environment.NewLine
                 CallGreaseWeazel(txtPythonLocation.Text, txtGWLocation.Text, True, False, txtSaveLocation.Text + fileGW, cmbSerialPorts.Text, False, chkDoubleStep.Checked, False, 0, "")
