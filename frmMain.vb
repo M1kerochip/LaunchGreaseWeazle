@@ -264,45 +264,37 @@ Public Class frmMain
         Dim regWhitespace As New Regex("\s")
 
         Dim filen As String
-        If chkFilenameRreplaceSpaceWithUnderscore.Checked Then
-            filen = regWhitespace.Replace(txtTitle.Text, String.Empty) + "_"                    'Set initial name to Title + "_" (assuming no one won't set a title!)
-        Else
-            filen = txtTitle.Text                                                               'Set initial name to Title
-        End If
+        filen = txtTitle.Text                                                               'Set initial name to Title
         If txtPublisher.Text.Trim <> "" Then
-            If chkFilenameRreplaceSpaceWithUnderscore.Checked Then
-                filen += regWhitespace.Replace(txtPublisher.Text, String.Empty) + "_"        'Add publisher + underscore, if a publisher is set
-            Else
-                filen += txtPublisher.Text                                                   'Add publisher
-            End If
+            filen += txtPublisher.Text                                                      'Add publisher if txt field not blank
         End If
         If cmbDiskOf.Text.Trim <> "" Then
-            cmbDisk.Text = cmbDisk.Text.Trim.PadLeft(cmbDiskOf.Text.Length, "0")                'Pad disk number to length of "diskof" field
+            cmbDisk.Text = cmbDisk.Text.Trim.PadLeft(cmbDiskOf.Text.Length, "0")            'Pad disk number to length of "diskof" field
         End If
         If cmbDisk.Text.Trim <> "" Then
-            filen += "Disk" + cmbDisk.Text.Trim
+            filen += "Disk" + cmbDisk.Text.Trim                                             'Add disk if disk field not blank
         End If
         If cmbDiskOf.Text.Trim <> "" Then
-            filen += "Of" + cmbDiskOf.Text.Trim
+            filen += "Of" + cmbDiskOf.Text.Trim                                             'Add disk of if disk of field not blank
         End If
         If ((cmbDisk.Text.Trim <> "") Or (cmbDiskOf.Text.Trim <> "")) Then
-            filen += "_"
+            filen += "_"                                                                    'If either disk or disk of field added, include trailing underscore
         End If
         If cmbDiskRevision.Text.Trim <> "" Then
-            filen += "_" + cmbDiskRevision.Text.Trim + "_"
+            filen += cmbDiskRevision.Text.Trim + "_"                                        'Add revision, if revision field not blank
         End If
         If cmbSystem.Text.Trim <> "" Then
-            If chkFilenameRreplaceSpaceWithUnderscore.Checked Then
-                filen += regWhitespace.Replace(cmbSystem.Text, String.Empty) + "_"
-            Else
-                filen += cmbSystem.Text.Trim + "_"
-            End If
+            filen += cmbSystem.Text.Trim + "_"                                              'Add system, if system field not blank
         End If
         If cmbDump.Text.Trim <> "" Then
-            filen += "Dump" + cmbDump.Text.Trim
+            filen += "Dump" + cmbDump.Text.Trim                                             'Add 'Dump+DumpNumber' field, if dump field not blank
         End If
 
-        Dim extst As String = ".scp"
+        Dim extst As String = ".scp"                                                        'Add file extension for SuperCard Pro "SCP"
+
+        If chkFilenameRreplaceSpaceWithUnderscore.Checked Then
+            filen = regWhitespace.Replace(filen, String.Empty)                              'Replace all spaces with underscores, if check "replace with underscores" checked.
+        End If
 
         If CheckExists = True Then
             'Check to see if file exists already. If so, get next available filename by appending "_X" where x is an ascending integer.
