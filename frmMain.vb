@@ -266,10 +266,11 @@ Public Class frmMain
         Dim filen As String
         filen = txtTitle.Text                                                               'Set initial name to Title
         If txtPublisher.Text.Trim <> "" Then
-            filen += txtPublisher.Text                                                      'Add publisher if txt field not blank
+            filen += "_" + txtPublisher.Text                                                      'Add publisher if txt field not blank
         End If
         If cmbDiskOf.Text.Trim <> "" Then
             cmbDisk.Text = cmbDisk.Text.Trim.PadLeft(cmbDiskOf.Text.Length, "0")            'Pad disk number to length of "diskof" field
+            filen += "_"
         End If
         If cmbDisk.Text.Trim <> "" Then
             filen += "Disk" + cmbDisk.Text.Trim                                             'Add disk if disk field not blank
@@ -293,7 +294,7 @@ Public Class frmMain
         Dim extst As String = ".scp"                                                        'Add file extension for SuperCard Pro "SCP"
 
         If chkFilenameRreplaceSpaceWithUnderscore.Checked Then
-            filen = regWhitespace.Replace(filen, String.Empty)                              'Replace all spaces with underscores, if check "replace with underscores" checked.
+            filen = regWhitespace.Replace(filen, "_")                                       'Replace all spaces with underscores, if check "replace with underscores" checked.
         End If
 
         If CheckExists = True Then
