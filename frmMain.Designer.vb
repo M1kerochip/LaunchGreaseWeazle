@@ -441,12 +441,10 @@ Partial Class frmMain
         'chkAdjustSpeed
         '
         Me.chkAdjustSpeed.AutoSize = True
-        Me.chkAdjustSpeed.Checked = True
-        Me.chkAdjustSpeed.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkAdjustSpeed.Location = New System.Drawing.Point(332, 48)
+        Me.chkAdjustSpeed.Location = New System.Drawing.Point(332, 78)
         Me.chkAdjustSpeed.Name = "chkAdjustSpeed"
         Me.chkAdjustSpeed.Size = New System.Drawing.Size(117, 17)
-        Me.chkAdjustSpeed.TabIndex = 58
+        Me.chkAdjustSpeed.TabIndex = 60
         Me.chkAdjustSpeed.Text = "Adjust Write Speed"
         Me.chkAdjustSpeed.UseVisualStyleBackColor = True
         '
@@ -465,7 +463,7 @@ Partial Class frmMain
         Me.lblSaveLocation.Location = New System.Drawing.Point(9, 238)
         Me.lblSaveLocation.Name = "lblSaveLocation"
         Me.lblSaveLocation.Size = New System.Drawing.Size(76, 13)
-        Me.lblSaveLocation.TabIndex = 60
+        Me.lblSaveLocation.TabIndex = 61
         Me.lblSaveLocation.Text = "Save Location"
         '
         'txtSaveLocation
@@ -579,7 +577,7 @@ Partial Class frmMain
         Me.btnResize.Location = New System.Drawing.Point(465, 29)
         Me.btnResize.Name = "btnResize"
         Me.btnResize.Size = New System.Drawing.Size(24, 53)
-        Me.btnResize.TabIndex = 49
+        Me.btnResize.TabIndex = 58
         Me.btnResize.Text = "<"
         Me.btnResize.UseVisualStyleBackColor = True
         '
@@ -661,10 +659,10 @@ Partial Class frmMain
         'chkDoubleStep
         '
         Me.chkDoubleStep.AutoSize = True
-        Me.chkDoubleStep.Location = New System.Drawing.Point(332, 78)
+        Me.chkDoubleStep.Location = New System.Drawing.Point(332, 48)
         Me.chkDoubleStep.Name = "chkDoubleStep"
         Me.chkDoubleStep.Size = New System.Drawing.Size(85, 17)
-        Me.chkDoubleStep.TabIndex = 50
+        Me.chkDoubleStep.TabIndex = 57
         Me.chkDoubleStep.Text = "Double Step"
         Me.chkDoubleStep.UseVisualStyleBackColor = True
         '

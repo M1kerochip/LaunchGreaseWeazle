@@ -341,6 +341,18 @@ Namespace My
                 Me("SingleSided") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property AdjustWriteSpeed() As Boolean
+            Get
+                Return CType(Me("AdjustWriteSpeed"),Boolean)
+            End Get
+            Set
+                Me("AdjustWriteSpeed") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

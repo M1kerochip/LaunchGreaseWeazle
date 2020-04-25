@@ -37,6 +37,7 @@ Public Class frmMain
         cmbStartTrack.Text = My.Settings.StartTrackNo
         chkEndTrack.Checked = My.Settings.EndTrack
         cmbEndTrack.Text = My.Settings.EndTrackNo
+        chkAdjustSpeed.Checked = My.Settings.AdjustWriteSpeed
 
         rtbOutput.Visible = False
         Me.Size = New Size(534, Me.Size.Height)
@@ -82,7 +83,7 @@ Public Class frmMain
         ToolTipMainForm.SetToolTip(ChkStartTrack, "Check to select a default start track other than track 0.")
         ToolTipMainForm.SetToolTip(chkEndTrack, "Check to select a default end track. Number of tracks that a drive can read/write depends on the drive itself. Consult disk drive manual if unsure.")
         ToolTipMainForm.SetToolTip(chkSingleSided, "Select this to read/write only on disk side 0 (the bottom on most drives)/ If unsure, leave unchecked. Maps to --single-sided argument.")
-        ToolTipMainForm.SetToolTip(chkAdjustSpeed, "If unsure, leave checked. Maps to --adjust-speed argument. Adjust write-flux times for drive speed.")
+        ToolTipMainForm.SetToolTip(chkAdjustSpeed, "Removed in v0.13 of Greaseweazle. Maps to --adjust-speed argument. Adjust write-flux times for drive speed.")
         ToolTipMainForm.SetToolTip(cmbStartTrack, "Track to start read/write process on. Tracks are zero indexed. Actual number of tracks a drive supports varies. Consult disk drive manual if unsure.")
         ToolTipMainForm.SetToolTip(cmbEndTrack, "Track to end read/write process on. Tracks are zero indexed. Actual number of tracks a drive supports varies. Consult disk drive manual if unsure.")
         ToolTipMainForm.SetToolTip(chkRevolutions, "Check this to change the revolutions per read from the default 3. (Note, 5 revolutions is the norm for archival purposes).")
@@ -251,6 +252,7 @@ Public Class frmMain
         My.Settings.EndTrack = chkEndTrack.Checked
         My.Settings.EndTrackNo = cmbEndTrack.Text
         My.Settings.SingleSided = chkSingleSided.Checked
+        My.Settings.AdjustWriteSpeed = chkAdjustSpeed.Checked
         If btnResize.Text = "<" Then My.Settings.WideForm = True Else My.Settings.WideForm = False
         My.Settings.Save()
     End Sub
@@ -266,39 +268,34 @@ Public Class frmMain
         Dim filen As String
         filen = txtTitle.Text                                                               'Set initial name to Title
         If txtPublisher.Text.Trim <> "" Then
-            filen += "_" + txtPublisher.Text                                                      'Add publisher if txt field not blank
+            filen += "_" + txtPublisher.Text                                                'Add publisher if txt field not blank
         End If
-        If cmbDiskOf.Text.Trim <> "" Then
-            cmbDisk.Text = cmbDisk.Text.Trim.PadLeft(cmbDiskOf.Text.Length, "0")            'Pad disk number to length of "diskof" field
+        If cmbDiskOf.Text.Trim <> "" Then                                                   'If "DiskOf" field not blank,
+            cmbDisk.Text = cmbDisk.Text.Trim.PadLeft(cmbDiskOf.Text.Length, "0")            'Pad "Disk" number to length of "DiskOf" field with preceding zeros
+        End If
+        If ((cmbDisk.Text.Trim <> "") Or (cmbDiskOf.Text.Trim <> "")) Then                  'If Disk or disk of fields are not blank, include _
             filen += "_"
         End If
         If cmbDisk.Text.Trim <> "" Then
-            filen += "Disk" + cmbDisk.Text.Trim                                             'Add disk if disk field not blank
+            filen += "Disk" + cmbDisk.Text.Trim                                             'Add "disk" if txt field not blank
         End If
         If cmbDiskOf.Text.Trim <> "" Then
-            filen += "Of" + cmbDiskOf.Text.Trim                                             'Add disk of if disk of field not blank
-        End If
-        If ((cmbDisk.Text.Trim <> "") Or (cmbDiskOf.Text.Trim <> "")) Then
-            filen += "_"                                                                    'If either disk or disk of field added, include trailing underscore
+            filen += "Of" + cmbDiskOf.Text.Trim                                             'Add "disk of" if txt field not blank
         End If
         If cmbDiskRevision.Text.Trim <> "" Then
-            filen += cmbDiskRevision.Text.Trim + "_"                                        'Add revision, if revision field not blank
+            filen += "_" + cmbDiskRevision.Text.Trim                                        'Add revision, if txt field not blank
         End If
         If cmbSystem.Text.Trim <> "" Then
-            filen += cmbSystem.Text.Trim + "_"                                              'Add system, if system field not blank
+            filen += "_" + cmbSystem.Text.Trim                                              'Add system, if txt field not blank
         End If
         If cmbDump.Text.Trim <> "" Then
-            filen += "Dump" + cmbDump.Text.Trim                                             'Add 'Dump+DumpNumber' field, if dump field not blank
+            filen += "_" + "Dump" + cmbDump.Text.Trim                                       'Add 'Dump+DumpNumber' field, if dump field not blank
         End If
-
-        Dim extst As String = ".scp"                                                        'Add file extension for SuperCard Pro "SCP"
-
+        Dim extst As String = ".scp"                                                        'Set file extension for SuperCard Pro "SCP"
         If chkFilenameRreplaceSpaceWithUnderscore.Checked Then
             filen = regWhitespace.Replace(filen, "_")                                       'Replace all spaces with underscores, if check "replace with underscores" checked.
         End If
-
-        If CheckExists = True Then
-            'Check to see if file exists already. If so, get next available filename by appending "_X" where x is an ascending integer.
+        If CheckExists = True Then                                                          'Check to see if file exists already. If so, get next available filename by appending "_X" where x is an ascending integer.
             Dim l As Integer = 0
             If My.Computer.FileSystem.FileExists(txtSaveLocation.Text.Trim + filen + extst) Then
                 l = 1
@@ -308,7 +305,7 @@ Public Class frmMain
             End If
             If l > 0 Then filen += "_" + CStr(l)
         End If
-        filen += extst
+        filen += extst                                                                      'Finally, add the extension to the filename
         Return filen
     End Function
 
@@ -587,6 +584,9 @@ Public Class frmMain
 
     Private Sub LinkLabelDLPython_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabelDLPython.LinkClicked
         System.Diagnostics.Process.Start("https://www.python.org/downloads/windows/")
+        rtbOutput.Text &= Environment.NewLine + Environment.NewLine
+        rtbOutput.Text &= "After downloading and installing Python (Remember to add it to the PATH variable), please run the following from a command prompt:" + Environment.NewLine + Environment.NewLine
+        rtbOutput.Text &= "pip3 install crcmod pyserial" + Environment.NewLine + Environment.NewLine + "pip3 install bitarray" + Environment.NewLine + Environment.NewLine
     End Sub
 
     Private Sub ChkEndTrack_CheckedChanged(sender As Object, e As EventArgs) Handles chkEndTrack.CheckedChanged
