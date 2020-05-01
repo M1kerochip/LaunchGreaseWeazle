@@ -22,6 +22,27 @@ RunGreaseWeazel
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="M:RunGreaseWeazel.frmMain.FrmMain_Load(System.Object,System.EventArgs)">
+ <summary>
+ Sets the title of the Form with the form name plus exe version number
+ </summary>
+</member>
+<member name="M:RunGreaseWeazel.frmMain.SetUpScreen">
+ <summary>
+ Loads settings from VB My.Settings (local) and sets the variables onscreen. Also sets up tooltips.
+ </summary>
+</member>
+<member name="M:RunGreaseWeazel.frmMain.EnableDarkTheme(System.Boolean)">
+ <summary>
+ Simple attempt to create an easier to use night mode.
+ </summary>
+ <param name="EnableDark">If true, set the program to dark, if not set to default</param>
+</member>
+<member name="M:RunGreaseWeazel.frmMain.SaveSettings">
+ <summary>
+ Write Settings out to VB.NET My.Settings section (All settings are per user)
+ </summary>
+</member>
 <member name="M:RunGreaseWeazel.frmMain.CreateFileName(System.Boolean)">
  <summary>
  Create a filename from the attributes onscreen. (Including checking if file exists, if necessary)
@@ -29,7 +50,7 @@ RunGreaseWeazel
  <param name="CheckExists">Check to see if the file exists on the disk. If so, append an integer to prevent GreaseSeazle from overwriting.</param>
  <returns>Filename as a string.</returns>
 </member>
-<member name="M:RunGreaseWeazel.frmMain.CallGreaseWeazel(System.String,System.String,System.Boolean,System.Boolean,System.String,System.String,System.Boolean,System.Boolean,System.Boolean,System.Int32,System.Char)">
+<member name="M:RunGreaseWeazel.frmMain.CallGreaseWeazel(System.String,System.String,System.Boolean,System.Boolean,System.String,System.String,System.Boolean,System.Boolean,System.Boolean,System.Int32,System.Char,System.Boolean)">
  <summary>
  Calls python.exe to run the gw.py script
  </summary>
