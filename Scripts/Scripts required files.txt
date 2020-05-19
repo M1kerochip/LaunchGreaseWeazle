@@ -1,0 +1,15 @@
+HxC Floppy Disk Emulator Tools.
+
+Website: https://hxc2001.com/download/floppy_drive_emulator/index.html
+
+Release Notes: https://hxc2001.com/download/floppy_drive_emulator/hxcfloppyemulator_soft_release_notes.txt
+
+File: https://hxc2001.com/download/floppy_drive_emulator/HxCFloppyEmulator_soft_beta.zip
+
+
+
+nConvert to convert the BMP disk images to PNG.
+
+Website: https://www.xnview.com/de/nconvert/
+
+File: http://download.xnview.com/NConvert-win.zip or http://download.xnview.com/NConvert-win64.zip

@@ -89,6 +89,7 @@ Partial Class frmMain
         Me.lblState = New System.Windows.Forms.Label()
         Me.chkDoubleStep = New System.Windows.Forms.CheckBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.btnHidePaths = New System.Windows.Forms.Button()
         Me.cmbReadFormat = New System.Windows.Forms.ComboBox()
         Me.chkFilenameRreplaceSpaceWithUnderscore = New System.Windows.Forms.CheckBox()
         Me.btnEraseDisk = New System.Windows.Forms.Button()
@@ -101,7 +102,7 @@ Partial Class frmMain
         Me.cmbSerialPorts.Location = New System.Drawing.Point(432, 12)
         Me.cmbSerialPorts.Name = "cmbSerialPorts"
         Me.cmbSerialPorts.Size = New System.Drawing.Size(75, 21)
-        Me.cmbSerialPorts.TabIndex = 6
+        Me.cmbSerialPorts.TabIndex = 8
         Me.cmbSerialPorts.Text = "auto"
         '
         'lblComPort
@@ -110,23 +111,27 @@ Partial Class frmMain
         Me.lblComPort.Location = New System.Drawing.Point(368, 15)
         Me.lblComPort.Name = "lblComPort"
         Me.lblComPort.Size = New System.Drawing.Size(58, 13)
-        Me.lblComPort.TabIndex = 4
+        Me.lblComPort.TabIndex = 6
         Me.lblComPort.Text = "COM Ports"
         '
         'rtbOutput
         '
+        Me.rtbOutput.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.rtbOutput.Location = New System.Drawing.Point(513, 12)
         Me.rtbOutput.Name = "rtbOutput"
         Me.rtbOutput.Size = New System.Drawing.Size(386, 381)
-        Me.rtbOutput.TabIndex = 100
+        Me.rtbOutput.TabIndex = 9
         Me.rtbOutput.Text = ""
         '
         'txtGWLocation
         '
         Me.txtGWLocation.Location = New System.Drawing.Point(12, 305)
+        Me.txtGWLocation.MinimumSize = New System.Drawing.Size(471, 20)
         Me.txtGWLocation.Name = "txtGWLocation"
-        Me.txtGWLocation.Size = New System.Drawing.Size(472, 20)
-        Me.txtGWLocation.TabIndex = 70
+        Me.txtGWLocation.Size = New System.Drawing.Size(471, 20)
+        Me.txtGWLocation.TabIndex = 80
         '
         'lblGWLocation
         '
@@ -134,7 +139,7 @@ Partial Class frmMain
         Me.lblGWLocation.Location = New System.Drawing.Point(9, 289)
         Me.lblGWLocation.Name = "lblGWLocation"
         Me.lblGWLocation.Size = New System.Drawing.Size(151, 13)
-        Me.lblGWLocation.TabIndex = 68
+        Me.lblGWLocation.TabIndex = 76
         Me.lblGWLocation.Text = "GreaseWeazel Script Location"
         '
         'btnGWLocation
@@ -142,16 +147,17 @@ Partial Class frmMain
         Me.btnGWLocation.Location = New System.Drawing.Point(483, 305)
         Me.btnGWLocation.Name = "btnGWLocation"
         Me.btnGWLocation.Size = New System.Drawing.Size(24, 20)
-        Me.btnGWLocation.TabIndex = 74
+        Me.btnGWLocation.TabIndex = 82
         Me.btnGWLocation.Text = "..."
         Me.btnGWLocation.UseVisualStyleBackColor = True
         '
         'txtPythonLocation
         '
         Me.txtPythonLocation.Location = New System.Drawing.Point(12, 354)
+        Me.txtPythonLocation.MinimumSize = New System.Drawing.Size(471, 20)
         Me.txtPythonLocation.Name = "txtPythonLocation"
-        Me.txtPythonLocation.Size = New System.Drawing.Size(472, 20)
-        Me.txtPythonLocation.TabIndex = 78
+        Me.txtPythonLocation.Size = New System.Drawing.Size(471, 20)
+        Me.txtPythonLocation.TabIndex = 88
         '
         'lblPythonLocation
         '
@@ -159,7 +165,7 @@ Partial Class frmMain
         Me.lblPythonLocation.Location = New System.Drawing.Point(9, 338)
         Me.lblPythonLocation.Name = "lblPythonLocation"
         Me.lblPythonLocation.Size = New System.Drawing.Size(104, 13)
-        Me.lblPythonLocation.TabIndex = 76
+        Me.lblPythonLocation.TabIndex = 84
         Me.lblPythonLocation.Text = "Python.exe Location"
         '
         'btnPythonLocation
@@ -167,17 +173,18 @@ Partial Class frmMain
         Me.btnPythonLocation.Location = New System.Drawing.Point(483, 354)
         Me.btnPythonLocation.Name = "btnPythonLocation"
         Me.btnPythonLocation.Size = New System.Drawing.Size(24, 20)
-        Me.btnPythonLocation.TabIndex = 82
+        Me.btnPythonLocation.TabIndex = 90
         Me.btnPythonLocation.Text = "..."
         Me.btnPythonLocation.UseVisualStyleBackColor = True
         '
         'btnRead
         '
+        Me.btnRead.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.btnRead.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnRead.Location = New System.Drawing.Point(12, 437)
         Me.btnRead.Name = "btnRead"
         Me.btnRead.Size = New System.Drawing.Size(240, 29)
-        Me.btnRead.TabIndex = 96
+        Me.btnRead.TabIndex = 104
         Me.btnRead.Text = "Read"
         Me.btnRead.UseVisualStyleBackColor = True
         '
@@ -194,7 +201,7 @@ Partial Class frmMain
         Me.lblTitle.Location = New System.Drawing.Point(12, 41)
         Me.lblTitle.Name = "lblTitle"
         Me.lblTitle.Size = New System.Drawing.Size(58, 13)
-        Me.lblTitle.TabIndex = 8
+        Me.lblTitle.TabIndex = 9
         Me.lblTitle.Text = "Game Title"
         '
         'txtPublisher
@@ -317,11 +324,12 @@ Partial Class frmMain
         '
         'btnWrite
         '
+        Me.btnWrite.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.btnWrite.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnWrite.Location = New System.Drawing.Point(267, 437)
         Me.btnWrite.Name = "btnWrite"
         Me.btnWrite.Size = New System.Drawing.Size(240, 29)
-        Me.btnWrite.TabIndex = 98
+        Me.btnWrite.TabIndex = 106
         Me.btnWrite.Text = "Write"
         Me.btnWrite.UseVisualStyleBackColor = True
         '
@@ -342,10 +350,10 @@ Partial Class frmMain
         'chkF7
         '
         Me.chkF7.AutoSize = True
-        Me.chkF7.Location = New System.Drawing.Point(5, 18)
+        Me.chkF7.Location = New System.Drawing.Point(5, 78)
         Me.chkF7.Name = "chkF7"
         Me.chkF7.Size = New System.Drawing.Size(44, 17)
-        Me.chkF7.TabIndex = 38
+        Me.chkF7.TabIndex = 58
         Me.chkF7.Text = "F7 :"
         Me.chkF7.UseVisualStyleBackColor = True
         '
@@ -353,30 +361,31 @@ Partial Class frmMain
         '
         Me.cmbDriveSelect.FormattingEnabled = True
         Me.cmbDriveSelect.Items.AddRange(New Object() {"A", "B", "0", "1", "2"})
-        Me.cmbDriveSelect.Location = New System.Drawing.Point(115, 16)
+        Me.cmbDriveSelect.Location = New System.Drawing.Point(115, 76)
         Me.cmbDriveSelect.Name = "cmbDriveSelect"
         Me.cmbDriveSelect.Size = New System.Drawing.Size(40, 21)
-        Me.cmbDriveSelect.TabIndex = 42
+        Me.cmbDriveSelect.TabIndex = 62
         '
         'LinkLabelDriveSelect
         '
         Me.LinkLabelDriveSelect.AutoSize = True
-        Me.LinkLabelDriveSelect.Location = New System.Drawing.Point(44, 19)
+        Me.LinkLabelDriveSelect.Location = New System.Drawing.Point(44, 79)
         Me.LinkLabelDriveSelect.Name = "LinkLabelDriveSelect"
         Me.LinkLabelDriveSelect.Size = New System.Drawing.Size(65, 13)
-        Me.LinkLabelDriveSelect.TabIndex = 40
+        Me.LinkLabelDriveSelect.TabIndex = 60
         Me.LinkLabelDriveSelect.TabStop = True
         Me.LinkLabelDriveSelect.Text = "Drive Select"
         '
         'chkSaveLog
         '
+        Me.chkSaveLog.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.chkSaveLog.AutoSize = True
         Me.chkSaveLog.Checked = True
         Me.chkSaveLog.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkSaveLog.Location = New System.Drawing.Point(176, 384)
         Me.chkSaveLog.Name = "chkSaveLog"
         Me.chkSaveLog.Size = New System.Drawing.Size(76, 17)
-        Me.chkSaveLog.TabIndex = 88
+        Me.chkSaveLog.TabIndex = 94
         Me.chkSaveLog.Text = "Write LOG"
         Me.chkSaveLog.UseVisualStyleBackColor = True
         '
@@ -387,7 +396,7 @@ Partial Class frmMain
         Me.cmbEndTrack.Location = New System.Drawing.Point(260, 46)
         Me.cmbEndTrack.Name = "cmbEndTrack"
         Me.cmbEndTrack.Size = New System.Drawing.Size(42, 21)
-        Me.cmbEndTrack.TabIndex = 56
+        Me.cmbEndTrack.TabIndex = 52
         Me.cmbEndTrack.Text = "83"
         '
         'chkEndTrack
@@ -396,7 +405,7 @@ Partial Class frmMain
         Me.chkEndTrack.Location = New System.Drawing.Point(177, 48)
         Me.chkEndTrack.Name = "chkEndTrack"
         Me.chkEndTrack.Size = New System.Drawing.Size(76, 17)
-        Me.chkEndTrack.TabIndex = 54
+        Me.chkEndTrack.TabIndex = 50
         Me.chkEndTrack.Text = "End Track"
         Me.chkEndTrack.UseVisualStyleBackColor = True
         '
@@ -406,7 +415,7 @@ Partial Class frmMain
         Me.chkSingleSided.Location = New System.Drawing.Point(332, 18)
         Me.chkSingleSided.Name = "chkSingleSided"
         Me.chkSingleSided.Size = New System.Drawing.Size(109, 17)
-        Me.chkSingleSided.TabIndex = 48
+        Me.chkSingleSided.TabIndex = 44
         Me.chkSingleSided.Text = "Single Sided Disk"
         Me.chkSingleSided.UseVisualStyleBackColor = True
         '
@@ -416,7 +425,7 @@ Partial Class frmMain
         Me.LinkLabelDLPython.Location = New System.Drawing.Point(395, 338)
         Me.LinkLabelDLPython.Name = "LinkLabelDLPython"
         Me.LinkLabelDLPython.Size = New System.Drawing.Size(91, 13)
-        Me.LinkLabelDLPython.TabIndex = 80
+        Me.LinkLabelDLPython.TabIndex = 86
         Me.LinkLabelDLPython.TabStop = True
         Me.LinkLabelDLPython.Text = "Download Python"
         '
@@ -426,7 +435,7 @@ Partial Class frmMain
         Me.LinkLabelDLGW.Location = New System.Drawing.Point(355, 289)
         Me.LinkLabelDLGW.Name = "LinkLabelDLGW"
         Me.LinkLabelDLGW.Size = New System.Drawing.Size(131, 13)
-        Me.LinkLabelDLGW.TabIndex = 72
+        Me.LinkLabelDLGW.TabIndex = 78
         Me.LinkLabelDLGW.TabStop = True
         Me.LinkLabelDLGW.Text = "Download Greeaseweazle"
         '
@@ -436,7 +445,7 @@ Partial Class frmMain
         Me.LinkLabelOpenLocation.Location = New System.Drawing.Point(409, 238)
         Me.LinkLabelOpenLocation.Name = "LinkLabelOpenLocation"
         Me.LinkLabelOpenLocation.Size = New System.Drawing.Size(77, 13)
-        Me.LinkLabelOpenLocation.TabIndex = 64
+        Me.LinkLabelOpenLocation.TabIndex = 70
         Me.LinkLabelOpenLocation.TabStop = True
         Me.LinkLabelOpenLocation.Text = "Open Location"
         '
@@ -446,7 +455,7 @@ Partial Class frmMain
         Me.chkAdjustSpeed.Location = New System.Drawing.Point(332, 78)
         Me.chkAdjustSpeed.Name = "chkAdjustSpeed"
         Me.chkAdjustSpeed.Size = New System.Drawing.Size(117, 17)
-        Me.chkAdjustSpeed.TabIndex = 60
+        Me.chkAdjustSpeed.TabIndex = 66
         Me.chkAdjustSpeed.Text = "Adjust Write Speed"
         Me.chkAdjustSpeed.UseVisualStyleBackColor = True
         '
@@ -455,7 +464,7 @@ Partial Class frmMain
         Me.btnSaveLocation.Location = New System.Drawing.Point(483, 254)
         Me.btnSaveLocation.Name = "btnSaveLocation"
         Me.btnSaveLocation.Size = New System.Drawing.Size(24, 20)
-        Me.btnSaveLocation.TabIndex = 66
+        Me.btnSaveLocation.TabIndex = 74
         Me.btnSaveLocation.Text = "..."
         Me.btnSaveLocation.UseVisualStyleBackColor = True
         '
@@ -465,59 +474,68 @@ Partial Class frmMain
         Me.lblSaveLocation.Location = New System.Drawing.Point(9, 238)
         Me.lblSaveLocation.Name = "lblSaveLocation"
         Me.lblSaveLocation.Size = New System.Drawing.Size(76, 13)
-        Me.lblSaveLocation.TabIndex = 61
+        Me.lblSaveLocation.TabIndex = 68
         Me.lblSaveLocation.Text = "Save Location"
         '
         'txtSaveLocation
         '
         Me.txtSaveLocation.Location = New System.Drawing.Point(12, 254)
+        Me.txtSaveLocation.MinimumSize = New System.Drawing.Size(471, 20)
         Me.txtSaveLocation.Name = "txtSaveLocation"
-        Me.txtSaveLocation.Size = New System.Drawing.Size(472, 20)
-        Me.txtSaveLocation.TabIndex = 62
+        Me.txtSaveLocation.Size = New System.Drawing.Size(471, 20)
+        Me.txtSaveLocation.TabIndex = 72
         '
         'txtExecuteScript
         '
+        Me.txtExecuteScript.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtExecuteScript.Location = New System.Drawing.Point(12, 401)
+        Me.txtExecuteScript.MinimumSize = New System.Drawing.Size(471, 20)
         Me.txtExecuteScript.Name = "txtExecuteScript"
-        Me.txtExecuteScript.Size = New System.Drawing.Size(472, 20)
-        Me.txtExecuteScript.TabIndex = 86
+        Me.txtExecuteScript.Size = New System.Drawing.Size(471, 20)
+        Me.txtExecuteScript.TabIndex = 100
         '
         'lblExecuteScript
         '
+        Me.lblExecuteScript.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lblExecuteScript.AutoSize = True
         Me.lblExecuteScript.Location = New System.Drawing.Point(9, 385)
         Me.lblExecuteScript.Name = "lblExecuteScript"
         Me.lblExecuteScript.Size = New System.Drawing.Size(102, 13)
-        Me.lblExecuteScript.TabIndex = 84
+        Me.lblExecuteScript.TabIndex = 92
         Me.lblExecuteScript.Text = "Execute Script/EXE"
         '
         'btnExecuteScript
         '
+        Me.btnExecuteScript.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnExecuteScript.Location = New System.Drawing.Point(483, 401)
         Me.btnExecuteScript.Name = "btnExecuteScript"
         Me.btnExecuteScript.Size = New System.Drawing.Size(24, 20)
-        Me.btnExecuteScript.TabIndex = 94
+        Me.btnExecuteScript.TabIndex = 102
         Me.btnExecuteScript.Text = "..."
         Me.btnExecuteScript.UseVisualStyleBackColor = True
         '
         'chkExecuteScript
         '
+        Me.chkExecuteScript.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.chkExecuteScript.AutoSize = True
         Me.chkExecuteScript.Location = New System.Drawing.Point(267, 384)
         Me.chkExecuteScript.Name = "chkExecuteScript"
         Me.chkExecuteScript.Size = New System.Drawing.Size(144, 17)
-        Me.chkExecuteScript.TabIndex = 90
+        Me.chkExecuteScript.TabIndex = 96
         Me.chkExecuteScript.Text = "Execute script after R/W"
         Me.chkExecuteScript.ThreeState = True
         Me.chkExecuteScript.UseVisualStyleBackColor = True
         '
         'LinkLabelLaunchNow
         '
+        Me.LinkLabelLaunchNow.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.LinkLabelLaunchNow.AutoSize = True
         Me.LinkLabelLaunchNow.Location = New System.Drawing.Point(414, 385)
         Me.LinkLabelLaunchNow.Name = "LinkLabelLaunchNow"
         Me.LinkLabelLaunchNow.Size = New System.Drawing.Size(71, 13)
-        Me.LinkLabelLaunchNow.TabIndex = 92
+        Me.LinkLabelLaunchNow.TabIndex = 98
         Me.LinkLabelLaunchNow.TabStop = True
         Me.LinkLabelLaunchNow.Text = "Execute Now"
         '
@@ -539,7 +557,7 @@ Partial Class frmMain
         Me.chkRevolutions.Location = New System.Drawing.Point(6, 48)
         Me.chkRevolutions.Name = "chkRevolutions"
         Me.chkRevolutions.Size = New System.Drawing.Size(97, 17)
-        Me.chkRevolutions.TabIndex = 50
+        Me.chkRevolutions.TabIndex = 46
         Me.chkRevolutions.Text = "Revolutions:"
         Me.chkRevolutions.UseVisualStyleBackColor = True
         '
@@ -550,7 +568,7 @@ Partial Class frmMain
         Me.cmbRevolutions.Location = New System.Drawing.Point(115, 46)
         Me.cmbRevolutions.Name = "cmbRevolutions"
         Me.cmbRevolutions.Size = New System.Drawing.Size(40, 21)
-        Me.cmbRevolutions.TabIndex = 52
+        Me.cmbRevolutions.TabIndex = 48
         Me.cmbRevolutions.Tag = ""
         Me.cmbRevolutions.Text = "5"
         '
@@ -561,7 +579,7 @@ Partial Class frmMain
         Me.cmbStartTrack.Location = New System.Drawing.Point(260, 16)
         Me.cmbStartTrack.Name = "cmbStartTrack"
         Me.cmbStartTrack.Size = New System.Drawing.Size(42, 21)
-        Me.cmbStartTrack.TabIndex = 46
+        Me.cmbStartTrack.TabIndex = 42
         Me.cmbStartTrack.Tag = ""
         Me.cmbStartTrack.Text = "0"
         '
@@ -571,26 +589,27 @@ Partial Class frmMain
         Me.ChkStartTrack.Location = New System.Drawing.Point(177, 18)
         Me.ChkStartTrack.Name = "ChkStartTrack"
         Me.ChkStartTrack.Size = New System.Drawing.Size(79, 17)
-        Me.ChkStartTrack.TabIndex = 44
+        Me.ChkStartTrack.TabIndex = 40
         Me.ChkStartTrack.Text = "Start Track"
         Me.ChkStartTrack.UseVisualStyleBackColor = True
         '
         'btnResize
         '
-        Me.btnResize.Location = New System.Drawing.Point(465, 29)
+        Me.btnResize.Location = New System.Drawing.Point(465, 12)
         Me.btnResize.Name = "btnResize"
         Me.btnResize.Size = New System.Drawing.Size(24, 53)
-        Me.btnResize.TabIndex = 58
+        Me.btnResize.TabIndex = 56
         Me.btnResize.Text = "<"
         Me.btnResize.UseVisualStyleBackColor = True
         '
         'btnUpdateFirmware
         '
+        Me.btnUpdateFirmware.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnUpdateFirmware.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnUpdateFirmware.Location = New System.Drawing.Point(733, 437)
         Me.btnUpdateFirmware.Name = "btnUpdateFirmware"
         Me.btnUpdateFirmware.Size = New System.Drawing.Size(163, 29)
-        Me.btnUpdateFirmware.TabIndex = 98
+        Me.btnUpdateFirmware.TabIndex = 122
         Me.btnUpdateFirmware.Text = "Update Firmware"
         Me.btnUpdateFirmware.UseVisualStyleBackColor = True
         '
@@ -600,63 +619,69 @@ Partial Class frmMain
         Me.LinkLabelLaunchGW.Location = New System.Drawing.Point(264, 15)
         Me.LinkLabelLaunchGW.Name = "LinkLabelLaunchGW"
         Me.LinkLabelLaunchGW.Size = New System.Drawing.Size(62, 13)
-        Me.LinkLabelLaunchGW.TabIndex = 101
+        Me.LinkLabelLaunchGW.TabIndex = 4
         Me.LinkLabelLaunchGW.TabStop = True
         Me.LinkLabelLaunchGW.Text = "LaunchGW"
         '
         'btnResetDevice
         '
+        Me.btnResetDevice.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnResetDevice.Location = New System.Drawing.Point(631, 437)
         Me.btnResetDevice.Name = "btnResetDevice"
         Me.btnResetDevice.Size = New System.Drawing.Size(93, 29)
-        Me.btnResetDevice.TabIndex = 102
+        Me.btnResetDevice.TabIndex = 120
         Me.btnResetDevice.Text = "Reset Device"
         Me.btnResetDevice.UseVisualStyleBackColor = True
         '
         'cmbLowHigh
         '
+        Me.cmbLowHigh.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmbLowHigh.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbLowHigh.FormattingEnabled = True
         Me.cmbLowHigh.Items.AddRange(New Object() {"Low (0v)", "High (5v)"})
         Me.cmbLowHigh.Location = New System.Drawing.Point(808, 402)
         Me.cmbLowHigh.Name = "cmbLowHigh"
         Me.cmbLowHigh.Size = New System.Drawing.Size(88, 21)
-        Me.cmbLowHigh.TabIndex = 103
+        Me.cmbLowHigh.TabIndex = 116
         '
         'cmbPIN
         '
+        Me.cmbPIN.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmbPIN.FormattingEnabled = True
         Me.cmbPIN.Items.AddRange(New Object() {"2"})
         Me.cmbPIN.Location = New System.Drawing.Point(684, 402)
         Me.cmbPIN.Name = "cmbPIN"
         Me.cmbPIN.Size = New System.Drawing.Size(40, 21)
-        Me.cmbPIN.TabIndex = 104
+        Me.cmbPIN.TabIndex = 112
         '
         'btnSetPin
         '
+        Me.btnSetPin.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnSetPin.Location = New System.Drawing.Point(528, 401)
         Me.btnSetPin.Name = "btnSetPin"
         Me.btnSetPin.Size = New System.Drawing.Size(93, 20)
-        Me.btnSetPin.TabIndex = 105
+        Me.btnSetPin.TabIndex = 108
         Me.btnSetPin.Text = "Set Pin Level"
         Me.btnSetPin.UseVisualStyleBackColor = True
         '
         'lblPin
         '
+        Me.lblPin.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblPin.AutoSize = True
         Me.lblPin.Location = New System.Drawing.Point(653, 405)
         Me.lblPin.Name = "lblPin"
         Me.lblPin.Size = New System.Drawing.Size(25, 13)
-        Me.lblPin.TabIndex = 106
+        Me.lblPin.TabIndex = 110
         Me.lblPin.Text = "Pin:"
         '
         'lblState
         '
+        Me.lblState.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblState.AutoSize = True
         Me.lblState.Location = New System.Drawing.Point(730, 405)
         Me.lblState.Name = "lblState"
         Me.lblState.Size = New System.Drawing.Size(75, 13)
-        Me.lblState.TabIndex = 107
+        Me.lblState.TabIndex = 114
         Me.lblState.Text = "Voltage Level:"
         '
         'chkDoubleStep
@@ -665,12 +690,13 @@ Partial Class frmMain
         Me.chkDoubleStep.Location = New System.Drawing.Point(332, 48)
         Me.chkDoubleStep.Name = "chkDoubleStep"
         Me.chkDoubleStep.Size = New System.Drawing.Size(85, 17)
-        Me.chkDoubleStep.TabIndex = 57
+        Me.chkDoubleStep.TabIndex = 54
         Me.chkDoubleStep.Text = "Double Step"
         Me.chkDoubleStep.UseVisualStyleBackColor = True
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.btnHidePaths)
         Me.GroupBox1.Controls.Add(Me.cmbReadFormat)
         Me.GroupBox1.Controls.Add(Me.chkFilenameRreplaceSpaceWithUnderscore)
         Me.GroupBox1.Controls.Add(Me.chkDoubleStep)
@@ -689,17 +715,26 @@ Partial Class frmMain
         Me.GroupBox1.Location = New System.Drawing.Point(12, 128)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(495, 105)
-        Me.GroupBox1.TabIndex = 109
+        Me.GroupBox1.TabIndex = 37
         Me.GroupBox1.TabStop = False
+        '
+        'btnHidePaths
+        '
+        Me.btnHidePaths.Location = New System.Drawing.Point(465, 79)
+        Me.btnHidePaths.Name = "btnHidePaths"
+        Me.btnHidePaths.Size = New System.Drawing.Size(24, 21)
+        Me.btnHidePaths.TabIndex = 67
+        Me.btnHidePaths.Text = "^"
+        Me.btnHidePaths.UseVisualStyleBackColor = True
         '
         'cmbReadFormat
         '
         Me.cmbReadFormat.FormattingEnabled = True
         Me.cmbReadFormat.Items.AddRange(New Object() {"Supercard Pro", "HxC Floppy Disk Emulator"})
-        Me.cmbReadFormat.Location = New System.Drawing.Point(6, 76)
+        Me.cmbReadFormat.Location = New System.Drawing.Point(6, 16)
         Me.cmbReadFormat.Name = "cmbReadFormat"
         Me.cmbReadFormat.Size = New System.Drawing.Size(149, 21)
-        Me.cmbReadFormat.TabIndex = 61
+        Me.cmbReadFormat.TabIndex = 38
         Me.cmbReadFormat.Tag = ""
         Me.cmbReadFormat.Text = "Supercard Pro"
         '
@@ -711,17 +746,18 @@ Partial Class frmMain
         Me.chkFilenameRreplaceSpaceWithUnderscore.Location = New System.Drawing.Point(177, 78)
         Me.chkFilenameRreplaceSpaceWithUnderscore.Name = "chkFilenameRreplaceSpaceWithUnderscore"
         Me.chkFilenameRreplaceSpaceWithUnderscore.Size = New System.Drawing.Size(129, 17)
-        Me.chkFilenameRreplaceSpaceWithUnderscore.TabIndex = 59
+        Me.chkFilenameRreplaceSpaceWithUnderscore.TabIndex = 64
         Me.chkFilenameRreplaceSpaceWithUnderscore.Text = "Replace space with _"
         Me.chkFilenameRreplaceSpaceWithUnderscore.UseVisualStyleBackColor = True
         '
         'btnEraseDisk
         '
+        Me.btnEraseDisk.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnEraseDisk.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnEraseDisk.Location = New System.Drawing.Point(528, 437)
         Me.btnEraseDisk.Name = "btnEraseDisk"
         Me.btnEraseDisk.Size = New System.Drawing.Size(93, 29)
-        Me.btnEraseDisk.TabIndex = 110
+        Me.btnEraseDisk.TabIndex = 118
         Me.btnEraseDisk.Text = "Erase Disk"
         Me.btnEraseDisk.UseVisualStyleBackColor = True
         '
@@ -859,4 +895,5 @@ Partial Class frmMain
     Friend WithEvents chkFilenameRreplaceSpaceWithUnderscore As CheckBox
     Friend WithEvents btnEraseDisk As Button
     Friend WithEvents cmbReadFormat As ComboBox
+    Friend WithEvents btnHidePaths As Button
 End Class
