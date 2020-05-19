@@ -27,11 +27,8 @@ Partial Class frmMain
         Me.cmbSerialPorts = New System.Windows.Forms.ComboBox()
         Me.lblComPort = New System.Windows.Forms.Label()
         Me.rtbOutput = New System.Windows.Forms.RichTextBox()
-        Me.txtGWLocation = New System.Windows.Forms.TextBox()
         Me.lblGWLocation = New System.Windows.Forms.Label()
-        Me.btnGWLocation = New System.Windows.Forms.Button()
         Me.txtPythonLocation = New System.Windows.Forms.TextBox()
-        Me.lblPythonLocation = New System.Windows.Forms.Label()
         Me.btnPythonLocation = New System.Windows.Forms.Button()
         Me.btnRead = New System.Windows.Forms.Button()
         Me.txtTitle = New System.Windows.Forms.TextBox()
@@ -125,52 +122,26 @@ Partial Class frmMain
         Me.rtbOutput.TabIndex = 9
         Me.rtbOutput.Text = ""
         '
-        'txtGWLocation
-        '
-        Me.txtGWLocation.Location = New System.Drawing.Point(12, 305)
-        Me.txtGWLocation.MinimumSize = New System.Drawing.Size(471, 20)
-        Me.txtGWLocation.Name = "txtGWLocation"
-        Me.txtGWLocation.Size = New System.Drawing.Size(471, 20)
-        Me.txtGWLocation.TabIndex = 80
-        '
         'lblGWLocation
         '
         Me.lblGWLocation.AutoSize = True
-        Me.lblGWLocation.Location = New System.Drawing.Point(9, 289)
+        Me.lblGWLocation.Location = New System.Drawing.Point(9, 307)
         Me.lblGWLocation.Name = "lblGWLocation"
-        Me.lblGWLocation.Size = New System.Drawing.Size(151, 13)
+        Me.lblGWLocation.Size = New System.Drawing.Size(121, 13)
         Me.lblGWLocation.TabIndex = 76
-        Me.lblGWLocation.Text = "GreaseWeazel Script Location"
-        '
-        'btnGWLocation
-        '
-        Me.btnGWLocation.Location = New System.Drawing.Point(483, 305)
-        Me.btnGWLocation.Name = "btnGWLocation"
-        Me.btnGWLocation.Size = New System.Drawing.Size(24, 20)
-        Me.btnGWLocation.TabIndex = 82
-        Me.btnGWLocation.Text = "..."
-        Me.btnGWLocation.UseVisualStyleBackColor = True
+        Me.lblGWLocation.Text = "GreaseWeazel Location"
         '
         'txtPythonLocation
         '
-        Me.txtPythonLocation.Location = New System.Drawing.Point(12, 354)
+        Me.txtPythonLocation.Location = New System.Drawing.Point(12, 323)
         Me.txtPythonLocation.MinimumSize = New System.Drawing.Size(471, 20)
         Me.txtPythonLocation.Name = "txtPythonLocation"
         Me.txtPythonLocation.Size = New System.Drawing.Size(471, 20)
         Me.txtPythonLocation.TabIndex = 88
         '
-        'lblPythonLocation
-        '
-        Me.lblPythonLocation.AutoSize = True
-        Me.lblPythonLocation.Location = New System.Drawing.Point(9, 338)
-        Me.lblPythonLocation.Name = "lblPythonLocation"
-        Me.lblPythonLocation.Size = New System.Drawing.Size(104, 13)
-        Me.lblPythonLocation.TabIndex = 84
-        Me.lblPythonLocation.Text = "Python.exe Location"
-        '
         'btnPythonLocation
         '
-        Me.btnPythonLocation.Location = New System.Drawing.Point(483, 354)
+        Me.btnPythonLocation.Location = New System.Drawing.Point(483, 323)
         Me.btnPythonLocation.Name = "btnPythonLocation"
         Me.btnPythonLocation.Size = New System.Drawing.Size(24, 20)
         Me.btnPythonLocation.TabIndex = 90
@@ -422,17 +393,18 @@ Partial Class frmMain
         'LinkLabelDLPython
         '
         Me.LinkLabelDLPython.AutoSize = True
-        Me.LinkLabelDLPython.Location = New System.Drawing.Point(395, 338)
+        Me.LinkLabelDLPython.Location = New System.Drawing.Point(186, 256)
         Me.LinkLabelDLPython.Name = "LinkLabelDLPython"
         Me.LinkLabelDLPython.Size = New System.Drawing.Size(91, 13)
         Me.LinkLabelDLPython.TabIndex = 86
         Me.LinkLabelDLPython.TabStop = True
         Me.LinkLabelDLPython.Text = "Download Python"
+        Me.LinkLabelDLPython.Visible = False
         '
         'LinkLabelDLGW
         '
         Me.LinkLabelDLGW.AutoSize = True
-        Me.LinkLabelDLGW.Location = New System.Drawing.Point(355, 289)
+        Me.LinkLabelDLGW.Location = New System.Drawing.Point(355, 307)
         Me.LinkLabelDLGW.Name = "LinkLabelDLGW"
         Me.LinkLabelDLGW.Size = New System.Drawing.Size(131, 13)
         Me.LinkLabelDLGW.TabIndex = 78
@@ -442,7 +414,7 @@ Partial Class frmMain
         'LinkLabelOpenLocation
         '
         Me.LinkLabelOpenLocation.AutoSize = True
-        Me.LinkLabelOpenLocation.Location = New System.Drawing.Point(409, 238)
+        Me.LinkLabelOpenLocation.Location = New System.Drawing.Point(409, 256)
         Me.LinkLabelOpenLocation.Name = "LinkLabelOpenLocation"
         Me.LinkLabelOpenLocation.Size = New System.Drawing.Size(77, 13)
         Me.LinkLabelOpenLocation.TabIndex = 70
@@ -461,7 +433,7 @@ Partial Class frmMain
         '
         'btnSaveLocation
         '
-        Me.btnSaveLocation.Location = New System.Drawing.Point(483, 254)
+        Me.btnSaveLocation.Location = New System.Drawing.Point(483, 272)
         Me.btnSaveLocation.Name = "btnSaveLocation"
         Me.btnSaveLocation.Size = New System.Drawing.Size(24, 20)
         Me.btnSaveLocation.TabIndex = 74
@@ -471,7 +443,7 @@ Partial Class frmMain
         'lblSaveLocation
         '
         Me.lblSaveLocation.AutoSize = True
-        Me.lblSaveLocation.Location = New System.Drawing.Point(9, 238)
+        Me.lblSaveLocation.Location = New System.Drawing.Point(9, 256)
         Me.lblSaveLocation.Name = "lblSaveLocation"
         Me.lblSaveLocation.Size = New System.Drawing.Size(76, 13)
         Me.lblSaveLocation.TabIndex = 68
@@ -479,7 +451,7 @@ Partial Class frmMain
         '
         'txtSaveLocation
         '
-        Me.txtSaveLocation.Location = New System.Drawing.Point(12, 254)
+        Me.txtSaveLocation.Location = New System.Drawing.Point(12, 272)
         Me.txtSaveLocation.MinimumSize = New System.Drawing.Size(471, 20)
         Me.txtSaveLocation.Name = "txtSaveLocation"
         Me.txtSaveLocation.Size = New System.Drawing.Size(471, 20)
@@ -714,7 +686,7 @@ Partial Class frmMain
         Me.GroupBox1.Controls.Add(Me.chkF7)
         Me.GroupBox1.Location = New System.Drawing.Point(12, 128)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(495, 105)
+        Me.GroupBox1.Size = New System.Drawing.Size(495, 111)
         Me.GroupBox1.TabIndex = 37
         Me.GroupBox1.TabStop = False
         '
@@ -805,16 +777,13 @@ Partial Class frmMain
         Me.Controls.Add(Me.txtTitle)
         Me.Controls.Add(Me.lblTitle)
         Me.Controls.Add(Me.btnRead)
-        Me.Controls.Add(Me.lblPythonLocation)
         Me.Controls.Add(Me.btnPythonLocation)
         Me.Controls.Add(Me.lblGWLocation)
-        Me.Controls.Add(Me.btnGWLocation)
         Me.Controls.Add(Me.lblComPort)
         Me.Controls.Add(Me.lblSaveLocation)
         Me.Controls.Add(Me.cmbSerialPorts)
         Me.Controls.Add(Me.btnSaveLocation)
         Me.Controls.Add(Me.txtPythonLocation)
-        Me.Controls.Add(Me.txtGWLocation)
         Me.Controls.Add(Me.txtSaveLocation)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
@@ -830,11 +799,8 @@ Partial Class frmMain
     Friend WithEvents cmbSerialPorts As ComboBox
     Friend WithEvents lblComPort As Label
     Friend WithEvents rtbOutput As RichTextBox
-    Friend WithEvents txtGWLocation As TextBox
     Friend WithEvents lblGWLocation As Label
-    Friend WithEvents btnGWLocation As Button
     Friend WithEvents txtPythonLocation As TextBox
-    Friend WithEvents lblPythonLocation As Label
     Friend WithEvents btnPythonLocation As Button
     Friend WithEvents btnRead As Button
     Friend WithEvents txtTitle As TextBox
