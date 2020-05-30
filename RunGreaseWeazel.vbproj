@@ -140,6 +140,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="README.md" />
     <None Include="Scripts\00_Convert_BMP_%28Disk%29.cmd" />
     <None Include="Scripts\01_Convert_BMP_%28Data%29.cmd" />
     <None Include="Scripts\02_Convert_IPF.cmd" />
