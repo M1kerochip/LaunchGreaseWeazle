@@ -29,10 +29,10 @@ REM Delete BMP (Remove these lines if nConvert isn't installed!!!)
 del "%1".02_data_HxC.bmp /F /Q
 
 REM Convert to HFE v3 .hfe image (For Gotek etc running Flash Floppy, HxC etc)
-F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.HxC_HFEv3.hfe -conv:HXC_HFEV3
+F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.HxC_HFEv1.hfe -conv:HXC_HFE
 
 REM Convert to IBM PC .IMG (Unprotected)
-F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.HxC.img -conv:RAW_IMG
+F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.HxC.img -conv:RAW_LOADER
 
 REM Show Info
 REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.info_HxC.txt -infos
@@ -41,24 +41,24 @@ REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -
 
 REM FOR AMIGA:
 REM-==========-
-
+REM
 REM Convert to Amiga .ADF (Unprotected)
 REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.HxC.adf -conv:AMIGA_ADF
-
+REM
 REM Convert to Amiga Extended .ADF (Protected) 
 REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.HxC.extended.adf -conv:AMIGA_EXTADF 
-
-
+REM
+REM
 REM FOR ATARI ST:
 REM-=============-
-
+REM
 REM Aufit: Create .stx, create protections.txt and create disk surface image:
 REM "D:\Program Files\Atari\Aufit\Aufit.exe" -suffix aufit.1.3 -scale 1.4 -disk -protections -save stx %1
-
+REM
 REM Convert to Atari .STX image (Protected)
 REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.HxC.stx -conv:ATARIST_STX
-
+REM
 REM Convert to Atari .ST image (Unprotected)
 REM F:\gw\HxCFloppyEmulator_soft_beta\HxCFloppyEmulator_Software\Windows\hxcfe -finput:%1 -foutput:%1.HxC.st -conv:ATARIST_ST
-
+REM
 REM pause

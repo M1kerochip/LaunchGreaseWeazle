@@ -50,9 +50,9 @@ RunGreaseWeazel
  <param name="CheckExists">Check to see if the file exists on the disk. If so, append an integer to prevent GreaseSeazle from overwriting.</param>
  <returns>Filename as a string.</returns>
 </member>
-<member name="M:RunGreaseWeazel.frmMain.CallGreaseWeazel(System.String,System.String,System.Int32,System.String,System.String,System.Boolean,System.Int32,System.Char)">
+<member name="M:RunGreaseWeazel.frmMain.CallGreaseWeazel(System.String,System.String,System.Int32,System.String,System.String,System.Boolean,System.Int32,System.Char,System.Int32,System.Int32,System.Boolean,System.Boolean)">
  <summary>
- Calls python.exe to run the gw.py script
+ Calls python.exe to run the gw.py script (Or run gw.exe directly in later versions)
  </summary>
  <param name="PythonEXE">Path to the python.exe. Python install folder must be in PATH variable.</param>
  <param name="gwLoc">Path to gw.py</param>
@@ -62,6 +62,8 @@ RunGreaseWeazel
  <param name="DoubleStep">Move the head twice for every track move indicated. Allows usage of a 40 track disk on an 80 track drive</param>
  <param name="PinToSet">The pin number (on the back of the floppy drive) to change value</param>
  <param name="PinLevel">Char: L or H denotes (L)ow 0v, or (H)igh 5v</param>
+ <param name="RPM">Integer: Sets the drive RPM. This value gets processed first</param>
+ <param name="Rate">Bitcell rate. 250 for DD disks, 500 for HD disks.</param>
  <returns></returns>
 </member>
 <member name="M:RunGreaseWeazel.frmMain.CheckVisible">

@@ -15,7 +15,7 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.0.0.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.6.0.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
@@ -351,6 +351,54 @@ Namespace My
             End Get
             Set
                 Me("AdjustWriteSpeed") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("250")>  _
+        Public Property DataRate() As String
+            Get
+                Return CType(Me("DataRate"),String)
+            End Get
+            Set
+                Me("DataRate") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property IncludeDataRate() As Boolean
+            Get
+                Return CType(Me("IncludeDataRate"),Boolean)
+            End Get
+            Set
+                Me("IncludeDataRate") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("300")>  _
+        Public Property RPM() As String
+            Get
+                Return CType(Me("RPM"),String)
+            End Get
+            Set
+                Me("RPM") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property IncludeRPM() As Boolean
+            Get
+                Return CType(Me("IncludeRPM"),Boolean)
+            End Get
+            Set
+                Me("IncludeRPM") = value
             End Set
         End Property
     End Class

@@ -27,6 +27,22 @@ Partial Class frmMain
         Me.cmbSerialPorts = New System.Windows.Forms.ComboBox()
         Me.lblComPort = New System.Windows.Forms.Label()
         Me.rtbOutput = New System.Windows.Forms.RichTextBox()
+        Me.ContextMenuStripMainCommands = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.READDiskToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.GreaseweazleINFOToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.WRITEDiskToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripSeparator()
+        Me.RESETGreaseweazleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem4 = New System.Windows.Forms.ToolStripSeparator()
+        Me.UpdateFirmwareToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem5 = New System.Windows.Forms.ToolStripSeparator()
+        Me.SetPinLevelToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem6 = New System.Windows.Forms.ToolStripSeparator()
+        Me.GreaswweazleDToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem7 = New System.Windows.Forms.ToolStripSeparator()
+        Me.GreaseweazleDelaysToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.lblGWLocation = New System.Windows.Forms.Label()
         Me.txtPythonLocation = New System.Windows.Forms.TextBox()
         Me.btnPythonLocation = New System.Windows.Forms.Button()
@@ -60,7 +76,6 @@ Partial Class frmMain
         Me.LinkLabelDLPython = New System.Windows.Forms.LinkLabel()
         Me.LinkLabelDLGW = New System.Windows.Forms.LinkLabel()
         Me.LinkLabelOpenLocation = New System.Windows.Forms.LinkLabel()
-        Me.chkAdjustSpeed = New System.Windows.Forms.CheckBox()
         Me.btnSaveLocation = New System.Windows.Forms.Button()
         Me.lblSaveLocation = New System.Windows.Forms.Label()
         Me.txtSaveLocation = New System.Windows.Forms.TextBox()
@@ -86,10 +101,18 @@ Partial Class frmMain
         Me.lblState = New System.Windows.Forms.Label()
         Me.chkDoubleStep = New System.Windows.Forms.CheckBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.cmbRPM = New System.Windows.Forms.ComboBox()
+        Me.chkRPM = New System.Windows.Forms.CheckBox()
+        Me.cmbRate = New System.Windows.Forms.ComboBox()
+        Me.chkRate = New System.Windows.Forms.CheckBox()
         Me.btnHidePaths = New System.Windows.Forms.Button()
         Me.cmbReadFormat = New System.Windows.Forms.ComboBox()
         Me.chkFilenameRreplaceSpaceWithUnderscore = New System.Windows.Forms.CheckBox()
         Me.btnEraseDisk = New System.Windows.Forms.Button()
+        Me.btnInfo = New System.Windows.Forms.Button()
+        Me.btnGWBandwidth = New System.Windows.Forms.Button()
+        Me.btnGWDelays = New System.Windows.Forms.Button()
+        Me.ContextMenuStripMainCommands.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -100,7 +123,6 @@ Partial Class frmMain
         Me.cmbSerialPorts.Name = "cmbSerialPorts"
         Me.cmbSerialPorts.Size = New System.Drawing.Size(75, 21)
         Me.cmbSerialPorts.TabIndex = 8
-        Me.cmbSerialPorts.Text = "auto"
         '
         'lblComPort
         '
@@ -116,16 +138,106 @@ Partial Class frmMain
         Me.rtbOutput.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.rtbOutput.ContextMenuStrip = Me.ContextMenuStripMainCommands
         Me.rtbOutput.Location = New System.Drawing.Point(513, 12)
         Me.rtbOutput.Name = "rtbOutput"
         Me.rtbOutput.Size = New System.Drawing.Size(386, 381)
         Me.rtbOutput.TabIndex = 9
         Me.rtbOutput.Text = ""
         '
+        'ContextMenuStripMainCommands
+        '
+        Me.ContextMenuStripMainCommands.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.READDiskToolStripMenuItem, Me.ToolStripMenuItem1, Me.GreaseweazleINFOToolStripMenuItem, Me.ToolStripMenuItem2, Me.WRITEDiskToolStripMenuItem, Me.ToolStripMenuItem3, Me.RESETGreaseweazleToolStripMenuItem, Me.ToolStripMenuItem4, Me.UpdateFirmwareToolStripMenuItem, Me.ToolStripMenuItem5, Me.SetPinLevelToolStripMenuItem, Me.ToolStripMenuItem6, Me.GreaswweazleDToolStripMenuItem, Me.ToolStripMenuItem7, Me.GreaseweazleDelaysToolStripMenuItem})
+        Me.ContextMenuStripMainCommands.Name = "ContextMenuStripMainCommands"
+        Me.ContextMenuStripMainCommands.Size = New System.Drawing.Size(205, 222)
+        '
+        'READDiskToolStripMenuItem
+        '
+        Me.READDiskToolStripMenuItem.Name = "READDiskToolStripMenuItem"
+        Me.READDiskToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
+        Me.READDiskToolStripMenuItem.Text = "READ Disk"
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(201, 6)
+        '
+        'GreaseweazleINFOToolStripMenuItem
+        '
+        Me.GreaseweazleINFOToolStripMenuItem.Name = "GreaseweazleINFOToolStripMenuItem"
+        Me.GreaseweazleINFOToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
+        Me.GreaseweazleINFOToolStripMenuItem.Text = "Greaseweazle INFO"
+        '
+        'ToolStripMenuItem2
+        '
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(201, 6)
+        '
+        'WRITEDiskToolStripMenuItem
+        '
+        Me.WRITEDiskToolStripMenuItem.Name = "WRITEDiskToolStripMenuItem"
+        Me.WRITEDiskToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
+        Me.WRITEDiskToolStripMenuItem.Text = "WRITE Disk"
+        '
+        'ToolStripMenuItem3
+        '
+        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(201, 6)
+        '
+        'RESETGreaseweazleToolStripMenuItem
+        '
+        Me.RESETGreaseweazleToolStripMenuItem.Name = "RESETGreaseweazleToolStripMenuItem"
+        Me.RESETGreaseweazleToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
+        Me.RESETGreaseweazleToolStripMenuItem.Text = "RESET Greaseweazle"
+        '
+        'ToolStripMenuItem4
+        '
+        Me.ToolStripMenuItem4.Name = "ToolStripMenuItem4"
+        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(201, 6)
+        '
+        'UpdateFirmwareToolStripMenuItem
+        '
+        Me.UpdateFirmwareToolStripMenuItem.Name = "UpdateFirmwareToolStripMenuItem"
+        Me.UpdateFirmwareToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
+        Me.UpdateFirmwareToolStripMenuItem.Text = "Update Firmware"
+        '
+        'ToolStripMenuItem5
+        '
+        Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
+        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(201, 6)
+        '
+        'SetPinLevelToolStripMenuItem
+        '
+        Me.SetPinLevelToolStripMenuItem.Name = "SetPinLevelToolStripMenuItem"
+        Me.SetPinLevelToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
+        Me.SetPinLevelToolStripMenuItem.Text = "Set Pin Level"
+        '
+        'ToolStripMenuItem6
+        '
+        Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
+        Me.ToolStripMenuItem6.Size = New System.Drawing.Size(201, 6)
+        '
+        'GreaswweazleDToolStripMenuItem
+        '
+        Me.GreaswweazleDToolStripMenuItem.Name = "GreaswweazleDToolStripMenuItem"
+        Me.GreaswweazleDToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
+        Me.GreaswweazleDToolStripMenuItem.Text = "Greaseweazle Bandwidth"
+        '
+        'ToolStripMenuItem7
+        '
+        Me.ToolStripMenuItem7.Name = "ToolStripMenuItem7"
+        Me.ToolStripMenuItem7.Size = New System.Drawing.Size(201, 6)
+        '
+        'GreaseweazleDelaysToolStripMenuItem
+        '
+        Me.GreaseweazleDelaysToolStripMenuItem.Name = "GreaseweazleDelaysToolStripMenuItem"
+        Me.GreaseweazleDelaysToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
+        Me.GreaseweazleDelaysToolStripMenuItem.Text = "Greaseweazle Delays:"
+        '
         'lblGWLocation
         '
         Me.lblGWLocation.AutoSize = True
-        Me.lblGWLocation.Location = New System.Drawing.Point(9, 307)
+        Me.lblGWLocation.Location = New System.Drawing.Point(9, 332)
         Me.lblGWLocation.Name = "lblGWLocation"
         Me.lblGWLocation.Size = New System.Drawing.Size(121, 13)
         Me.lblGWLocation.TabIndex = 76
@@ -133,7 +245,7 @@ Partial Class frmMain
         '
         'txtPythonLocation
         '
-        Me.txtPythonLocation.Location = New System.Drawing.Point(12, 323)
+        Me.txtPythonLocation.Location = New System.Drawing.Point(12, 348)
         Me.txtPythonLocation.MinimumSize = New System.Drawing.Size(471, 20)
         Me.txtPythonLocation.Name = "txtPythonLocation"
         Me.txtPythonLocation.Size = New System.Drawing.Size(471, 20)
@@ -141,7 +253,7 @@ Partial Class frmMain
         '
         'btnPythonLocation
         '
-        Me.btnPythonLocation.Location = New System.Drawing.Point(483, 323)
+        Me.btnPythonLocation.Location = New System.Drawing.Point(483, 348)
         Me.btnPythonLocation.Name = "btnPythonLocation"
         Me.btnPythonLocation.Size = New System.Drawing.Size(24, 20)
         Me.btnPythonLocation.TabIndex = 90
@@ -154,7 +266,7 @@ Partial Class frmMain
         Me.btnRead.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnRead.Location = New System.Drawing.Point(12, 437)
         Me.btnRead.Name = "btnRead"
-        Me.btnRead.Size = New System.Drawing.Size(240, 29)
+        Me.btnRead.Size = New System.Drawing.Size(210, 29)
         Me.btnRead.TabIndex = 104
         Me.btnRead.Text = "Read"
         Me.btnRead.UseVisualStyleBackColor = True
@@ -297,9 +409,9 @@ Partial Class frmMain
         '
         Me.btnWrite.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.btnWrite.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnWrite.Location = New System.Drawing.Point(267, 437)
+        Me.btnWrite.Location = New System.Drawing.Point(297, 437)
         Me.btnWrite.Name = "btnWrite"
-        Me.btnWrite.Size = New System.Drawing.Size(240, 29)
+        Me.btnWrite.Size = New System.Drawing.Size(210, 29)
         Me.btnWrite.TabIndex = 106
         Me.btnWrite.Text = "Write"
         Me.btnWrite.UseVisualStyleBackColor = True
@@ -393,18 +505,17 @@ Partial Class frmMain
         'LinkLabelDLPython
         '
         Me.LinkLabelDLPython.AutoSize = True
-        Me.LinkLabelDLPython.Location = New System.Drawing.Point(186, 256)
+        Me.LinkLabelDLPython.Location = New System.Drawing.Point(186, 281)
         Me.LinkLabelDLPython.Name = "LinkLabelDLPython"
         Me.LinkLabelDLPython.Size = New System.Drawing.Size(91, 13)
         Me.LinkLabelDLPython.TabIndex = 86
         Me.LinkLabelDLPython.TabStop = True
         Me.LinkLabelDLPython.Text = "Download Python"
-        Me.LinkLabelDLPython.Visible = False
         '
         'LinkLabelDLGW
         '
         Me.LinkLabelDLGW.AutoSize = True
-        Me.LinkLabelDLGW.Location = New System.Drawing.Point(355, 307)
+        Me.LinkLabelDLGW.Location = New System.Drawing.Point(355, 332)
         Me.LinkLabelDLGW.Name = "LinkLabelDLGW"
         Me.LinkLabelDLGW.Size = New System.Drawing.Size(131, 13)
         Me.LinkLabelDLGW.TabIndex = 78
@@ -414,26 +525,16 @@ Partial Class frmMain
         'LinkLabelOpenLocation
         '
         Me.LinkLabelOpenLocation.AutoSize = True
-        Me.LinkLabelOpenLocation.Location = New System.Drawing.Point(409, 256)
+        Me.LinkLabelOpenLocation.Location = New System.Drawing.Point(409, 281)
         Me.LinkLabelOpenLocation.Name = "LinkLabelOpenLocation"
         Me.LinkLabelOpenLocation.Size = New System.Drawing.Size(77, 13)
         Me.LinkLabelOpenLocation.TabIndex = 70
         Me.LinkLabelOpenLocation.TabStop = True
         Me.LinkLabelOpenLocation.Text = "Open Location"
         '
-        'chkAdjustSpeed
-        '
-        Me.chkAdjustSpeed.AutoSize = True
-        Me.chkAdjustSpeed.Location = New System.Drawing.Point(332, 78)
-        Me.chkAdjustSpeed.Name = "chkAdjustSpeed"
-        Me.chkAdjustSpeed.Size = New System.Drawing.Size(117, 17)
-        Me.chkAdjustSpeed.TabIndex = 66
-        Me.chkAdjustSpeed.Text = "Adjust Write Speed"
-        Me.chkAdjustSpeed.UseVisualStyleBackColor = True
-        '
         'btnSaveLocation
         '
-        Me.btnSaveLocation.Location = New System.Drawing.Point(483, 272)
+        Me.btnSaveLocation.Location = New System.Drawing.Point(483, 297)
         Me.btnSaveLocation.Name = "btnSaveLocation"
         Me.btnSaveLocation.Size = New System.Drawing.Size(24, 20)
         Me.btnSaveLocation.TabIndex = 74
@@ -443,7 +544,7 @@ Partial Class frmMain
         'lblSaveLocation
         '
         Me.lblSaveLocation.AutoSize = True
-        Me.lblSaveLocation.Location = New System.Drawing.Point(9, 256)
+        Me.lblSaveLocation.Location = New System.Drawing.Point(9, 281)
         Me.lblSaveLocation.Name = "lblSaveLocation"
         Me.lblSaveLocation.Size = New System.Drawing.Size(76, 13)
         Me.lblSaveLocation.TabIndex = 68
@@ -451,7 +552,7 @@ Partial Class frmMain
         '
         'txtSaveLocation
         '
-        Me.txtSaveLocation.Location = New System.Drawing.Point(12, 272)
+        Me.txtSaveLocation.Location = New System.Drawing.Point(12, 297)
         Me.txtSaveLocation.MinimumSize = New System.Drawing.Size(471, 20)
         Me.txtSaveLocation.Name = "txtSaveLocation"
         Me.txtSaveLocation.Size = New System.Drawing.Size(471, 20)
@@ -479,8 +580,7 @@ Partial Class frmMain
         '
         'btnExecuteScript
         '
-        Me.btnExecuteScript.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnExecuteScript.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnExecuteScript.Location = New System.Drawing.Point(483, 401)
         Me.btnExecuteScript.Name = "btnExecuteScript"
         Me.btnExecuteScript.Size = New System.Drawing.Size(24, 20)
@@ -598,7 +698,7 @@ Partial Class frmMain
         'btnResetDevice
         '
         Me.btnResetDevice.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnResetDevice.Location = New System.Drawing.Point(631, 437)
+        Me.btnResetDevice.Location = New System.Drawing.Point(528, 437)
         Me.btnResetDevice.Name = "btnResetDevice"
         Me.btnResetDevice.Size = New System.Drawing.Size(93, 29)
         Me.btnResetDevice.TabIndex = 120
@@ -668,6 +768,10 @@ Partial Class frmMain
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.cmbRPM)
+        Me.GroupBox1.Controls.Add(Me.chkRPM)
+        Me.GroupBox1.Controls.Add(Me.cmbRate)
+        Me.GroupBox1.Controls.Add(Me.chkRate)
         Me.GroupBox1.Controls.Add(Me.btnHidePaths)
         Me.GroupBox1.Controls.Add(Me.cmbReadFormat)
         Me.GroupBox1.Controls.Add(Me.chkFilenameRreplaceSpaceWithUnderscore)
@@ -676,7 +780,6 @@ Partial Class frmMain
         Me.GroupBox1.Controls.Add(Me.ChkStartTrack)
         Me.GroupBox1.Controls.Add(Me.cmbRevolutions)
         Me.GroupBox1.Controls.Add(Me.chkRevolutions)
-        Me.GroupBox1.Controls.Add(Me.chkAdjustSpeed)
         Me.GroupBox1.Controls.Add(Me.chkSingleSided)
         Me.GroupBox1.Controls.Add(Me.cmbEndTrack)
         Me.GroupBox1.Controls.Add(Me.btnResize)
@@ -686,9 +789,50 @@ Partial Class frmMain
         Me.GroupBox1.Controls.Add(Me.chkF7)
         Me.GroupBox1.Location = New System.Drawing.Point(12, 128)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(495, 111)
+        Me.GroupBox1.Size = New System.Drawing.Size(495, 139)
         Me.GroupBox1.TabIndex = 37
         Me.GroupBox1.TabStop = False
+        '
+        'cmbRPM
+        '
+        Me.cmbRPM.FormattingEnabled = True
+        Me.cmbRPM.Items.AddRange(New Object() {"300"})
+        Me.cmbRPM.Location = New System.Drawing.Point(425, 106)
+        Me.cmbRPM.Name = "cmbRPM"
+        Me.cmbRPM.Size = New System.Drawing.Size(42, 21)
+        Me.cmbRPM.TabIndex = 71
+        Me.cmbRPM.Text = "300"
+        '
+        'chkRPM
+        '
+        Me.chkRPM.AutoSize = True
+        Me.chkRPM.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkRPM.Location = New System.Drawing.Point(332, 108)
+        Me.chkRPM.Name = "chkRPM"
+        Me.chkRPM.Size = New System.Drawing.Size(87, 17)
+        Me.chkRPM.TabIndex = 70
+        Me.chkRPM.Text = "Drive RPM"
+        Me.chkRPM.UseVisualStyleBackColor = True
+        '
+        'cmbRate
+        '
+        Me.cmbRate.FormattingEnabled = True
+        Me.cmbRate.Items.AddRange(New Object() {"250", "500"})
+        Me.cmbRate.Location = New System.Drawing.Point(260, 106)
+        Me.cmbRate.Name = "cmbRate"
+        Me.cmbRate.Size = New System.Drawing.Size(42, 21)
+        Me.cmbRate.TabIndex = 69
+        Me.cmbRate.Text = "250"
+        '
+        'chkRate
+        '
+        Me.chkRate.AutoSize = True
+        Me.chkRate.Location = New System.Drawing.Point(6, 108)
+        Me.chkRate.Name = "chkRate"
+        Me.chkRate.Size = New System.Drawing.Size(232, 17)
+        Me.chkRate.TabIndex = 68
+        Me.chkRate.Text = "Bitcell data rate in kbit/s (250=DD 500=HD)"
+        Me.chkRate.UseVisualStyleBackColor = True
         '
         'btnHidePaths
         '
@@ -726,18 +870,57 @@ Partial Class frmMain
         '
         Me.btnEraseDisk.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnEraseDisk.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnEraseDisk.Location = New System.Drawing.Point(528, 437)
+        Me.btnEraseDisk.Location = New System.Drawing.Point(627, 437)
         Me.btnEraseDisk.Name = "btnEraseDisk"
-        Me.btnEraseDisk.Size = New System.Drawing.Size(93, 29)
+        Me.btnEraseDisk.Size = New System.Drawing.Size(97, 29)
         Me.btnEraseDisk.TabIndex = 118
         Me.btnEraseDisk.Text = "Erase Disk"
         Me.btnEraseDisk.UseVisualStyleBackColor = True
+        '
+        'btnInfo
+        '
+        Me.btnInfo.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnInfo.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnInfo.Location = New System.Drawing.Point(238, 437)
+        Me.btnInfo.Name = "btnInfo"
+        Me.btnInfo.Size = New System.Drawing.Size(43, 29)
+        Me.btnInfo.TabIndex = 123
+        Me.btnInfo.Text = "Info"
+        Me.btnInfo.UseVisualStyleBackColor = True
+        '
+        'btnGWBandwidth
+        '
+        Me.btnGWBandwidth.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnGWBandwidth.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnGWBandwidth.Location = New System.Drawing.Point(588, 311)
+        Me.btnGWBandwidth.Name = "btnGWBandwidth"
+        Me.btnGWBandwidth.Size = New System.Drawing.Size(68, 29)
+        Me.btnGWBandwidth.TabIndex = 124
+        Me.btnGWBandwidth.Text = "Bandwidth"
+        Me.btnGWBandwidth.UseVisualStyleBackColor = True
+        Me.btnGWBandwidth.Visible = False
+        '
+        'btnGWDelays
+        '
+        Me.btnGWDelays.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnGWDelays.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnGWDelays.Location = New System.Drawing.Point(672, 311)
+        Me.btnGWDelays.Name = "btnGWDelays"
+        Me.btnGWDelays.Size = New System.Drawing.Size(68, 29)
+        Me.btnGWDelays.TabIndex = 125
+        Me.btnGWDelays.Text = "Delays"
+        Me.btnGWDelays.UseVisualStyleBackColor = True
+        Me.btnGWDelays.Visible = False
         '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(908, 473)
+        Me.ContextMenuStrip = Me.ContextMenuStripMainCommands
+        Me.Controls.Add(Me.btnGWDelays)
+        Me.Controls.Add(Me.btnGWBandwidth)
+        Me.Controls.Add(Me.btnInfo)
         Me.Controls.Add(Me.btnExecuteScript)
         Me.Controls.Add(Me.btnEraseDisk)
         Me.Controls.Add(Me.GroupBox1)
@@ -790,6 +973,7 @@ Partial Class frmMain
         Me.Name = "frmMain"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Run GreaseWeazle Script"
+        Me.ContextMenuStripMainCommands.ResumeLayout(False)
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.ResumeLayout(False)
@@ -832,7 +1016,6 @@ Partial Class frmMain
     Friend WithEvents LinkLabelDLPython As LinkLabel
     Friend WithEvents LinkLabelDLGW As LinkLabel
     Friend WithEvents LinkLabelOpenLocation As LinkLabel
-    Friend WithEvents chkAdjustSpeed As CheckBox
     Friend WithEvents btnSaveLocation As Button
     Friend WithEvents lblSaveLocation As Label
     Friend WithEvents txtSaveLocation As TextBox
@@ -862,4 +1045,27 @@ Partial Class frmMain
     Friend WithEvents btnEraseDisk As Button
     Friend WithEvents cmbReadFormat As ComboBox
     Friend WithEvents btnHidePaths As Button
+    Friend WithEvents cmbRPM As ComboBox
+    Friend WithEvents chkRPM As CheckBox
+    Friend WithEvents cmbRate As ComboBox
+    Friend WithEvents chkRate As CheckBox
+    Friend WithEvents btnInfo As Button
+    Friend WithEvents ContextMenuStripMainCommands As ContextMenuStrip
+    Friend WithEvents READDiskToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
+    Friend WithEvents GreaseweazleINFOToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator
+    Friend WithEvents WRITEDiskToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem3 As ToolStripSeparator
+    Friend WithEvents RESETGreaseweazleToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem4 As ToolStripSeparator
+    Friend WithEvents UpdateFirmwareToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem5 As ToolStripSeparator
+    Friend WithEvents SetPinLevelToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem6 As ToolStripSeparator
+    Friend WithEvents GreaswweazleDToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem7 As ToolStripSeparator
+    Friend WithEvents GreaseweazleDelaysToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents btnGWBandwidth As Button
+    Friend WithEvents btnGWDelays As Button
 End Class
