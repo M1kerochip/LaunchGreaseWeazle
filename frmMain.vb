@@ -21,6 +21,15 @@ Public Class frmMain
         SetUpScreen()
     End Sub
 
+    Public Sub DoLOG()
+        If chkLOG.Checked Then
+            If rtbOutput.Text.Trim <> "" Then
+                Dim l As New LogFileClass
+                l.WriteToLog(rtbOutput.Lines)
+            End If
+        End If
+    End Sub
+
     ''' <summary>
     ''' Loads settings from VB My.Settings (local) and sets the variables onscreen. Also sets up tooltips.
     ''' </summary>
@@ -61,6 +70,7 @@ Public Class frmMain
         chkRPM.Checked = My.Settings.IncludeRPM
         cmbRPM.Text = My.Settings.RPM
         cmbRate.Text = My.Settings.DataRate
+        chkLOG.Checked = My.Settings.RunningLog
 
         rtbOutput.Visible = False
         Me.Size = New Size(534, Me.Size.Height)
@@ -72,6 +82,9 @@ Public Class frmMain
             btnResize.Text = "<"
         End If
 
+        If chkLOG.Checked Then
+            rtbOutput.AppendText("Started on: " + DateTime.Today.ToString("yyyy-MM-dd") + " at " + DateTime.Now.ToString("HH:mm:ss") + vbCrLf)
+        End If
         CheckVisible()
 
         ToolTipMainForm.SetToolTip(btnRead, "Begin GreaseWeazle read process. Creates a flux level copy of a floppy disk to a file.")
@@ -98,7 +111,7 @@ Public Class frmMain
         ToolTipMainForm.SetToolTip(LinkLabelGWWiki, "Start here! Opens GreaseWeazle Wiki page. Setup and other usage documentation.")
         ToolTipMainForm.SetToolTip(LinkLabelOpenLocation, "Opens Explorer in the Save folder on the HDD.")
         ToolTipMainForm.SetToolTip(LinkLabelDLGW, "Opens the GreaseWeazle Github download page")
-        ToolTipMainForm.SetToolTip(LinkLabelDLPython, "Opens main Python download page")
+        'ToolTipMainForm.SetToolTip(LinkLabelDLPython, "Opens main Python download page")
         ToolTipMainForm.SetToolTip(LinkLabelLaunchNow, "Executes exe/script from location below, with current disk image name.")
         ToolTipMainForm.SetToolTip(chkF7, "Check this if you are writing to a STM32F7 device (rather than the usual 'Bluepill'.")
         ToolTipMainForm.SetToolTip(cmbDriveSelect, "If using an F7 device, select the drive you want to read to/write from. Multiple drives may be connected at once. (F7 device only!!).")
@@ -127,6 +140,7 @@ Public Class frmMain
         ToolTipMainForm.SetToolTip(cmbRate, "Set the disk RPM to this rate. This setting is set before all others.")
         ToolTipMainForm.SetToolTip(chkRPM, "Enable the drive RPM.")
         ToolTipMainForm.SetToolTip(cmbRPM, "Set read rate. 250 for DD disks, 500 for HD disks.")
+        ToolTipMainForm.SetToolTip(chkLOG, "Save a running log of actions to programname.log")
         Return True
     End Function
 
@@ -241,9 +255,9 @@ Public Class frmMain
         LinkLabelDLGW.ForeColor = LinkLabelProjectName.ForeColor
         LinkLabelDLGW.LinkColor = LinkLabelProjectName.LinkColor
         LinkLabelDLGW.VisitedLinkColor = LinkLabelProjectName.VisitedLinkColor
-        LinkLabelDLPython.ForeColor = LinkLabelProjectName.ForeColor
-        LinkLabelDLPython.LinkColor = LinkLabelProjectName.LinkColor
-        LinkLabelDLPython.VisitedLinkColor = LinkLabelProjectName.VisitedLinkColor
+        'LinkLabelDLPython.ForeColor = LinkLabelProjectName.ForeColor
+        'LinkLabelDLPython.LinkColor = LinkLabelProjectName.LinkColor
+        'LinkLabelDLPython.VisitedLinkColor = LinkLabelProjectName.VisitedLinkColor
         LinkLabelLaunchNow.ForeColor = LinkLabelProjectName.ForeColor
         LinkLabelLaunchNow.LinkColor = LinkLabelProjectName.LinkColor
         LinkLabelLaunchNow.VisitedLinkColor = LinkLabelProjectName.VisitedLinkColor
@@ -298,6 +312,7 @@ Public Class frmMain
         My.Settings.LoopDumpCount = cmbDump.Text
         My.Settings.DoubleStep = chkDoubleStep.Checked
         My.Settings.StartTrack = ChkStartTrack.Checked
+        My.Settings.RunningLog = chkLOG.Checked
         If IsNumeric(cmbStartTrack.Text) Then
             My.Settings.StartTrackNo = CInt(cmbStartTrack.Text)
         Else
@@ -385,6 +400,7 @@ Public Class frmMain
             Return False
         Else
             Dim errstr As String = ""
+            DoLOG()
             rtbOutput.Clear()
             If cmbSerialPorts.Text.Trim = "" Then
                 errstr = "No COM port selected!" + Environment.NewLine
@@ -569,6 +585,7 @@ Public Class frmMain
                 For loopc = 0 To CInt(cmbDump.Text)
                     cmbDump.Text = CStr(loopc)
                     Dim fileGW As String = CreateFileName(True)
+                    DoLOG()
                     rtbOutput.Clear()
                     rtbOutput.Text &= "Reading from Greaseweazel on port " + cmbSerialPorts.Text + Environment.NewLine
                     rtbOutput.Text &= "Start: " + cmbStartTrack.Text + "  End: " + cmbEndTrack.Text + "  Revolutions: " + cmbRevolutions.Text + "  Sided: "
@@ -590,6 +607,7 @@ Public Class frmMain
                 Next                    'If running gw.py on a loop, to dump a disk multiple times
             Else    'Run gw.py once only
                 Dim fileGW As String = CreateFileName(True)
+                DoLOG()
                 rtbOutput.Clear()
                 rtbOutput.Text &= "Reading from Greaseweazel on port " + cmbSerialPorts.Text + Environment.NewLine
                 rtbOutput.Text &= "Start: " + cmbStartTrack.Text + "  End: " + cmbEndTrack.Text + "  Revolutions: " + cmbRevolutions.Text + "  Sided: "
@@ -615,6 +633,8 @@ Public Class frmMain
 
     Private Sub frmMain_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         SaveSettings()
+        rtbOutput.AppendText(vbCrLf + "Closed on " + DateTime.Today.ToString("yyyy-MM-dd") + " at " + DateTime.Now.ToString("HH:mm:ss") + vbCrLf)
+        DoLOG()
     End Sub
 
     Private Sub BtnSaveLocation_Click(sender As Object, e As EventArgs) Handles btnSaveLocation.Click
@@ -647,6 +667,7 @@ Public Class frmMain
             Dim fileGW As String
             If (OpenFileDialogMain.ShowDialog() = DialogResult.OK) Then
                 fileGW = OpenFileDialogMain.FileName
+                DoLOG()
                 rtbOutput.Clear()
                 rtbOutput.Text &= "Writing to Greaseweazel on port " + cmbSerialPorts.Text + Environment.NewLine
                 rtbOutput.Text &= "Start: " + cmbStartTrack.Text + "  End: " + cmbEndTrack.Text + "  Revolutions: " + cmbRevolutions.Text + "  Sided: "
@@ -676,7 +697,7 @@ Public Class frmMain
         System.Diagnostics.Process.Start("https://github.com/keirf/Greaseweazle/wiki/Downloads")
     End Sub
 
-    Private Sub LinkLabelDLPython_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabelDLPython.LinkClicked
+    Private Sub LinkLabelDLPython_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs)
         System.Diagnostics.Process.Start("https://www.python.org/downloads/windows/")
         rtbOutput.Text &= Environment.NewLine + Environment.NewLine
         rtbOutput.Text &= "After downloading and installing Python (Remember to add it to the PATH variable), please run the following from a command prompt:" + Environment.NewLine + Environment.NewLine
@@ -736,6 +757,7 @@ Public Class frmMain
             Dim fileGW As String
             If (OpenFileDialogMain.ShowDialog() = DialogResult.OK) Then
                 fileGW = OpenFileDialogMain.FileName
+                DoLOG()
                 rtbOutput.Clear()
                 rtbOutput.Text &= "Updating Greaseweazel firmware on port " + cmbSerialPorts.Text
                 rtbOutput.Text &= Environment.NewLine
@@ -751,6 +773,7 @@ Public Class frmMain
                 End If
             End If
         Else
+            DoLOG()
             rtbOutput.Clear()
             rtbOutput.Text &= "Updating Greaseweazel Bootloader on port " + cmbSerialPorts.Text
             rtbOutput.Text &= Environment.NewLine
@@ -853,7 +876,7 @@ Public Class frmMain
         btnSaveLocation.TabStop = lblSaveLocation.Visible
         lblGWLocation.TabStop = lblSaveLocation.Visible
         LinkLabelDLGW.TabStop = lblSaveLocation.Visible
-        LinkLabelDLPython.TabStop = lblSaveLocation.Visible
+        'LinkLabelDLPython.TabStop = lblSaveLocation.Visible
         txtPythonLocation.TabStop = lblSaveLocation.Visible
         btnPythonLocation.TabStop = lblSaveLocation.Visible
 
@@ -862,7 +885,7 @@ Public Class frmMain
         btnSaveLocation.Visible = lblSaveLocation.Visible
         lblGWLocation.Visible = lblSaveLocation.Visible
         LinkLabelDLGW.Visible = lblSaveLocation.Visible
-        LinkLabelDLPython.Visible = lblSaveLocation.Visible
+        'LinkLabelDLPython.Visible = lblSaveLocation.Visible
         txtPythonLocation.Visible = lblSaveLocation.Visible
         btnPythonLocation.Visible = lblSaveLocation.Visible
 

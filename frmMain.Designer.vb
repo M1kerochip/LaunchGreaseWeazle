@@ -43,6 +43,8 @@ Partial Class frmMain
         Me.GreaswweazleDToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem7 = New System.Windows.Forms.ToolStripSeparator()
         Me.GreaseweazleDelaysToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem8 = New System.Windows.Forms.ToolStripSeparator()
+        Me.EnableProgramLOGToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.lblGWLocation = New System.Windows.Forms.Label()
         Me.txtPythonLocation = New System.Windows.Forms.TextBox()
         Me.btnPythonLocation = New System.Windows.Forms.Button()
@@ -73,7 +75,6 @@ Partial Class frmMain
         Me.cmbEndTrack = New System.Windows.Forms.ComboBox()
         Me.chkEndTrack = New System.Windows.Forms.CheckBox()
         Me.chkSingleSided = New System.Windows.Forms.CheckBox()
-        Me.LinkLabelDLPython = New System.Windows.Forms.LinkLabel()
         Me.LinkLabelDLGW = New System.Windows.Forms.LinkLabel()
         Me.LinkLabelOpenLocation = New System.Windows.Forms.LinkLabel()
         Me.btnSaveLocation = New System.Windows.Forms.Button()
@@ -112,6 +113,7 @@ Partial Class frmMain
         Me.btnInfo = New System.Windows.Forms.Button()
         Me.btnGWBandwidth = New System.Windows.Forms.Button()
         Me.btnGWDelays = New System.Windows.Forms.Button()
+        Me.chkLOG = New System.Windows.Forms.CheckBox()
         Me.ContextMenuStripMainCommands.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
@@ -147,92 +149,103 @@ Partial Class frmMain
         '
         'ContextMenuStripMainCommands
         '
-        Me.ContextMenuStripMainCommands.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.READDiskToolStripMenuItem, Me.ToolStripMenuItem1, Me.GreaseweazleINFOToolStripMenuItem, Me.ToolStripMenuItem2, Me.WRITEDiskToolStripMenuItem, Me.ToolStripMenuItem3, Me.RESETGreaseweazleToolStripMenuItem, Me.ToolStripMenuItem4, Me.UpdateFirmwareToolStripMenuItem, Me.ToolStripMenuItem5, Me.SetPinLevelToolStripMenuItem, Me.ToolStripMenuItem6, Me.GreaswweazleDToolStripMenuItem, Me.ToolStripMenuItem7, Me.GreaseweazleDelaysToolStripMenuItem})
+        Me.ContextMenuStripMainCommands.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.READDiskToolStripMenuItem, Me.ToolStripMenuItem1, Me.GreaseweazleINFOToolStripMenuItem, Me.ToolStripMenuItem2, Me.WRITEDiskToolStripMenuItem, Me.ToolStripMenuItem3, Me.RESETGreaseweazleToolStripMenuItem, Me.ToolStripMenuItem4, Me.UpdateFirmwareToolStripMenuItem, Me.ToolStripMenuItem5, Me.SetPinLevelToolStripMenuItem, Me.ToolStripMenuItem6, Me.GreaswweazleDToolStripMenuItem, Me.ToolStripMenuItem7, Me.GreaseweazleDelaysToolStripMenuItem, Me.ToolStripMenuItem8, Me.EnableProgramLOGToolStripMenuItem})
         Me.ContextMenuStripMainCommands.Name = "ContextMenuStripMainCommands"
-        Me.ContextMenuStripMainCommands.Size = New System.Drawing.Size(205, 222)
+        Me.ContextMenuStripMainCommands.Size = New System.Drawing.Size(278, 250)
         '
         'READDiskToolStripMenuItem
         '
         Me.READDiskToolStripMenuItem.Name = "READDiskToolStripMenuItem"
-        Me.READDiskToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
+        Me.READDiskToolStripMenuItem.Size = New System.Drawing.Size(277, 22)
         Me.READDiskToolStripMenuItem.Text = "READ Disk"
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(201, 6)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(274, 6)
         '
         'GreaseweazleINFOToolStripMenuItem
         '
         Me.GreaseweazleINFOToolStripMenuItem.Name = "GreaseweazleINFOToolStripMenuItem"
-        Me.GreaseweazleINFOToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
+        Me.GreaseweazleINFOToolStripMenuItem.Size = New System.Drawing.Size(277, 22)
         Me.GreaseweazleINFOToolStripMenuItem.Text = "Greaseweazle INFO"
         '
         'ToolStripMenuItem2
         '
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(201, 6)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(274, 6)
         '
         'WRITEDiskToolStripMenuItem
         '
         Me.WRITEDiskToolStripMenuItem.Name = "WRITEDiskToolStripMenuItem"
-        Me.WRITEDiskToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
+        Me.WRITEDiskToolStripMenuItem.Size = New System.Drawing.Size(277, 22)
         Me.WRITEDiskToolStripMenuItem.Text = "WRITE Disk"
         '
         'ToolStripMenuItem3
         '
         Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(201, 6)
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(274, 6)
         '
         'RESETGreaseweazleToolStripMenuItem
         '
         Me.RESETGreaseweazleToolStripMenuItem.Name = "RESETGreaseweazleToolStripMenuItem"
-        Me.RESETGreaseweazleToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
+        Me.RESETGreaseweazleToolStripMenuItem.Size = New System.Drawing.Size(277, 22)
         Me.RESETGreaseweazleToolStripMenuItem.Text = "RESET Greaseweazle"
         '
         'ToolStripMenuItem4
         '
         Me.ToolStripMenuItem4.Name = "ToolStripMenuItem4"
-        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(201, 6)
+        Me.ToolStripMenuItem4.Size = New System.Drawing.Size(274, 6)
         '
         'UpdateFirmwareToolStripMenuItem
         '
         Me.UpdateFirmwareToolStripMenuItem.Name = "UpdateFirmwareToolStripMenuItem"
-        Me.UpdateFirmwareToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
+        Me.UpdateFirmwareToolStripMenuItem.Size = New System.Drawing.Size(277, 22)
         Me.UpdateFirmwareToolStripMenuItem.Text = "Update Firmware"
         '
         'ToolStripMenuItem5
         '
         Me.ToolStripMenuItem5.Name = "ToolStripMenuItem5"
-        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(201, 6)
+        Me.ToolStripMenuItem5.Size = New System.Drawing.Size(274, 6)
         '
         'SetPinLevelToolStripMenuItem
         '
         Me.SetPinLevelToolStripMenuItem.Name = "SetPinLevelToolStripMenuItem"
-        Me.SetPinLevelToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
+        Me.SetPinLevelToolStripMenuItem.Size = New System.Drawing.Size(277, 22)
         Me.SetPinLevelToolStripMenuItem.Text = "Set Pin Level"
         '
         'ToolStripMenuItem6
         '
         Me.ToolStripMenuItem6.Name = "ToolStripMenuItem6"
-        Me.ToolStripMenuItem6.Size = New System.Drawing.Size(201, 6)
+        Me.ToolStripMenuItem6.Size = New System.Drawing.Size(274, 6)
         '
         'GreaswweazleDToolStripMenuItem
         '
         Me.GreaswweazleDToolStripMenuItem.Name = "GreaswweazleDToolStripMenuItem"
-        Me.GreaswweazleDToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
-        Me.GreaswweazleDToolStripMenuItem.Text = "Greaseweazle Bandwidth"
+        Me.GreaswweazleDToolStripMenuItem.Size = New System.Drawing.Size(277, 22)
+        Me.GreaswweazleDToolStripMenuItem.Text = "Greaseweazle: Show Device Bandwidth"
         '
         'ToolStripMenuItem7
         '
         Me.ToolStripMenuItem7.Name = "ToolStripMenuItem7"
-        Me.ToolStripMenuItem7.Size = New System.Drawing.Size(201, 6)
+        Me.ToolStripMenuItem7.Size = New System.Drawing.Size(274, 6)
         '
         'GreaseweazleDelaysToolStripMenuItem
         '
         Me.GreaseweazleDelaysToolStripMenuItem.Name = "GreaseweazleDelaysToolStripMenuItem"
-        Me.GreaseweazleDelaysToolStripMenuItem.Size = New System.Drawing.Size(204, 22)
-        Me.GreaseweazleDelaysToolStripMenuItem.Text = "Greaseweazle Delays:"
+        Me.GreaseweazleDelaysToolStripMenuItem.Size = New System.Drawing.Size(277, 22)
+        Me.GreaseweazleDelaysToolStripMenuItem.Text = "Greaseweazle: Show Delays"
+        '
+        'ToolStripMenuItem8
+        '
+        Me.ToolStripMenuItem8.Name = "ToolStripMenuItem8"
+        Me.ToolStripMenuItem8.Size = New System.Drawing.Size(274, 6)
+        '
+        'EnableProgramLOGToolStripMenuItem
+        '
+        Me.EnableProgramLOGToolStripMenuItem.Name = "EnableProgramLOGToolStripMenuItem"
+        Me.EnableProgramLOGToolStripMenuItem.Size = New System.Drawing.Size(277, 22)
+        Me.EnableProgramLOGToolStripMenuItem.Text = "Enable Program .LOG"
         '
         'lblGWLocation
         '
@@ -502,16 +515,6 @@ Partial Class frmMain
         Me.chkSingleSided.Text = "Single Sided Disk"
         Me.chkSingleSided.UseVisualStyleBackColor = True
         '
-        'LinkLabelDLPython
-        '
-        Me.LinkLabelDLPython.AutoSize = True
-        Me.LinkLabelDLPython.Location = New System.Drawing.Point(186, 281)
-        Me.LinkLabelDLPython.Name = "LinkLabelDLPython"
-        Me.LinkLabelDLPython.Size = New System.Drawing.Size(91, 13)
-        Me.LinkLabelDLPython.TabIndex = 86
-        Me.LinkLabelDLPython.TabStop = True
-        Me.LinkLabelDLPython.Text = "Download Python"
-        '
         'LinkLabelDLGW
         '
         Me.LinkLabelDLGW.AutoSize = True
@@ -711,7 +714,7 @@ Partial Class frmMain
         Me.cmbLowHigh.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbLowHigh.FormattingEnabled = True
         Me.cmbLowHigh.Items.AddRange(New Object() {"Low (0v)", "High (5v)"})
-        Me.cmbLowHigh.Location = New System.Drawing.Point(808, 402)
+        Me.cmbLowHigh.Location = New System.Drawing.Point(808, 401)
         Me.cmbLowHigh.Name = "cmbLowHigh"
         Me.cmbLowHigh.Size = New System.Drawing.Size(88, 21)
         Me.cmbLowHigh.TabIndex = 116
@@ -721,7 +724,7 @@ Partial Class frmMain
         Me.cmbPIN.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmbPIN.FormattingEnabled = True
         Me.cmbPIN.Items.AddRange(New Object() {"2"})
-        Me.cmbPIN.Location = New System.Drawing.Point(684, 402)
+        Me.cmbPIN.Location = New System.Drawing.Point(684, 401)
         Me.cmbPIN.Name = "cmbPIN"
         Me.cmbPIN.Size = New System.Drawing.Size(40, 21)
         Me.cmbPIN.TabIndex = 112
@@ -729,9 +732,9 @@ Partial Class frmMain
         'btnSetPin
         '
         Me.btnSetPin.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnSetPin.Location = New System.Drawing.Point(528, 401)
+        Me.btnSetPin.Location = New System.Drawing.Point(568, 400)
         Me.btnSetPin.Name = "btnSetPin"
-        Me.btnSetPin.Size = New System.Drawing.Size(93, 20)
+        Me.btnSetPin.Size = New System.Drawing.Size(80, 21)
         Me.btnSetPin.TabIndex = 108
         Me.btnSetPin.Text = "Set Pin Level"
         Me.btnSetPin.UseVisualStyleBackColor = True
@@ -740,7 +743,7 @@ Partial Class frmMain
         '
         Me.lblPin.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblPin.AutoSize = True
-        Me.lblPin.Location = New System.Drawing.Point(653, 405)
+        Me.lblPin.Location = New System.Drawing.Point(653, 404)
         Me.lblPin.Name = "lblPin"
         Me.lblPin.Size = New System.Drawing.Size(25, 13)
         Me.lblPin.TabIndex = 110
@@ -750,7 +753,7 @@ Partial Class frmMain
         '
         Me.lblState.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblState.AutoSize = True
-        Me.lblState.Location = New System.Drawing.Point(730, 405)
+        Me.lblState.Location = New System.Drawing.Point(730, 404)
         Me.lblState.Name = "lblState"
         Me.lblState.Size = New System.Drawing.Size(75, 13)
         Me.lblState.TabIndex = 114
@@ -912,12 +915,24 @@ Partial Class frmMain
         Me.btnGWDelays.UseVisualStyleBackColor = True
         Me.btnGWDelays.Visible = False
         '
+        'chkLOG
+        '
+        Me.chkLOG.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.chkLOG.AutoSize = True
+        Me.chkLOG.Location = New System.Drawing.Point(513, 403)
+        Me.chkLOG.Name = "chkLOG"
+        Me.chkLOG.Size = New System.Drawing.Size(44, 17)
+        Me.chkLOG.TabIndex = 126
+        Me.chkLOG.Text = "Log"
+        Me.chkLOG.UseVisualStyleBackColor = True
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(908, 473)
         Me.ContextMenuStrip = Me.ContextMenuStripMainCommands
+        Me.Controls.Add(Me.chkLOG)
         Me.Controls.Add(Me.btnGWDelays)
         Me.Controls.Add(Me.btnGWBandwidth)
         Me.Controls.Add(Me.btnInfo)
@@ -939,7 +954,6 @@ Partial Class frmMain
         Me.Controls.Add(Me.lblExecuteScript)
         Me.Controls.Add(Me.LinkLabelOpenLocation)
         Me.Controls.Add(Me.LinkLabelDLGW)
-        Me.Controls.Add(Me.LinkLabelDLPython)
         Me.Controls.Add(Me.chkSaveLog)
         Me.Controls.Add(Me.LinkLabelGWWiki)
         Me.Controls.Add(Me.btnUpdateFirmware)
@@ -1013,7 +1027,6 @@ Partial Class frmMain
     Friend WithEvents cmbEndTrack As ComboBox
     Friend WithEvents chkEndTrack As CheckBox
     Friend WithEvents chkSingleSided As CheckBox
-    Friend WithEvents LinkLabelDLPython As LinkLabel
     Friend WithEvents LinkLabelDLGW As LinkLabel
     Friend WithEvents LinkLabelOpenLocation As LinkLabel
     Friend WithEvents btnSaveLocation As Button
@@ -1068,4 +1081,7 @@ Partial Class frmMain
     Friend WithEvents GreaseweazleDelaysToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents btnGWBandwidth As Button
     Friend WithEvents btnGWDelays As Button
+    Friend WithEvents ToolStripMenuItem8 As ToolStripSeparator
+    Friend WithEvents EnableProgramLOGToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents chkLOG As CheckBox
 End Class
