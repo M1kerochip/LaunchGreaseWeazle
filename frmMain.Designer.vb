@@ -44,7 +44,6 @@ Partial Class frmMain
         Me.ToolStripMenuItem7 = New System.Windows.Forms.ToolStripSeparator()
         Me.GreaseweazleDelaysToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem8 = New System.Windows.Forms.ToolStripSeparator()
-        Me.EnableProgramLOGToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.lblGWLocation = New System.Windows.Forms.Label()
         Me.txtPythonLocation = New System.Windows.Forms.TextBox()
         Me.btnPythonLocation = New System.Windows.Forms.Button()
@@ -114,6 +113,10 @@ Partial Class frmMain
         Me.btnGWBandwidth = New System.Windows.Forms.Button()
         Me.btnGWDelays = New System.Windows.Forms.Button()
         Me.chkLOG = New System.Windows.Forms.CheckBox()
+        Me.LogOptionsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EnableProgramLOGToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem9 = New System.Windows.Forms.ToolStripSeparator()
+        Me.WriteLOGWithEachReadWriteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStripMainCommands.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
@@ -142,6 +145,7 @@ Partial Class frmMain
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.rtbOutput.ContextMenuStrip = Me.ContextMenuStripMainCommands
         Me.rtbOutput.Location = New System.Drawing.Point(513, 12)
+        Me.rtbOutput.MinimumSize = New System.Drawing.Size(386, 0)
         Me.rtbOutput.Name = "rtbOutput"
         Me.rtbOutput.Size = New System.Drawing.Size(386, 381)
         Me.rtbOutput.TabIndex = 9
@@ -149,9 +153,9 @@ Partial Class frmMain
         '
         'ContextMenuStripMainCommands
         '
-        Me.ContextMenuStripMainCommands.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.READDiskToolStripMenuItem, Me.ToolStripMenuItem1, Me.GreaseweazleINFOToolStripMenuItem, Me.ToolStripMenuItem2, Me.WRITEDiskToolStripMenuItem, Me.ToolStripMenuItem3, Me.RESETGreaseweazleToolStripMenuItem, Me.ToolStripMenuItem4, Me.UpdateFirmwareToolStripMenuItem, Me.ToolStripMenuItem5, Me.SetPinLevelToolStripMenuItem, Me.ToolStripMenuItem6, Me.GreaswweazleDToolStripMenuItem, Me.ToolStripMenuItem7, Me.GreaseweazleDelaysToolStripMenuItem, Me.ToolStripMenuItem8, Me.EnableProgramLOGToolStripMenuItem})
+        Me.ContextMenuStripMainCommands.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.READDiskToolStripMenuItem, Me.ToolStripMenuItem1, Me.GreaseweazleINFOToolStripMenuItem, Me.ToolStripMenuItem2, Me.WRITEDiskToolStripMenuItem, Me.ToolStripMenuItem3, Me.RESETGreaseweazleToolStripMenuItem, Me.ToolStripMenuItem4, Me.UpdateFirmwareToolStripMenuItem, Me.ToolStripMenuItem5, Me.SetPinLevelToolStripMenuItem, Me.ToolStripMenuItem6, Me.GreaswweazleDToolStripMenuItem, Me.ToolStripMenuItem7, Me.GreaseweazleDelaysToolStripMenuItem, Me.ToolStripMenuItem8, Me.LogOptionsToolStripMenuItem})
         Me.ContextMenuStripMainCommands.Name = "ContextMenuStripMainCommands"
-        Me.ContextMenuStripMainCommands.Size = New System.Drawing.Size(278, 250)
+        Me.ContextMenuStripMainCommands.Size = New System.Drawing.Size(278, 272)
         '
         'READDiskToolStripMenuItem
         '
@@ -240,12 +244,6 @@ Partial Class frmMain
         '
         Me.ToolStripMenuItem8.Name = "ToolStripMenuItem8"
         Me.ToolStripMenuItem8.Size = New System.Drawing.Size(274, 6)
-        '
-        'EnableProgramLOGToolStripMenuItem
-        '
-        Me.EnableProgramLOGToolStripMenuItem.Name = "EnableProgramLOGToolStripMenuItem"
-        Me.EnableProgramLOGToolStripMenuItem.Size = New System.Drawing.Size(277, 22)
-        Me.EnableProgramLOGToolStripMenuItem.Text = "Enable Program .LOG"
         '
         'lblGWLocation
         '
@@ -926,6 +924,30 @@ Partial Class frmMain
         Me.chkLOG.Text = "Log"
         Me.chkLOG.UseVisualStyleBackColor = True
         '
+        'LogOptionsToolStripMenuItem
+        '
+        Me.LogOptionsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.EnableProgramLOGToolStripMenuItem, Me.ToolStripMenuItem9, Me.WriteLOGWithEachReadWriteToolStripMenuItem})
+        Me.LogOptionsToolStripMenuItem.Name = "LogOptionsToolStripMenuItem"
+        Me.LogOptionsToolStripMenuItem.Size = New System.Drawing.Size(277, 22)
+        Me.LogOptionsToolStripMenuItem.Text = "Log options:"
+        '
+        'EnableProgramLOGToolStripMenuItem
+        '
+        Me.EnableProgramLOGToolStripMenuItem.Name = "EnableProgramLOGToolStripMenuItem"
+        Me.EnableProgramLOGToolStripMenuItem.Size = New System.Drawing.Size(244, 22)
+        Me.EnableProgramLOGToolStripMenuItem.Text = "Enable Program .LOG"
+        '
+        'ToolStripMenuItem9
+        '
+        Me.ToolStripMenuItem9.Name = "ToolStripMenuItem9"
+        Me.ToolStripMenuItem9.Size = New System.Drawing.Size(241, 6)
+        '
+        'WriteLOGWithEachReadWriteToolStripMenuItem
+        '
+        Me.WriteLOGWithEachReadWriteToolStripMenuItem.Name = "WriteLOGWithEachReadWriteToolStripMenuItem"
+        Me.WriteLOGWithEachReadWriteToolStripMenuItem.Size = New System.Drawing.Size(244, 22)
+        Me.WriteLOGWithEachReadWriteToolStripMenuItem.Text = "Write LOG with each Read/Write"
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -984,6 +1006,7 @@ Partial Class frmMain
         Me.Controls.Add(Me.txtSaveLocation)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
+        Me.MinimumSize = New System.Drawing.Size(924, 0)
         Me.Name = "frmMain"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Run GreaseWeazle Script"
@@ -1082,6 +1105,9 @@ Partial Class frmMain
     Friend WithEvents btnGWBandwidth As Button
     Friend WithEvents btnGWDelays As Button
     Friend WithEvents ToolStripMenuItem8 As ToolStripSeparator
-    Friend WithEvents EnableProgramLOGToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents chkLOG As CheckBox
+    Friend WithEvents LogOptionsToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents EnableProgramLOGToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem9 As ToolStripSeparator
+    Friend WithEvents WriteLOGWithEachReadWriteToolStripMenuItem As ToolStripMenuItem
 End Class

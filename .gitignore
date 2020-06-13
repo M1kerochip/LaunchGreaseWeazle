@@ -3,6 +3,11 @@
 obj/
 bin/Debug/
 
+Scripts_RelativeDirectories/_SW
+Scripts_RelativeDirectories/Aufit-1.3
+Scripts_RelativeDirectories/HxCFloppyEmulator_soft_beta
+Scripts_RelativeDirectories/NConvert
+
 # User-specific files
 *.rsuser
 *.suo

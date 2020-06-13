@@ -156,9 +156,26 @@
     <None Include="Scripts\Convert_All_Amiga.cmd" />
     <None Include="Scripts\Convert_All_Atari.cmd" />
     <None Include="Scripts\Convert_All_IBM_PC.cmd" />
+    <None Include="Scripts_RelativeDirectories\00_Convert_BMP_%28Disk%29.cmd" />
+    <None Include="Scripts_RelativeDirectories\01_Convert_BMP_%28Data%29.cmd" />
+    <None Include="Scripts_RelativeDirectories\02_Convert_IPF.cmd" />
+    <None Include="Scripts_RelativeDirectories\03_Convert_HFEv3.cmd" />
+    <None Include="Scripts_RelativeDirectories\04_Convert_ST.cmd" />
+    <None Include="Scripts_RelativeDirectories\05_Convert_STX.cmd" />
+    <None Include="Scripts_RelativeDirectories\06_Convert_ADF.cmd" />
+    <None Include="Scripts_RelativeDirectories\07_Convert_Ext.ADF.cmd" />
+    <None Include="Scripts_RelativeDirectories\08_nConvert_BMP_PNG.cmd" />
+    <None Include="Scripts_RelativeDirectories\09_Convert_IBM_PC.img.cmd" />
+    <None Include="Scripts_RelativeDirectories\10_Convert_Aufit_AtariST_STX.cmd" />
+    <None Include="Scripts_RelativeDirectories\Convert_All_Amiga+Atari.cmd" />
+    <None Include="Scripts_RelativeDirectories\Convert_All_Amiga.cmd" />
+    <None Include="Scripts_RelativeDirectories\Convert_All_Atari.cmd" />
+    <None Include="Scripts_RelativeDirectories\Convert_All_IBM_PC.cmd" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <Content Include="Scripts_RelativeDirectories\Scripts required files.txt" />
+    <Content Include="Scripts_RelativeDirectories\_Notes.txt" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

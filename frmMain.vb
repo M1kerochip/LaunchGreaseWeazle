@@ -36,7 +36,7 @@ Public Class frmMain
     Public Function SetUpScreen() As Boolean
         cmbSerialPorts.Items.Clear()
 
-        For Each sp As String In My.Computer.Ports.SerialPortNames
+        For Each sp As String In My.Computer.Ports.SerialPortNames      'Add detected serial ports to combo box drop down
             cmbSerialPorts.Items.Add(sp)
         Next
 
@@ -71,6 +71,11 @@ Public Class frmMain
         cmbRPM.Text = My.Settings.RPM
         cmbRate.Text = My.Settings.DataRate
         chkLOG.Checked = My.Settings.RunningLog
+
+        EnableProgramLOGToolStripMenuItem.CheckOnClick = True
+        EnableProgramLOGToolStripMenuItem.Checked = chkLOG.Checked
+        WriteLOGWithEachReadWriteToolStripMenuItem.CheckOnClick = True
+        WriteLOGWithEachReadWriteToolStripMenuItem.Checked = chkSaveLog.Checked
 
         rtbOutput.Visible = False
         Me.Size = New Size(534, Me.Size.Height)
@@ -140,7 +145,7 @@ Public Class frmMain
         ToolTipMainForm.SetToolTip(cmbRate, "Set the disk RPM to this rate. This setting is set before all others.")
         ToolTipMainForm.SetToolTip(chkRPM, "Enable the drive RPM.")
         ToolTipMainForm.SetToolTip(cmbRPM, "Set read rate. 250 for DD disks, 500 for HD disks.")
-        ToolTipMainForm.SetToolTip(chkLOG, "Save a running log of actions to programname.log")
+        ToolTipMainForm.SetToolTip(chkLOG, "Save an audit log of actions to a programname.log file")
         Return True
     End Function
 
@@ -736,10 +741,12 @@ Public Class frmMain
     Private Sub BtnResize_Click(sender As Object, e As EventArgs) Handles btnResize.Click
         If rtbOutput.Visible Then
             rtbOutput.Visible = False
+            Me.MinimumSize = New Size(534, Me.Height)
             Me.Width = 534
             btnResize.Text = ">"
         Else
             rtbOutput.Visible = True
+            Me.MinimumSize = New Size(924, Me.Height)
             Me.Width = 924
             btnResize.Text = "<"
         End If
@@ -905,6 +912,7 @@ Public Class frmMain
         btnUpdateFirmware.Visible = rtbOutput.Visible
         lblPin.Visible = rtbOutput.Visible
         lblState.Visible = rtbOutput.Visible
+        chkLOG.Visible = rtbOutput.Visible
     End Sub
 
     Private Sub btnInfo_Click(sender As Object, e As EventArgs) Handles btnInfo.Click, GreaseweazleINFOToolStripMenuItem.Click
@@ -934,10 +942,23 @@ Public Class frmMain
         cmbRevolutions.Enabled = chkRevolutions.Checked
     End Sub
 
-    Private Sub frmMain_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
-        Dim p As New Point
-        p.X = txtExecuteScript.Width + 12
-        p.Y = btnExecuteScript.Location.Y
-        btnExecuteScript.Location() = p
+    Private Sub EnableProgramLOGToolStripMenuItem_Click(sender As Object, e As EventArgs)
+        'Checks or unchecks the "Log" checkbox.
+        EnableProgramLOGToolStripMenuItem.Checked = Not (chkLOG.Checked)
+        chkLOG.Checked = EnableProgramLOGToolStripMenuItem.Checked
+    End Sub
+
+    Private Sub btnExecuteScript_Move(sender As Object, e As EventArgs) Handles btnExecuteScript.Move
+        btnExecuteScript.Left = txtExecuteScript.Width + 12
+    End Sub
+
+    Private Sub txtExecuteScript_Resize(sender As Object, e As EventArgs) Handles txtExecuteScript.Resize
+        btnExecuteScript.Left = txtExecuteScript.Width + 12
+    End Sub
+
+    Private Sub WriteLOGWithEachReadWriteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WriteLOGWithEachReadWriteToolStripMenuItem.Click
+        'Checks or unchecks the "Write LOG" checkbox.
+        WriteLOGWithEachReadWriteToolStripMenuItem.Checked = Not (chkSaveLog.Checked)
+        chkSaveLog.Checked = WriteLOGWithEachReadWriteToolStripMenuItem.Checked
     End Sub
 End Class
