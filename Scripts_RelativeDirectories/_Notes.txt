@@ -1,4 +1,4 @@
-Each bactch file has the path to the .exe hard coded, to a relative directory.
+Each batch file has the path to the .exe hard coded, to a relative directory.
 
 To use, decompress the required files to a folder on your HDD, and place the script files in the same folder.
 

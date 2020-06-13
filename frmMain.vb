@@ -433,6 +433,29 @@ Public Class frmMain
         Replace(cmbDiskRevision.Text, " ", "_")
     End Sub
 
+    Function ExecuteCommand(ByVal fileToRun As String, ByVal Arguments As String, ByVal WinState As Integer) As Boolean
+        Dim CMD As New Process
+        CMD.StartInfo.FileName = fileToRun
+        CMD.StartInfo.Arguments = Arguments
+        Select Case WinState
+            Case 0, 1   'Execute With normal cmd window (ie chkbox onscreen ticked or unticked)
+                CMD.StartInfo.UseShellExecute = True
+                CMD.StartInfo.WindowStyle = ProcessWindowStyle.Normal
+
+            Case 2      'Execute With hidden cmd window (ie chkbox onscreen is third state/half checked)
+                CMD.StartInfo.UseShellExecute = True
+                CMD.StartInfo.WindowStyle = ProcessWindowStyle.Minimized
+
+            Case 3      'Execute With no cmd window
+                CMD.StartInfo.UseShellExecute = False
+                CMD.StartInfo.CreateNoWindow = True
+        End Select
+
+        CMD.StartInfo.WorkingDirectory = IO.Path.GetDirectoryName(fileToRun)
+        'CMD.StartInfo.RedirectStandardInput = True
+        'CMD.StartInfo.RedirectStandardOutput = True
+        CMD.Start()
+    End Function
     ''' <summary>
     ''' Calls python.exe to run the gw.py script (Or run gw.exe directly in later versions)
     ''' </summary>
@@ -554,14 +577,7 @@ Public Class frmMain
                 End If
 
                 If oktorun Then
-                    Dim inStartInfo As New ProcessStartInfo
-                    inStartInfo.Arguments = fName
-                    inStartInfo.FileName = txtExecuteScript.Text.Trim
-                    inStartInfo.WindowStyle = ProcessWindowStyle.Normal
-                    If chkExecuteScript.CheckState = CheckState.Indeterminate Then
-                        inStartInfo.WindowStyle = ProcessWindowStyle.Minimized
-                    End If
-                    System.Diagnostics.Process.Start(inStartInfo)
+                    ExecuteCommand(txtExecuteScript.Text.Trim, fName, chkExecuteScript.CheckState)
                 End If
             End If
         End If
@@ -731,7 +747,7 @@ Public Class frmMain
     End Sub
 
     Private Sub LinkLabelLaunchNow_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabelLaunchNow.LinkClicked
-        System.Diagnostics.Process.Start(txtExecuteScript.Text.Trim, txtSaveLocation.Text.Trim + CreateFileName(False))
+        ExecuteCommand(txtExecuteScript.Text.Trim, txtSaveLocation.Text.Trim + CreateFileName(False), chkExecuteScript.CheckState)
     End Sub
 
     Private Sub ChkStartCyl_CheckedChanged(sender As Object, e As EventArgs) Handles ChkStartTrack.CheckedChanged
