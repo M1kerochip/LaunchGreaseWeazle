@@ -332,10 +332,10 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property SingleSided() As Boolean
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property SingleSided() As Integer
             Get
-                Return CType(Me("SingleSided"),Boolean)
+                Return CType(Me("SingleSided"),Integer)
             End Get
             Set
                 Me("SingleSided") = value
@@ -411,6 +411,30 @@ Namespace My
             End Get
             Set
                 Me("RunningLog") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property UpdateSettings() As Boolean
+            Get
+                Return CType(Me("UpdateSettings"),Boolean)
+            End Get
+            Set
+                Me("UpdateSettings") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property EraseEmpty() As Boolean
+            Get
+                Return CType(Me("EraseEmpty"),Boolean)
+            End Get
+            Set
+                Me("EraseEmpty") = value
             End Set
         End Property
     End Class

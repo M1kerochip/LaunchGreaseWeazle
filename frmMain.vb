@@ -40,6 +40,12 @@ Public Class frmMain
             cmbSerialPorts.Items.Add(sp)
         Next
 
+        If My.Settings.UpdateSettings = True Then                       'Copy user settings from previous application version if necessary
+            My.Settings.Upgrade()
+            My.Settings.UpdateSettings = False
+            My.Settings.Save()
+        End If
+
         txtSaveLocation.Text = My.Settings.SaveLoc
         txtPythonLocation.Text = My.Settings.Python
         chkF7.Checked = My.Settings.F7
@@ -60,7 +66,7 @@ Public Class frmMain
         txtPublisher.Text = My.Settings.Company
         txtExecuteScript.Text = My.Settings.Script
         chkDoubleStep.Checked = My.Settings.DoubleStep
-        chkSingleSided.Checked = My.Settings.SingleSided
+        chkSingleSided.CheckState = CType(My.Settings.SingleSided, CheckState)
         ChkStartTrack.Checked = My.Settings.StartTrack
         cmbStartTrack.Text = CStr(My.Settings.StartTrackNo)
         chkEndTrack.Checked = My.Settings.EndTrack
@@ -71,6 +77,7 @@ Public Class frmMain
         cmbRPM.Text = My.Settings.RPM
         cmbRate.Text = My.Settings.DataRate
         chkLOG.Checked = My.Settings.RunningLog
+        chkEraseEmpty.Checked = My.Settings.EraseEmpty
 
         EnableProgramLOGToolStripMenuItem.CheckOnClick = True
         EnableProgramLOGToolStripMenuItem.Checked = chkLOG.Checked
@@ -123,7 +130,7 @@ Public Class frmMain
         ToolTipMainForm.SetToolTip(LinkLabelDriveSelect, "Opens the 'Drive Select' page of the Wiki.")
         ToolTipMainForm.SetToolTip(ChkStartTrack, "Check to select a default start track other than track 0.")
         ToolTipMainForm.SetToolTip(chkEndTrack, "Check to select a default end track. Number of tracks that a drive can read/write depends on the drive itself. Consult disk drive manual if unsure.")
-        ToolTipMainForm.SetToolTip(chkSingleSided, "Select this to read/write only on disk side 0 (the bottom on most drives)/ If unsure, leave unchecked. Maps to --single-sided argument.")
+        ToolTipMainForm.SetToolTip(chkSingleSided, "Select this to read/write only on disk side 0 (the bottom on most drives)/ If unsure, leave unchecked. Maps to --single-sided argument. Select a second time to enable legacy single sided images. maps to ::legacy_ss argument.")
         'ToolTipMainForm.SetToolTip(chkAdjustSpeed, "Removed in v0.13 of Greaseweazle. Maps to --adjust-speed argument. Adjust write-flux times for drive speed.")
         ToolTipMainForm.SetToolTip(cmbStartTrack, "Track to start read/write process on. Tracks are zero indexed. Actual number of tracks a drive supports varies. Consult disk drive manual if unsure.")
         ToolTipMainForm.SetToolTip(cmbEndTrack, "Track to end read/write process on. Tracks are zero indexed. Actual number of tracks a drive supports varies. Consult disk drive manual if unsure.")
@@ -132,7 +139,7 @@ Public Class frmMain
         ToolTipMainForm.SetToolTip(btnUpdateFirmware, "Begin GreaseWeazle firmware upgrade process. Bridge the two pins: DCLK + DCIO and select update file.")
         ToolTipMainForm.SetToolTip(LinkLabelLaunchGW, "The Github repository for this program. Get the latest versions here.")
         ToolTipMainForm.SetToolTip(btnResetDevice, "Resets the Greaseweazle device to power-on settings: Motors off, drives deselected, power-on pin levels and delay values. GW 0.12+ required.")
-        ToolTipMainForm.SetToolTip(chkDoubleStep, "Makes the Greaseweazle move the head two tracks at a time. Used to read 40 track disks on an 80 track device. EG C64 (SD) disk in an IBM PC (DD) drive. GW 0.12+ required.")
+        ToolTipMainForm.SetToolTip(chkDoubleStep, "Makes the Greaseweazle move the head two tracks at a time. Used to read (GW 0.12+) or write (GW 0.20+) 40 track disks on an 80 track device. EG C64 (SD) disk in an IBM PC (DD) drive.")
         ToolTipMainForm.SetToolTip(btnSetPin, "Set the pin in the dropdown list to either Low (0v) or Hight (5v). GW v0.12+ required.")
         ToolTipMainForm.SetToolTip(cmbPIN, "The floppy drive pin whos value will be set either high or low. (Cannot be blank) GW 0.12+ required.")
         ToolTipMainForm.SetToolTip(cmbLowHigh, "Force a Low or High value on a given pin. (Cannot be blank) GW 0.12+ required.")
@@ -146,6 +153,7 @@ Public Class frmMain
         ToolTipMainForm.SetToolTip(chkRPM, "Enable the drive RPM.")
         ToolTipMainForm.SetToolTip(cmbRPM, "Set read rate. 250 for DD disks, 500 for HD disks.")
         ToolTipMainForm.SetToolTip(chkLOG, "Save an audit log of actions to a programname.log file")
+        ToolTipMainForm.SetToolTip(chkEraseEmpty, "Erases empty tracks on write. Off by default.")
         Return True
     End Function
 
@@ -318,6 +326,7 @@ Public Class frmMain
         My.Settings.DoubleStep = chkDoubleStep.Checked
         My.Settings.StartTrack = ChkStartTrack.Checked
         My.Settings.RunningLog = chkLOG.Checked
+        My.Settings.EraseEmpty = chkEraseEmpty.Checked
         If IsNumeric(cmbStartTrack.Text) Then
             My.Settings.StartTrackNo = CInt(cmbStartTrack.Text)
         Else
@@ -329,7 +338,7 @@ Public Class frmMain
         Else
             My.Settings.EndTrackNo = 81
         End If
-        My.Settings.SingleSided = chkSingleSided.Checked
+        My.Settings.SingleSided = chkSingleSided.CheckState
         'My.Settings.AdjustWriteSpeed = chkAdjustSpeed.Checked
         My.Settings.IncludeDataRate = chkRate.Checked
         My.Settings.IncludeRPM = chkRPM.Checked
@@ -510,13 +519,21 @@ Public Class frmMain
                             str += " read "
                         Else
                             str += " write "                                'Write image to floppy disk (from a supported format)
+
+                            If chkEraseEmpty.Checked Then                   'Erase empty sectors: only applies to write
+                                str += "--erase-empty "
+                            End If
                         End If
                         'If chkAdjustSpeed.Checked Then                      'Removed in Greaseweazle 0.13
                         '    str += "--adjust-speed "
                         'End If
                     End If
-                    If chkSingleSided.Checked Then                          'For single sided floppie disks or drives
+                    If chkSingleSided.Checked Then                          'For single sided floppy disks or drives
                         str += "--single-sided "
+
+                        If chkSingleSided.CheckState = 2 Then               'For legacy single sided floppy disk images
+                            fName += "::legacy_ss"
+                        End If
                     End If
                     If ChkStartTrack.Checked Then
                         str += "--scyl=" + cmbStartTrack.Text + " "         'Start Track: 0 based index
@@ -542,12 +559,13 @@ Public Class frmMain
                         str += "--drive " + cmbDriveSelect.Text             'For F7 devices, a drive can be selected. A/B etc.
                     End If
                 End If
-                If ((GWAction <> GWErase) Or (GWAction <> GWFirmware)) Then 'If we are not erasing a disk or updating firmware, add quotes around filename to save. (Otherewise for erase/firmware, fname is blank, no need for quotes)
+                If ((GWAction <> GWErase) And (GWAction <> GWFirmware)) Then 'If we are not erasing a disk or updating firmware, add quotes around filename to save. (Otherewise for erase/firmware, fname is blank, no need for quotes)
                     str += ControlChars.Quote + fName + ControlChars.Quote + " "
                 End If
             End If
         End If
         str += ComPort                                                      'Add com port to the string
+
         CMD.StartInfo.Arguments = str
         CMD.StartInfo.UseShellExecute = False
         CMD.StartInfo.RedirectStandardInput = True
@@ -560,6 +578,7 @@ Public Class frmMain
         Do Until SR.EndOfStream = True
             rtbOutput.Text &= SR.ReadLine
             rtbOutput.Text &= Environment.NewLine
+            'Me.Refresh()
         Loop
         SW.Dispose()
         SR.Dispose()
@@ -645,10 +664,10 @@ Public Class frmMain
                 End If
                 rtbOutput.Text += Environment.NewLine
                 rtbOutput.Text &= "to file: " + fileGW + Environment.NewLine + Environment.NewLine
-                    Me.Refresh()
-                    CallGreaseWeazel(txtPythonLocation.Text, "", GWRead, txtSaveLocation.Text + fileGW, cmbSerialPorts.Text, chkDoubleStep.Checked, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked)
-                End If  'Run gw.py once only
-                Else
+                Me.Refresh()
+                CallGreaseWeazel(txtPythonLocation.Text, "", GWRead, txtSaveLocation.Text + fileGW, cmbSerialPorts.Text, chkDoubleStep.Checked, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked)
+            End If  'Run gw.py once only
+        Else
         End If
     End Sub
 
@@ -977,4 +996,5 @@ Public Class frmMain
         WriteLOGWithEachReadWriteToolStripMenuItem.Checked = Not (chkSaveLog.Checked)
         chkSaveLog.Checked = WriteLOGWithEachReadWriteToolStripMenuItem.Checked
     End Sub
+
 End Class

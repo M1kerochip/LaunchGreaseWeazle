@@ -71,8 +71,8 @@
     <Setting Name="EndTrackNo" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">79</Value>
     </Setting>
-    <Setting Name="SingleSided" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+    <Setting Name="SingleSided" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="AdjustWriteSpeed" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -90,6 +90,12 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="RunningLog" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="UpdateSettings" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="EraseEmpty" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
