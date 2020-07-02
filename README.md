@@ -17,7 +17,7 @@ Set your com port, your disk name, and click [Read].
 
 (If you get a message saying GW tools are our of date, expand the program screen, and update your device.)
 
-![Alt Text](LaunchGW_1.7.5.png)
+![Alt Text](LaunchGW_1.8.0.png)
 
 
 ### To update your device: 
