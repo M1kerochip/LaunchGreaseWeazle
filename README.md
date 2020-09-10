@@ -21,6 +21,7 @@ Set your com port, your disk name, and click [Read].
 
 
 ### To update your device: 
+Select the new GW.EXE if upgrading to a new version.
 Disconnect GW device, bridge the pins as directed, reconnect and click [Update firmware] and pick the .upd file.
 
 

@@ -493,6 +493,11 @@ Public Class frmMain
             str = ControlChars.Quote + gwLoc + ControlChars.Quote 'Add save location
         End If
 
+        Dim COMStr As String = ""                  'Define Com Port string
+        If ComPort <> "" Then
+            COMStr = "--device " + ComPort + " "
+        End If
+
         If ((GWAction = GWReset) Or (GWAction = GWInfo) Or (GWAction = GWBandwidth) Or (GWAction = GWDelays)) Then
             Select Case GWAction
                 Case GWReset
@@ -504,9 +509,11 @@ Public Class frmMain
                 Case GWDelays
                     str += " delays "       'Get device delays.
             End Select
+            str += COMStr                   'Add com port to the string
         Else
             If GWAction = GWSetPin Then                                     'Set a pin level, 0v or 5v.
                 str += " pin " + PinToSet.ToString + " " + PinLevel + " "
+                str += COMStr                   'Add com port to the string
             Else
                 If ((GWAction = GWUpdate) Or (GWAction = GWFirmware)) Then  'Update the firmware. (Main or bootloader) GW must have update pins joined for main update only. Booloader update in normal operational mode.
                     str += " update "
@@ -519,7 +526,6 @@ Public Class frmMain
                             str += " read "
                         Else
                             str += " write "                                'Write image to floppy disk (from a supported format)
-
                             If chkEraseEmpty.Checked Then                   'Erase empty sectors: only applies to write
                                 str += "--erase-empty "
                             End If
@@ -528,6 +534,9 @@ Public Class frmMain
                         '    str += "--adjust-speed "
                         'End If
                     End If
+
+                    str += COMStr                   'Add com port to the string
+
                     If chkSingleSided.Checked Then                          'For single sided floppy disks or drives
                         str += "--single-sided "
 
@@ -564,7 +573,6 @@ Public Class frmMain
                 End If
             End If
         End If
-        str += ComPort                                                      'Add com port to the string
 
         CMD.StartInfo.Arguments = str
         CMD.StartInfo.UseShellExecute = False
@@ -997,4 +1005,11 @@ Public Class frmMain
         chkSaveLog.Checked = WriteLOGWithEachReadWriteToolStripMenuItem.Checked
     End Sub
 
+    Private Sub cmbReadFormat_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbReadFormat.SelectedIndexChanged
+        If cmbReadFormat.SelectedIndex > 0 Then
+            If chkSingleSided.CheckState = CheckState.Indeterminate Then
+                chkSingleSided.CheckState = CheckState.Checked
+            End If
+        End If
+    End Sub
 End Class
