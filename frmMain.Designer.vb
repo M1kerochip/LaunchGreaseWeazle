@@ -118,6 +118,10 @@ Partial Class frmMain
         Me.btnGWBandwidth = New System.Windows.Forms.Button()
         Me.btnGWDelays = New System.Windows.Forms.Button()
         Me.chkLOG = New System.Windows.Forms.CheckBox()
+        Me.btnSeekA = New System.Windows.Forms.Button()
+        Me.btnSeekB = New System.Windows.Forms.Button()
+        Me.cmbSeekA = New System.Windows.Forms.ComboBox()
+        Me.cmbSeekB = New System.Windows.Forms.ComboBox()
         Me.ContextMenuStripMainCommands.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
@@ -148,7 +152,7 @@ Partial Class frmMain
         Me.rtbOutput.Location = New System.Drawing.Point(513, 12)
         Me.rtbOutput.MinimumSize = New System.Drawing.Size(386, 4)
         Me.rtbOutput.Name = "rtbOutput"
-        Me.rtbOutput.Size = New System.Drawing.Size(386, 381)
+        Me.rtbOutput.Size = New System.Drawing.Size(386, 364)
         Me.rtbOutput.TabIndex = 9
         Me.rtbOutput.Text = ""
         '
@@ -738,7 +742,7 @@ Partial Class frmMain
         Me.cmbLowHigh.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbLowHigh.FormattingEnabled = True
         Me.cmbLowHigh.Items.AddRange(New Object() {"Low (0v)", "High (5v)"})
-        Me.cmbLowHigh.Location = New System.Drawing.Point(808, 401)
+        Me.cmbLowHigh.Location = New System.Drawing.Point(808, 410)
         Me.cmbLowHigh.Name = "cmbLowHigh"
         Me.cmbLowHigh.Size = New System.Drawing.Size(88, 21)
         Me.cmbLowHigh.TabIndex = 116
@@ -748,7 +752,7 @@ Partial Class frmMain
         Me.cmbPIN.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmbPIN.FormattingEnabled = True
         Me.cmbPIN.Items.AddRange(New Object() {"2"})
-        Me.cmbPIN.Location = New System.Drawing.Point(684, 401)
+        Me.cmbPIN.Location = New System.Drawing.Point(684, 410)
         Me.cmbPIN.Name = "cmbPIN"
         Me.cmbPIN.Size = New System.Drawing.Size(40, 21)
         Me.cmbPIN.TabIndex = 112
@@ -756,9 +760,9 @@ Partial Class frmMain
         'btnSetPin
         '
         Me.btnSetPin.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnSetPin.Location = New System.Drawing.Point(568, 400)
+        Me.btnSetPin.Location = New System.Drawing.Point(528, 409)
         Me.btnSetPin.Name = "btnSetPin"
-        Me.btnSetPin.Size = New System.Drawing.Size(80, 21)
+        Me.btnSetPin.Size = New System.Drawing.Size(93, 21)
         Me.btnSetPin.TabIndex = 108
         Me.btnSetPin.Text = "Set Pin Level"
         Me.btnSetPin.UseVisualStyleBackColor = True
@@ -767,7 +771,7 @@ Partial Class frmMain
         '
         Me.lblPin.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblPin.AutoSize = True
-        Me.lblPin.Location = New System.Drawing.Point(653, 404)
+        Me.lblPin.Location = New System.Drawing.Point(653, 414)
         Me.lblPin.Name = "lblPin"
         Me.lblPin.Size = New System.Drawing.Size(25, 13)
         Me.lblPin.TabIndex = 110
@@ -777,7 +781,7 @@ Partial Class frmMain
         '
         Me.lblState.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblState.AutoSize = True
-        Me.lblState.Location = New System.Drawing.Point(730, 404)
+        Me.lblState.Location = New System.Drawing.Point(730, 413)
         Me.lblState.Name = "lblState"
         Me.lblState.Size = New System.Drawing.Size(75, 13)
         Me.lblState.TabIndex = 114
@@ -954,12 +958,53 @@ Partial Class frmMain
         '
         Me.chkLOG.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.chkLOG.AutoSize = True
-        Me.chkLOG.Location = New System.Drawing.Point(513, 403)
+        Me.chkLOG.Location = New System.Drawing.Point(801, 384)
         Me.chkLOG.Name = "chkLOG"
-        Me.chkLOG.Size = New System.Drawing.Size(44, 17)
+        Me.chkLOG.Size = New System.Drawing.Size(95, 17)
         Me.chkLOG.TabIndex = 126
-        Me.chkLOG.Text = "Log"
+        Me.chkLOG.Text = "Save LOG File"
         Me.chkLOG.UseVisualStyleBackColor = True
+        '
+        'btnSeekA
+        '
+        Me.btnSeekA.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnSeekA.Location = New System.Drawing.Point(528, 382)
+        Me.btnSeekA.Name = "btnSeekA"
+        Me.btnSeekA.Size = New System.Drawing.Size(61, 21)
+        Me.btnSeekA.TabIndex = 127
+        Me.btnSeekA.Text = "Seek (A)"
+        Me.btnSeekA.UseVisualStyleBackColor = True
+        '
+        'btnSeekB
+        '
+        Me.btnSeekB.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnSeekB.Location = New System.Drawing.Point(663, 382)
+        Me.btnSeekB.Name = "btnSeekB"
+        Me.btnSeekB.Size = New System.Drawing.Size(61, 21)
+        Me.btnSeekB.TabIndex = 128
+        Me.btnSeekB.Text = "Seek (B)"
+        Me.btnSeekB.UseVisualStyleBackColor = True
+        '
+        'cmbSeekA
+        '
+        Me.cmbSeekA.FormattingEnabled = True
+        Me.cmbSeekA.Items.AddRange(New Object() {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"})
+        Me.cmbSeekA.Location = New System.Drawing.Point(595, 383)
+        Me.cmbSeekA.Name = "cmbSeekA"
+        Me.cmbSeekA.Size = New System.Drawing.Size(42, 21)
+        Me.cmbSeekA.TabIndex = 73
+        Me.cmbSeekA.Tag = ""
+        Me.cmbSeekA.Text = "0"
+        '
+        'cmbSeekB
+        '
+        Me.cmbSeekB.FormattingEnabled = True
+        Me.cmbSeekB.Items.AddRange(New Object() {"79", "80", "81", "82", "83", "37", "38", "39", "40", "41", "42", "43"})
+        Me.cmbSeekB.Location = New System.Drawing.Point(733, 382)
+        Me.cmbSeekB.Name = "cmbSeekB"
+        Me.cmbSeekB.Size = New System.Drawing.Size(42, 21)
+        Me.cmbSeekB.TabIndex = 73
+        Me.cmbSeekB.Text = "83"
         '
         'frmMain
         '
@@ -967,6 +1012,10 @@ Partial Class frmMain
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(908, 473)
         Me.ContextMenuStrip = Me.ContextMenuStripMainCommands
+        Me.Controls.Add(Me.cmbSeekB)
+        Me.Controls.Add(Me.cmbSeekA)
+        Me.Controls.Add(Me.btnSeekB)
+        Me.Controls.Add(Me.btnSeekA)
         Me.Controls.Add(Me.chkLOG)
         Me.Controls.Add(Me.btnGWDelays)
         Me.Controls.Add(Me.btnGWBandwidth)
@@ -1124,4 +1173,8 @@ Partial Class frmMain
     Friend WithEvents ToolStripMenuItem9 As ToolStripSeparator
     Friend WithEvents WriteLOGWithEachReadWriteToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents chkEraseEmpty As CheckBox
+    Friend WithEvents btnSeekA As Button
+    Friend WithEvents btnSeekB As Button
+    Friend WithEvents cmbSeekA As ComboBox
+    Friend WithEvents cmbSeekB As ComboBox
 End Class

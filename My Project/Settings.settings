@@ -98,5 +98,11 @@
     <Setting Name="EraseEmpty" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="SeekA" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="SeekB" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">83</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

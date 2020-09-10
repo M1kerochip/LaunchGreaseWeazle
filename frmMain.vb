@@ -12,6 +12,7 @@ Public Class frmMain
     Private GWInfo As Integer = 7       'call gw.py info
     Private GWBandwidth As Integer = 8  'call gw.py bandwidth
     Private GWDelays As Integer = 9     'call gw.py delays
+    Private GWSeek As Integer = 10      'call gw.py seek
 
     ''' <summary>
     ''' Sets the title of the Form with the form name plus exe version number
@@ -71,6 +72,8 @@ Public Class frmMain
         cmbStartTrack.Text = CStr(My.Settings.StartTrackNo)
         chkEndTrack.Checked = My.Settings.EndTrack
         cmbEndTrack.Text = CStr(My.Settings.EndTrackNo)
+        cmbSeekA.Text = CStr(My.Settings.SeekA)
+        cmbSeekB.Text = CStr(My.Settings.SeekB)
         'chkAdjustSpeed.Checked = My.Settings.AdjustWriteSpeed
         chkRate.Checked = My.Settings.IncludeDataRate
         chkRPM.Checked = My.Settings.IncludeRPM
@@ -327,6 +330,16 @@ Public Class frmMain
         My.Settings.StartTrack = ChkStartTrack.Checked
         My.Settings.RunningLog = chkLOG.Checked
         My.Settings.EraseEmpty = chkEraseEmpty.Checked
+        If IsNumeric(cmbSeekA.Text) Then
+            My.Settings.SeekA = CInt(cmbSeekA.Text)
+        Else
+            My.Settings.SeekA = 0
+        End If
+        If IsNumeric(cmbSeekB.Text) Then
+            My.Settings.SeekB = CInt(cmbSeekB.Text)
+        Else
+            My.Settings.SeekB = 83
+        End If
         If IsNumeric(cmbStartTrack.Text) Then
             My.Settings.StartTrackNo = CInt(cmbStartTrack.Text)
         Else
@@ -336,7 +349,7 @@ Public Class frmMain
         If IsNumeric(cmbEndTrack.Text) Then
             My.Settings.EndTrackNo = CInt(cmbEndTrack.Text)
         Else
-            My.Settings.EndTrackNo = 81
+            My.Settings.EndTrackNo = 83
         End If
         My.Settings.SingleSided = chkSingleSided.CheckState
         'My.Settings.AdjustWriteSpeed = chkAdjustSpeed.Checked
@@ -444,27 +457,34 @@ Public Class frmMain
 
     Function ExecuteCommand(ByVal fileToRun As String, ByVal Arguments As String, ByVal WinState As Integer) As Boolean
         Dim CMD As New Process
-        CMD.StartInfo.FileName = fileToRun
-        CMD.StartInfo.Arguments = Arguments
-        Select Case WinState
-            Case 0, 1   'Execute With normal cmd window (ie chkbox onscreen ticked or unticked)
-                CMD.StartInfo.UseShellExecute = True
-                CMD.StartInfo.WindowStyle = ProcessWindowStyle.Normal
+        Dim RVal As Boolean = False
+        Try
+            CMD.StartInfo.FileName = fileToRun
+            CMD.StartInfo.Arguments = Arguments
+            Select Case WinState
+                Case 0, 1   'Execute With normal cmd window (ie chkbox onscreen ticked or unticked)
+                    CMD.StartInfo.UseShellExecute = True
+                    CMD.StartInfo.WindowStyle = ProcessWindowStyle.Normal
 
-            Case 2      'Execute With hidden cmd window (ie chkbox onscreen is third state/half checked)
-                CMD.StartInfo.UseShellExecute = True
-                CMD.StartInfo.WindowStyle = ProcessWindowStyle.Minimized
+                Case 2      'Execute With hidden cmd window (ie chkbox onscreen is third state/half checked)
+                    CMD.StartInfo.UseShellExecute = True
+                    CMD.StartInfo.WindowStyle = ProcessWindowStyle.Minimized
 
-            Case 3      'Execute With no cmd window
-                CMD.StartInfo.UseShellExecute = False
-                CMD.StartInfo.CreateNoWindow = True
-        End Select
+                Case 3      'Execute With no cmd window
+                    CMD.StartInfo.UseShellExecute = False
+                    CMD.StartInfo.CreateNoWindow = True
+            End Select
 
-        CMD.StartInfo.WorkingDirectory = IO.Path.GetDirectoryName(fileToRun)
-        'CMD.StartInfo.RedirectStandardInput = True
-        'CMD.StartInfo.RedirectStandardOutput = True
-        CMD.Start()
+            CMD.StartInfo.WorkingDirectory = IO.Path.GetDirectoryName(fileToRun)
+            'CMD.StartInfo.RedirectStandardInput = True
+            'CMD.StartInfo.RedirectStandardOutput = True
+            CMD.Start()
+            RVal = True
+        Finally
+        End Try
+        Return RVal
     End Function
+
     ''' <summary>
     ''' Calls python.exe to run the gw.py script (Or run gw.exe directly in later versions)
     ''' </summary>
@@ -482,7 +502,8 @@ Public Class frmMain
     Private Function CallGreaseWeazel(ByVal PythonEXE As String, ByVal gwLoc As String, ByVal GWAction As Integer,
                                       ByVal fName As String, ByVal ComPort As String, ByVal DoubleStep As Boolean,
                                       ByVal PinToSet As Integer, ByVal PinLevel As Char, ByVal RPM As Integer,
-                                      ByVal Rate As Integer, ByVal SetRPM As Boolean, ByVal SetRate As Boolean) As Boolean
+                                      ByVal Rate As Integer, ByVal SetRPM As Boolean, ByVal SetRate As Boolean,
+                                      ByVal SeekCyl As Integer) As Boolean
         Dim CMD As New Process
         Dim SW As IO.StreamWriter
         Dim SR As IO.StreamReader
@@ -498,16 +519,18 @@ Public Class frmMain
             COMStr = "--device " + ComPort + " "
         End If
 
-        If ((GWAction = GWReset) Or (GWAction = GWInfo) Or (GWAction = GWBandwidth) Or (GWAction = GWDelays)) Then
+        If ((GWAction = GWReset) Or (GWAction = GWInfo) Or (GWAction = GWBandwidth) Or (GWAction = GWDelays) Or (GWAction = GWSeek)) Then
             Select Case GWAction
                 Case GWReset
-                    str += " reset "        'Reset Device
+                    str += " reset "                    'Reset Device
                 Case GWInfo
-                    str += " info "         'Get Device Info
+                    str += " info "                     'Get Device Info
                 Case GWBandwidth
-                    str += " bandwidth "    'Get device bandwidth between GW and pc.
+                    str += " bandwidth "                'Get device bandwidth between GW and pc.
                 Case GWDelays
-                    str += " delays "       'Get device delays.
+                    str += " delays "                   'Get device delays.
+                Case GWSeek
+                    str += " seek " + CStr(SeekCyl)     'Move drive head to this cylender/track
             End Select
             str += COMStr                   'Add com port to the string
         Else
@@ -651,7 +674,7 @@ Public Class frmMain
                     rtbOutput.Text += Environment.NewLine
                     rtbOutput.Text &= "to file: " + fileGW + Environment.NewLine + Environment.NewLine
                     Me.Refresh()
-                    CallGreaseWeazel(txtPythonLocation.Text, "", GWRead, txtSaveLocation.Text + fileGW, cmbSerialPorts.Text, chkDoubleStep.Checked, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked)
+                    CallGreaseWeazel(txtPythonLocation.Text, "", GWRead, txtSaveLocation.Text + fileGW, cmbSerialPorts.Text, chkDoubleStep.Checked, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, 0)
                 Next                    'If running gw.py on a loop, to dump a disk multiple times
             Else    'Run gw.py once only
                 Dim fileGW As String = CreateFileName(True)
@@ -673,7 +696,7 @@ Public Class frmMain
                 rtbOutput.Text += Environment.NewLine
                 rtbOutput.Text &= "to file: " + fileGW + Environment.NewLine + Environment.NewLine
                 Me.Refresh()
-                CallGreaseWeazel(txtPythonLocation.Text, "", GWRead, txtSaveLocation.Text + fileGW, cmbSerialPorts.Text, chkDoubleStep.Checked, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked)
+                CallGreaseWeazel(txtPythonLocation.Text, "", GWRead, txtSaveLocation.Text + fileGW, cmbSerialPorts.Text, chkDoubleStep.Checked, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, 0)
             End If  'Run gw.py once only
         Else
         End If
@@ -726,7 +749,7 @@ Public Class frmMain
                 End If
                 rtbOutput.Text &= Environment.NewLine
                 rtbOutput.Text &= "using file: " + fileGW + Environment.NewLine + Environment.NewLine
-                CallGreaseWeazel(txtPythonLocation.Text, "", GWWrite, fileGW, cmbSerialPorts.Text, chkDoubleStep.Checked, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked)
+                CallGreaseWeazel(txtPythonLocation.Text, "", GWWrite, fileGW, cmbSerialPorts.Text, chkDoubleStep.Checked, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, 0)
             Else
                 rtbOutput.Text &= Environment.NewLine + "Write image cancelled" + Environment.NewLine
             End If
@@ -816,7 +839,7 @@ Public Class frmMain
                 rtbOutput.Text &= "Please ensure GND + DCLK are bridged with a jumper before the process starts."
                 rtbOutput.Text &= Environment.NewLine + Environment.NewLine
                 If MessageBox.Show("Continue with flashing process?" + vbNewLine + vbNewLine + "Are GND + DCLK are bridged with a jumper also?", "Flash Greaseweazle", MessageBoxButtons.OKCancel) = DialogResult.OK Then
-                    CallGreaseWeazel(txtPythonLocation.Text, "", GWUpdate, fileGW, cmbSerialPorts.Text, chkDoubleStep.Checked, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked)
+                    CallGreaseWeazel(txtPythonLocation.Text, "", GWUpdate, fileGW, cmbSerialPorts.Text, chkDoubleStep.Checked, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, 0)
                     rtbOutput.Text &= Environment.NewLine + Environment.NewLine
                     rtbOutput.Text &= "Remember to select the updated gw.py in the 'Greaseweazle Script Location'"
                     rtbOutput.Text &= Environment.NewLine + Environment.NewLine
@@ -834,7 +857,7 @@ Public Class frmMain
                 rtbOutput.Text &= Environment.NewLine + Environment.NewLine
             End If
             If MessageBox.Show("Continue with Bootloader flashing?", "Flash Greaseweazle", MessageBoxButtons.OKCancel) = DialogResult.OK Then
-                CallGreaseWeazel(txtPythonLocation.Text, "", GWFirmware, "", cmbSerialPorts.Text, chkDoubleStep.Checked, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked)
+                CallGreaseWeazel(txtPythonLocation.Text, "", GWFirmware, "", cmbSerialPorts.Text, chkDoubleStep.Checked, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, 0)
                 rtbOutput.Text &= Environment.NewLine + Environment.NewLine
                 If IO.Path.GetFileName(txtPythonLocation.Text) <> "gw.exe" Then
                     rtbOutput.Text &= "Remember to select the updated gw.py in the 'Greaseweazle Script Location'"
@@ -853,7 +876,7 @@ Public Class frmMain
         If IsNumeric(cmbPIN.Text) = True Then
             rtbOutput.Text &= "Setting pin level:"
             rtbOutput.Text &= Environment.NewLine + Environment.NewLine
-            CallGreaseWeazel(txtPythonLocation.Text, "", GWSetPin, "", cmbSerialPorts.Text, False, CInt(cmbPIN.Text), cmbLowHigh.Text.Chars(0), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked)
+            CallGreaseWeazel(txtPythonLocation.Text, "", GWSetPin, "", cmbSerialPorts.Text, False, CInt(cmbPIN.Text), cmbLowHigh.Text.Chars(0), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, 0)
         Else
             rtbOutput.Text &= Environment.NewLine + Environment.NewLine
             rtbOutput.Text &= "Pin to change must be selected in the Pin dropdown box."
@@ -864,7 +887,7 @@ Public Class frmMain
         rtbOutput.Text &= Environment.NewLine
         rtbOutput.Text &= "Issuing device reset:"
         rtbOutput.Text &= Environment.NewLine + Environment.NewLine
-        CallGreaseWeazel(txtPythonLocation.Text, "", GWReset, "", cmbSerialPorts.Text, False, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked)
+        CallGreaseWeazel(txtPythonLocation.Text, "", GWReset, "", cmbSerialPorts.Text, False, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, 0)
     End Sub
 
     Private Sub cmbDiskOf_LostFocus(sender As Object, e As EventArgs) Handles cmbDiskOf.LostFocus
@@ -898,7 +921,7 @@ Public Class frmMain
     Private Sub BtnEraseDisk_Click(sender As Object, e As EventArgs) Handles btnEraseDisk.Click
         rtbOutput.Text &= Environment.NewLine + "Erasing Disk:" + Environment.NewLine
         If MessageBox.Show("Erase floppy disk?", "Warning: Erase disk and wipe all contents from it.", MessageBoxButtons.YesNo) = DialogResult.Yes Then
-            CallGreaseWeazel(txtPythonLocation.Text, "", GWErase, "", cmbSerialPorts.Text, False, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked)
+            CallGreaseWeazel(txtPythonLocation.Text, "", GWErase, "", cmbSerialPorts.Text, False, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, 0)
         Else
             rtbOutput.Text &= Environment.NewLine + "Erasing Disk: Cancelled" + Environment.NewLine
         End If
@@ -960,17 +983,17 @@ Public Class frmMain
 
     Private Sub btnInfo_Click(sender As Object, e As EventArgs) Handles btnInfo.Click, GreaseweazleINFOToolStripMenuItem.Click
         rtbOutput.Text &= Environment.NewLine
-        CallGreaseWeazel(txtPythonLocation.Text, "", GWInfo, "", cmbSerialPorts.Text, False, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked)
+        CallGreaseWeazel(txtPythonLocation.Text, "", GWInfo, "", cmbSerialPorts.Text, False, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, 0)
     End Sub
 
     Private Sub btnGWBandwidth_Click(sender As Object, e As EventArgs) Handles btnGWBandwidth.Click, GreaswweazleDToolStripMenuItem.Click
         rtbOutput.Text &= Environment.NewLine
-        CallGreaseWeazel(txtPythonLocation.Text, "", GWBandwidth, "", cmbSerialPorts.Text, False, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked)
+        CallGreaseWeazel(txtPythonLocation.Text, "", GWBandwidth, "", cmbSerialPorts.Text, False, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, 0)
     End Sub
 
     Private Sub btnGWDelays_Click(sender As Object, e As EventArgs) Handles btnGWDelays.Click, GreaseweazleDelaysToolStripMenuItem.Click
         rtbOutput.Text &= Environment.NewLine
-        CallGreaseWeazel(txtPythonLocation.Text, "", GWDelays, "", cmbSerialPorts.Text, False, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked)
+        CallGreaseWeazel(txtPythonLocation.Text, "", GWDelays, "", cmbSerialPorts.Text, False, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, 0)
     End Sub
 
     Private Sub chkRate_CheckedChanged(sender As Object, e As EventArgs) Handles chkRate.CheckedChanged
@@ -1010,6 +1033,26 @@ Public Class frmMain
             If chkSingleSided.CheckState = CheckState.Indeterminate Then
                 chkSingleSided.CheckState = CheckState.Checked
             End If
+        End If
+    End Sub
+
+    Private Sub btnSeekA_Click(sender As Object, e As EventArgs) Handles btnSeekA.Click
+        rtbOutput.Text &= Environment.NewLine
+        If IsNumeric(cmbSeekA.Text) = True Then
+            rtbOutput.Text &= "Moving floppy head to track: " + cmbSeekA.Text + Environment.NewLine
+            CallGreaseWeazel(txtPythonLocation.Text, "", GWSeek, "", cmbSerialPorts.Text, chkDoubleStep.Checked, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, CInt(cmbSeekA.Text))
+        Else
+            rtbOutput.Text &= "SeekA value '" + cmbSeekA.Text + "' isn't a number. Track number must be between 0 and 85."
+        End If
+    End Sub
+
+    Private Sub btnSeekB_Click(sender As Object, e As EventArgs) Handles btnSeekB.Click
+        rtbOutput.Text &= Environment.NewLine
+        If IsNumeric(cmbSeekB.Text) = True Then
+            rtbOutput.Text &= "Moving floppy head to track: " + cmbSeekB.Text + Environment.NewLine
+            CallGreaseWeazel(txtPythonLocation.Text, "", GWSeek, "", cmbSerialPorts.Text, chkDoubleStep.Checked, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, CInt(cmbSeekB.Text))
+        Else
+            rtbOutput.Text &= "SeekB value '" + cmbSeekB.Text + "' isn't a number. Track number must be between 0 and 85."
         End If
     End Sub
 End Class

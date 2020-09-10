@@ -50,7 +50,7 @@ RunGreaseWeazel
  <param name="CheckExists">Check to see if the file exists on the disk. If so, append an integer to prevent GreaseSeazle from overwriting.</param>
  <returns>Filename as a string.</returns>
 </member>
-<member name="M:RunGreaseWeazel.frmMain.CallGreaseWeazel(System.String,System.String,System.Int32,System.String,System.String,System.Boolean,System.Int32,System.Char,System.Int32,System.Int32,System.Boolean,System.Boolean)">
+<member name="M:RunGreaseWeazel.frmMain.CallGreaseWeazel(System.String,System.String,System.Int32,System.String,System.String,System.Boolean,System.Int32,System.Char,System.Int32,System.Int32,System.Boolean,System.Boolean,System.Int32)">
  <summary>
  Calls python.exe to run the gw.py script (Or run gw.exe directly in later versions)
  </summary>

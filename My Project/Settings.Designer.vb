@@ -437,6 +437,30 @@ Namespace My
                 Me("EraseEmpty") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property SeekA() As Integer
+            Get
+                Return CType(Me("SeekA"),Integer)
+            End Get
+            Set
+                Me("SeekA") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("83")>  _
+        Public Property SeekB() As Integer
+            Get
+                Return CType(Me("SeekB"),Integer)
+            End Get
+            Set
+                Me("SeekB") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
