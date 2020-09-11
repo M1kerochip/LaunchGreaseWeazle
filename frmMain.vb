@@ -157,6 +157,8 @@ Public Class frmMain
         ToolTipMainForm.SetToolTip(cmbRPM, "Set read rate. 250 for DD disks, 500 for HD disks.")
         ToolTipMainForm.SetToolTip(chkLOG, "Save an audit log of actions to a programname.log file")
         ToolTipMainForm.SetToolTip(chkEraseEmpty, "Erases empty tracks on write. Off by default.")
+        ToolTipMainForm.SetToolTip(btnSeekA, "Move the disk drive head to this track")
+        ToolTipMainForm.SetToolTip(btnSeekB, "Move the disk drive head to this track")
         Return True
     End Function
 
@@ -979,6 +981,11 @@ Public Class frmMain
         lblPin.Visible = rtbOutput.Visible
         lblState.Visible = rtbOutput.Visible
         chkLOG.Visible = rtbOutput.Visible
+        btnSeekA.Visible = rtbOutput.Visible
+        btnSeekB.Visible = rtbOutput.Visible
+        cmbSeekA.Visible = rtbOutput.Visible
+        cmbSeekB.Visible = rtbOutput.Visible
+
     End Sub
 
     Private Sub btnInfo_Click(sender As Object, e As EventArgs) Handles btnInfo.Click, GreaseweazleINFOToolStripMenuItem.Click
@@ -1016,10 +1023,12 @@ Public Class frmMain
 
     Private Sub btnExecuteScript_Move(sender As Object, e As EventArgs) Handles btnExecuteScript.Move
         btnExecuteScript.Left = txtExecuteScript.Width + 12
+        btnExecuteScript.Top = txtExecuteScript.Top
     End Sub
 
     Private Sub txtExecuteScript_Resize(sender As Object, e As EventArgs) Handles txtExecuteScript.Resize
         btnExecuteScript.Left = txtExecuteScript.Width + 12
+        btnExecuteScript.Top = txtExecuteScript.Top
     End Sub
 
     Private Sub WriteLOGWithEachReadWriteToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles WriteLOGWithEachReadWriteToolStripMenuItem.Click
@@ -1055,4 +1064,5 @@ Public Class frmMain
             rtbOutput.Text &= "SeekB value '" + cmbSeekB.Text + "' isn't a number. Track number must be between 0 and 85."
         End If
     End Sub
+
 End Class

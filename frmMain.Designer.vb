@@ -958,7 +958,7 @@ Partial Class frmMain
         '
         Me.chkLOG.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.chkLOG.AutoSize = True
-        Me.chkLOG.Location = New System.Drawing.Point(801, 384)
+        Me.chkLOG.Location = New System.Drawing.Point(808, 385)
         Me.chkLOG.Name = "chkLOG"
         Me.chkLOG.Size = New System.Drawing.Size(95, 17)
         Me.chkLOG.TabIndex = 126
@@ -987,6 +987,7 @@ Partial Class frmMain
         '
         'cmbSeekA
         '
+        Me.cmbSeekA.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmbSeekA.FormattingEnabled = True
         Me.cmbSeekA.Items.AddRange(New Object() {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"})
         Me.cmbSeekA.Location = New System.Drawing.Point(595, 383)
@@ -998,6 +999,7 @@ Partial Class frmMain
         '
         'cmbSeekB
         '
+        Me.cmbSeekB.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmbSeekB.FormattingEnabled = True
         Me.cmbSeekB.Items.AddRange(New Object() {"79", "80", "81", "82", "83", "37", "38", "39", "40", "41", "42", "43"})
         Me.cmbSeekB.Location = New System.Drawing.Point(733, 382)
