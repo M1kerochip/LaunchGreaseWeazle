@@ -231,6 +231,10 @@ Public Class frmMain
 
         cmbRate.ForeColor = cmbSerialPorts.ForeColor
         cmbRate.BackColor = cmbSerialPorts.BackColor
+        cmbSeekA.ForeColor = cmbSerialPorts.ForeColor
+        cmbSeekA.BackColor = cmbSerialPorts.BackColor
+        cmbSeekB.ForeColor = cmbSerialPorts.ForeColor
+        cmbSeekB.BackColor = cmbSerialPorts.BackColor
         cmbRPM.ForeColor = cmbSerialPorts.ForeColor
         cmbRPM.BackColor = cmbSerialPorts.BackColor
         cmbReadFormat.ForeColor = cmbSerialPorts.ForeColor
@@ -304,6 +308,10 @@ Public Class frmMain
         btnSaveLocation.BackColor = btnWrite.BackColor
         btnResize.ForeColor = btnWrite.ForeColor
         btnResize.BackColor = btnWrite.BackColor
+        btnSeekA.ForeColor = btnWrite.ForeColor
+        btnSeekA.BackColor = btnWrite.BackColor
+        btnSeekB.ForeColor = btnWrite.ForeColor
+        btnSeekB.BackColor = btnWrite.BackColor
 
         ContextMenuStripMainCommands.BackColor = Me.BackColor
         ContextMenuStripMainCommands.ForeColor = Me.ForeColor
@@ -733,10 +741,10 @@ Public Class frmMain
 
     Private Sub BtnWrite_Click(sender As Object, e As EventArgs) Handles btnWrite.Click, WRITEDiskToolStripMenuItem.Click
         If CheckForErrors() = False Then
-            OpenFileDialogMain.Title = "Select SuperCard Pro / HxC Floppy Emulator / Software Preservation Society file to write to floppy"
+            OpenFileDialogMain.Title = "Select SuperCard Pro / HxC Floppy Emulator / Amiga ADF / Software Preservation Society file to write to floppy"
             OpenFileDialogMain.Multiselect = False
             OpenFileDialogMain.FileName = ""
-            OpenFileDialogMain.Filter = "Supported files|*.scp;*.ipf;*.hfe|Supercard Pro files|*.scp|HxC Flippy Emulator HFE files|*.hfe|Software Preservation Society IPF files|*.ipf|All files (*.*)|*.*"
+            OpenFileDialogMain.Filter = "Supported files|*.scp;*.hfe;*.adf;*.ipf|Supercard Pro files|*.scp|HxC Flippy Emulator HFE files|*.hfe|Commodore Amiga ADF files|*.adf|Software Preservation Society IPF files|*.ipf|All files (*.*)|*.*"
             Dim fileGW As String
             If (OpenFileDialogMain.ShowDialog() = DialogResult.OK) Then
                 fileGW = OpenFileDialogMain.FileName
@@ -867,7 +875,6 @@ Public Class frmMain
                 End If
             End If
         End If
-
     End Sub
 
     Private Sub LinkLabelLaunchGW_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabelLaunchGW.LinkClicked
