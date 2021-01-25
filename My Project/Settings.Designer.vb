@@ -15,7 +15,7 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.6.0.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.7.0.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
@@ -69,24 +69,12 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property GW() As String
+        Public Property GWExe() As String
             Get
-                Return CType(Me("GW"),String)
+                Return CType(Me("GWExe"),String)
             End Get
             Set
-                Me("GW") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property Python() As String
-            Get
-                Return CType(Me("Python"),String)
-            End Get
-            Set
-                Me("Python") = value
+                Me("GWExe") = value
             End Set
         End Property
         
@@ -261,18 +249,6 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property DoubleStep() As Boolean
-            Get
-                Return CType(Me("DoubleStep"),Boolean)
-            End Get
-            Set
-                Me("DoubleStep") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
         Public Property WideForm() As Boolean
             Get
                 Return CType(Me("WideForm"),Boolean)
@@ -327,18 +303,6 @@ Namespace My
             End Get
             Set
                 Me("EndTrackNo") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property SingleSided() As Integer
-            Get
-                Return CType(Me("SingleSided"),Integer)
-            End Get
-            Set
-                Me("SingleSided") = value
             End Set
         End Property
         
@@ -459,6 +423,66 @@ Namespace My
             End Get
             Set
                 Me("SeekB") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0-1")>  _
+        Public Property Sides() As String
+            Get
+                Return CType(Me("Sides"),String)
+            End Get
+            Set
+                Me("Sides") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+        Public Property Stepping() As Integer
+            Get
+                Return CType(Me("Stepping"),Integer)
+            End Get
+            Set
+                Me("Stepping") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property SeparateFolders() As Boolean
+            Get
+                Return CType(Me("SeparateFolders"),Boolean)
+            End Get
+            Set
+                Me("SeparateFolders") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property PythonExe() As String
+            Get
+                Return CType(Me("PythonExe"),String)
+            End Get
+            Set
+                Me("PythonExe") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property UsePython() As Boolean
+            Get
+                Return CType(Me("UsePython"),Boolean)
+            End Get
+            Set
+                Me("UsePython") = value
             End Set
         End Property
     End Class

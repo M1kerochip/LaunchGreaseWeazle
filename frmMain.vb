@@ -48,7 +48,7 @@ Public Class frmMain
         End If
 
         txtSaveLocation.Text = My.Settings.SaveLoc
-        txtPythonLocation.Text = My.Settings.Python
+        txtGWLocation.Text = My.Settings.GWExe
         chkF7.Checked = My.Settings.F7
         cmbDriveSelect.Text = My.Settings.Drive
         cmbDriveSelect.Enabled = chkF7.Checked
@@ -66,8 +66,8 @@ Public Class frmMain
         txtTitle.Text = My.Settings.Title
         txtPublisher.Text = My.Settings.Company
         txtExecuteScript.Text = My.Settings.Script
-        chkDoubleStep.Checked = My.Settings.DoubleStep
-        chkSingleSided.CheckState = CType(My.Settings.SingleSided, CheckState)
+        cmbSides.Text = My.Settings.Sides
+        cmbStepping.Text = CStr(My.Settings.Stepping)
         ChkStartTrack.Checked = My.Settings.StartTrack
         cmbStartTrack.Text = CStr(My.Settings.StartTrackNo)
         chkEndTrack.Checked = My.Settings.EndTrack
@@ -81,6 +81,9 @@ Public Class frmMain
         cmbRate.Text = My.Settings.DataRate
         chkLOG.Checked = My.Settings.RunningLog
         chkEraseEmpty.Checked = My.Settings.EraseEmpty
+        chkSeparateFolders.Checked = My.Settings.SeparateFolders
+        txtPythonLocation.Text = My.Settings.PythonExe
+        chkUsePython.Checked = My.Settings.UsePython
 
         EnableProgramLOGToolStripMenuItem.CheckOnClick = True
         EnableProgramLOGToolStripMenuItem.Checked = chkLOG.Checked
@@ -97,6 +100,20 @@ Public Class frmMain
             btnResize.Text = "<"
         End If
 
+        If My.Settings.UsePython = True Then
+            txtPythonLocation.Enabled = True
+            btnPython_EXE.Enabled = True
+            txtPythonLocation.Visible = True
+            lblPythonLocation.Visible = True
+            btnPython_EXE.Visible = True
+        Else
+            txtPythonLocation.Enabled = False
+            btnPython_EXE.Enabled = False
+            txtPythonLocation.Visible = False
+            lblPythonLocation.Visible = False
+            btnPython_EXE.Visible = False
+        End If
+
         If chkLOG.Checked Then
             rtbOutput.AppendText("Started on: " + DateTime.Today.ToString("yyyy-MM-dd") + " at " + DateTime.Now.ToString("HH:mm:ss") + vbCrLf)
         End If
@@ -105,13 +122,13 @@ Public Class frmMain
         ToolTipMainForm.SetToolTip(btnRead, "Begin GreaseWeazle read process. Creates a flux level copy of a floppy disk to a file.")
         ToolTipMainForm.SetToolTip(btnWrite, "Begin GreaseWeazle write process. Writes a supported file format to a physical floppy disk.")
         ToolTipMainForm.SetToolTip(btnExecuteScript, "Select the program or batch file to run. Path to disk image is passed as first argument.")
-        ToolTipMainForm.SetToolTip(btnPythonLocation, "Select the location of the python.exe.")
+        ToolTipMainForm.SetToolTip(btnGW_EXE, "Select the location of the gw.exe (or gw.py for Python).")
         ToolTipMainForm.SetToolTip(btnSaveLocation, "Select the location to save Disk images to.")
         ToolTipMainForm.SetToolTip(btnResize, "Show log. Not very useful though!")
         ToolTipMainForm.SetToolTip(chkExecuteScript, "Executes script after each read attempt.")
         ToolTipMainForm.SetToolTip(chkSaveLog, "Writes the log to a file after each read/write attempt.")
         ToolTipMainForm.SetToolTip(txtExecuteScript, "Location of program or batch file to execute")
-        ToolTipMainForm.SetToolTip(txtPythonLocation, "Location of python.exe. Python must be installed. Exe is in main python install folder.")
+        ToolTipMainForm.SetToolTip(txtGWLocation, "Location of python.exe. Python must be installed. Exe is in main python install folder.")
         ToolTipMainForm.SetToolTip(txtSaveLocation, "Location to save disk images to.")
         ToolTipMainForm.SetToolTip(txtTitle, "Title of floppy disk image. This should not be blank.")
         ToolTipMainForm.SetToolTip(txtPublisher, "Publisher of disk image. Seperated from title by underscore. May be blank if desired.")
@@ -126,14 +143,15 @@ Public Class frmMain
         ToolTipMainForm.SetToolTip(LinkLabelGWWiki, "Start here! Opens GreaseWeazle Wiki page. Setup and other usage documentation.")
         ToolTipMainForm.SetToolTip(LinkLabelOpenLocation, "Opens Explorer in the Save folder on the HDD.")
         ToolTipMainForm.SetToolTip(LinkLabelDLGW, "Opens the GreaseWeazle Github download page")
-        'ToolTipMainForm.SetToolTip(LinkLabelDLPython, "Opens main Python download page")
+        ToolTipMainForm.SetToolTip(LinkLabelDownloadPython, "Opens main Python download page")
         ToolTipMainForm.SetToolTip(LinkLabelLaunchNow, "Executes exe/script from location below, with current disk image name.")
         ToolTipMainForm.SetToolTip(chkF7, "Check this if you are writing to a STM32F7 device (rather than the usual 'Bluepill'.")
         ToolTipMainForm.SetToolTip(cmbDriveSelect, "If using an F7 device, select the drive you want to read to/write from. Multiple drives may be connected at once. (F7 device only!!).")
         ToolTipMainForm.SetToolTip(LinkLabelDriveSelect, "Opens the 'Drive Select' page of the Wiki.")
         ToolTipMainForm.SetToolTip(ChkStartTrack, "Check to select a default start track other than track 0.")
         ToolTipMainForm.SetToolTip(chkEndTrack, "Check to select a default end track. Number of tracks that a drive can read/write depends on the drive itself. Consult disk drive manual if unsure.")
-        ToolTipMainForm.SetToolTip(chkSingleSided, "Select this to read/write only on disk side 0 (the bottom on most drives)/ If unsure, leave unchecked. Maps to --single-sided argument. Select a second time to enable legacy single sided images. maps to ::legacy_ss argument.")
+        ToolTipMainForm.SetToolTip(cmbSides, "Select disk sides to read / write / erase. Side 0 is the bottom of a double sided disk drive disk, side 1 is the top of a double sided drive disk. Single sided drives should use side 0 only")
+        ToolTipMainForm.SetToolTip(lblDiskSides, "Select disk sides to read / write / erase. Side 0 is the bottom of a double sided disk drive disk, side 1 is the top of a double sided drive disk. Single sided drives should use side 0 only")
         'ToolTipMainForm.SetToolTip(chkAdjustSpeed, "Removed in v0.13 of Greaseweazle. Maps to --adjust-speed argument. Adjust write-flux times for drive speed.")
         ToolTipMainForm.SetToolTip(cmbStartTrack, "Track to start read/write process on. Tracks are zero indexed. Actual number of tracks a drive supports varies. Consult disk drive manual if unsure.")
         ToolTipMainForm.SetToolTip(cmbEndTrack, "Track to end read/write process on. Tracks are zero indexed. Actual number of tracks a drive supports varies. Consult disk drive manual if unsure.")
@@ -142,23 +160,32 @@ Public Class frmMain
         ToolTipMainForm.SetToolTip(btnUpdateFirmware, "Begin GreaseWeazle firmware upgrade process. Bridge the two pins: DCLK + DCIO and select update file.")
         ToolTipMainForm.SetToolTip(LinkLabelLaunchGW, "The Github repository for this program. Get the latest versions here.")
         ToolTipMainForm.SetToolTip(btnResetDevice, "Resets the Greaseweazle device to power-on settings: Motors off, drives deselected, power-on pin levels and delay values. GW 0.12+ required.")
-        ToolTipMainForm.SetToolTip(chkDoubleStep, "Makes the Greaseweazle move the head two tracks at a time. Used to read (GW 0.12+) or write (GW 0.20+) 40 track disks on an 80 track device. EG C64 (SD) disk in an IBM PC (DD) drive.")
+        ToolTipMainForm.SetToolTip(cmbStepping, "Makes the Greaseweazle move the head x tracks at a time. Used to read (GW 0.12+) or write (GW 0.20+) 40 track disks on an 80 track device. EG C64 (SD) disk in an IBM PC (DD) drive. Default is 1 (GW 0.23)")
+        ToolTipMainForm.SetToolTip(lblHeadStep, "Makes the Greaseweazle move the head x tracks at a time. Used to read (GW 0.12+) or write (GW 0.20+) 40 track disks on an 80 track device. EG C64 (SD) disk in an IBM PC (DD) drive. Default is 1 (GW 0.23)")
         ToolTipMainForm.SetToolTip(btnSetPin, "Set the pin in the dropdown list to either Low (0v) or Hight (5v). GW v0.12+ required.")
         ToolTipMainForm.SetToolTip(cmbPIN, "The floppy drive pin whos value will be set either high or low. (Cannot be blank) GW 0.12+ required.")
         ToolTipMainForm.SetToolTip(cmbLowHigh, "Force a Low or High value on a given pin. (Cannot be blank) GW 0.12+ required.")
-        ToolTipMainForm.SetToolTip(cmbReadFormat, "GreaseWeazle read format. Supercard Pro (.scp) or HxC (.hfe). Alternatively specify your own extension including period. GW 0.14+ required.")
+        ToolTipMainForm.SetToolTip(cmbReadFormat, "GreaseWeazle read format. Supercard Pro (.scp), KryoFlux (.raw) or HxC (.hfe). Alternatively specify your own extension including period. GW 0.14+ required. (0.23+ for Kryoflux)")
         ToolTipMainForm.SetToolTip(btnEraseDisk, "**WARNING** Erases the contents of a physical floppy disk. Write protect tab must be off/closed.")
         ToolTipMainForm.SetToolTip(btnInfo, "Displays Greaseweazle device information.")
         ToolTipMainForm.SetToolTip(btnGWBandwidth, "Display bandwidth between Greasweazle and PC")
         ToolTipMainForm.SetToolTip(btnGWDelays, "Displays Greaseweazle device delays information.")
         ToolTipMainForm.SetToolTip(chkRate, "Enable drive read rate. 250 for DD disks, 500 for HD disks and HD drives.")
-        ToolTipMainForm.SetToolTip(cmbRate, "Set the disk RPM to this rate. This setting is set before all others.")
+        ToolTipMainForm.SetToolTip(cmbRPM, "Set the disk RPM to this rate. This setting is set before all others.")
         ToolTipMainForm.SetToolTip(chkRPM, "Enable the drive RPM.")
-        ToolTipMainForm.SetToolTip(cmbRPM, "Set read rate. 250 for DD disks, 500 for HD disks.")
+        ToolTipMainForm.SetToolTip(cmbRate, "Set read rate. 250 for DD disks, 500 for HD disks.")
         ToolTipMainForm.SetToolTip(chkLOG, "Save an audit log of actions to a programname.log file")
         ToolTipMainForm.SetToolTip(chkEraseEmpty, "Erases empty tracks on write. Off by default.")
         ToolTipMainForm.SetToolTip(btnSeekA, "Move the disk drive head to this track")
         ToolTipMainForm.SetToolTip(btnSeekB, "Move the disk drive head to this track")
+        ToolTipMainForm.SetToolTip(chkTrackGroup, "Tick to use a group of tracks. Must be a valid set of tracks. eg 0-83 or 0-5,10-15 to read tracks 0 to 5 and then also 10-15.")
+        ToolTipMainForm.SetToolTip(txtTrackGroup, "Create a group of tracks to read/write/erase. Tracks are in the format <startTrack>-<endtrack>. To add more ranges of tracks to the group, separate them with a comma")
+        ToolTipMainForm.SetToolTip(chkSeparateFolders, "Check to create disk images inside their own folder. Useful for KryoFlux dumps, where each track is it's own file.")
+        ToolTipMainForm.SetToolTip(lblAddTrackList, "Add the start and end track to the group below.")
+        ToolTipMainForm.SetToolTip(lblClearTrackList, "Clear track group.")
+        ToolTipMainForm.SetToolTip(btnPython_EXE, "Click to pick the location of the python.exe")
+        ToolTipMainForm.SetToolTip(txtPythonLocation, "The location of the Python.exe, if using greaseweazle python scripts.")
+        ToolTipMainForm.SetToolTip(chkUsePython, "Check this to use the python version of Greaseweazle. Python must be installed with required libraries (bitarray crcmod pyserial")
         Return True
     End Function
 
@@ -224,10 +251,12 @@ Public Class frmMain
         txtPublisher.BackColor = rtbOutput.BackColor
         txtSaveLocation.ForeColor = rtbOutput.ForeColor
         txtSaveLocation.BackColor = rtbOutput.BackColor
-        txtPythonLocation.ForeColor = rtbOutput.ForeColor
-        txtPythonLocation.BackColor = rtbOutput.BackColor
+        txtGWLocation.ForeColor = rtbOutput.ForeColor
+        txtGWLocation.BackColor = rtbOutput.BackColor
         txtExecuteScript.ForeColor = rtbOutput.ForeColor
         txtExecuteScript.BackColor = rtbOutput.BackColor
+        txtPythonLocation.ForeColor = rtbOutput.ForeColor
+        txtPythonLocation.BackColor = rtbOutput.BackColor
 
         cmbRate.ForeColor = cmbSerialPorts.ForeColor
         cmbRate.BackColor = cmbSerialPorts.BackColor
@@ -271,15 +300,18 @@ Public Class frmMain
         LinkLabelDriveSelect.ForeColor = LinkLabelProjectName.ForeColor
         LinkLabelDriveSelect.LinkColor = LinkLabelProjectName.LinkColor
         LinkLabelDriveSelect.VisitedLinkColor = LinkLabelProjectName.VisitedLinkColor
+        llabelPreCompensate.ForeColor = LinkLabelProjectName.ForeColor
+        llabelPreCompensate.LinkColor = LinkLabelProjectName.LinkColor
+        llabelPreCompensate.VisitedLinkColor = LinkLabelProjectName.VisitedLinkColor
         LinkLabelOpenLocation.ForeColor = LinkLabelProjectName.ForeColor
         LinkLabelOpenLocation.LinkColor = LinkLabelProjectName.LinkColor
         LinkLabelOpenLocation.VisitedLinkColor = LinkLabelProjectName.VisitedLinkColor
         LinkLabelDLGW.ForeColor = LinkLabelProjectName.ForeColor
         LinkLabelDLGW.LinkColor = LinkLabelProjectName.LinkColor
         LinkLabelDLGW.VisitedLinkColor = LinkLabelProjectName.VisitedLinkColor
-        'LinkLabelDLPython.ForeColor = LinkLabelProjectName.ForeColor
-        'LinkLabelDLPython.LinkColor = LinkLabelProjectName.LinkColor
-        'LinkLabelDLPython.VisitedLinkColor = LinkLabelProjectName.VisitedLinkColor
+        LinkLabelDownloadPython.ForeColor = LinkLabelProjectName.ForeColor
+        LinkLabelDownloadPython.LinkColor = LinkLabelProjectName.LinkColor
+        LinkLabelDownloadPython.VisitedLinkColor = LinkLabelProjectName.VisitedLinkColor
         LinkLabelLaunchNow.ForeColor = LinkLabelProjectName.ForeColor
         LinkLabelLaunchNow.LinkColor = LinkLabelProjectName.LinkColor
         LinkLabelLaunchNow.VisitedLinkColor = LinkLabelProjectName.VisitedLinkColor
@@ -302,8 +334,8 @@ Public Class frmMain
         btnSetPin.BackColor = btnWrite.BackColor
         btnExecuteScript.ForeColor = btnWrite.ForeColor
         btnExecuteScript.BackColor = btnWrite.BackColor
-        btnPythonLocation.ForeColor = btnWrite.ForeColor
-        btnPythonLocation.BackColor = btnWrite.BackColor
+        btnGW_EXE.ForeColor = btnWrite.ForeColor
+        btnGW_EXE.BackColor = btnWrite.BackColor
         btnSaveLocation.ForeColor = btnWrite.ForeColor
         btnSaveLocation.BackColor = btnWrite.BackColor
         btnResize.ForeColor = btnWrite.ForeColor
@@ -312,6 +344,8 @@ Public Class frmMain
         btnSeekA.BackColor = btnWrite.BackColor
         btnSeekB.ForeColor = btnWrite.ForeColor
         btnSeekB.BackColor = btnWrite.BackColor
+        btnPython_EXE.ForeColor = btnWrite.ForeColor
+        btnPython_EXE.BackColor = btnWrite.BackColor
 
         ContextMenuStripMainCommands.BackColor = Me.BackColor
         ContextMenuStripMainCommands.ForeColor = Me.ForeColor
@@ -323,7 +357,7 @@ Public Class frmMain
     ''' </summary>
     Public Sub SaveSettings()
         My.Settings.SaveLoc = txtSaveLocation.Text.Trim
-        My.Settings.Python = txtPythonLocation.Text.Trim
+        My.Settings.GWExe = txtGWLocation.Text.Trim
         My.Settings.F7 = chkF7.Checked
         My.Settings.Drive = cmbDriveSelect.Text.Trim
         My.Settings.COM = cmbSerialPorts.Text.Trim
@@ -336,10 +370,13 @@ Public Class frmMain
         My.Settings.ExecuteScript = chkExecuteScript.Checked
         My.Settings.LoopDump = chkLoop.Checked
         My.Settings.LoopDumpCount = cmbDump.Text
-        My.Settings.DoubleStep = chkDoubleStep.Checked
+        My.Settings.Stepping = CInt(cmbStepping.Text)
         My.Settings.StartTrack = ChkStartTrack.Checked
         My.Settings.RunningLog = chkLOG.Checked
         My.Settings.EraseEmpty = chkEraseEmpty.Checked
+        My.Settings.UsePython = chkUsePython.Checked
+        My.Settings.PythonExe = txtPythonLocation.Text
+
         If IsNumeric(cmbSeekA.Text) Then
             My.Settings.SeekA = CInt(cmbSeekA.Text)
         Else
@@ -361,13 +398,14 @@ Public Class frmMain
         Else
             My.Settings.EndTrackNo = 83
         End If
-        My.Settings.SingleSided = chkSingleSided.CheckState
+        My.Settings.Sides = cmbSides.Text
         'My.Settings.AdjustWriteSpeed = chkAdjustSpeed.Checked
         My.Settings.IncludeDataRate = chkRate.Checked
         My.Settings.IncludeRPM = chkRPM.Checked
         My.Settings.RPM = cmbRPM.Text
         My.Settings.DataRate = cmbRate.Text
         If btnResize.Text = "<" Then My.Settings.WideForm = True Else My.Settings.WideForm = False
+        My.Settings.SeparateFolders = chkSeparateFolders.Checked
         My.Settings.Save()
     End Sub
 
@@ -376,7 +414,7 @@ Public Class frmMain
     ''' </summary>
     ''' <param name="CheckExists">Check to see if the file exists on the disk. If so, append an integer to prevent GreaseSeazle from overwriting.</param>
     ''' <returns>Filename as a string.</returns>
-    Function CreateFileName(ByVal CheckExists As Boolean) As String
+    Function CreateFileName(ByVal CheckExists As Boolean, ByVal UseFolders As Boolean) As String
         Dim regWhitespace As New Regex("\s")
 
         Dim filen As String
@@ -402,17 +440,31 @@ Public Class frmMain
         If cmbSystem.Text.Trim <> "" Then
             filen += "_" + cmbSystem.Text.Trim                                              'Add system, if txt field not blank
         End If
+        If UseFolders = True Then
+            filen += "\"
+        Else
+            filen += "_"
+        End If
         If cmbDump.Text.Trim <> "" Then
-            filen += "_" + "Dump" + cmbDump.Text.Trim                                       'Add 'Dump+DumpNumber' field, if dump field not blank
+            filen += "Dump" + cmbDump.Text.Trim                                       'Add 'Dump+DumpNumber' field, if dump field not blank
         End If
-        Dim extst As String = ".scp"                                                        'Set file extension for SuperCard Pro "SCP"
-        If cmbReadFormat.Text <> "Supercard Pro" Then
-            If cmbReadFormat.Text = "HxC Floppy Disk Emulator" Then
+
+        Dim extst As String = ".scp"                                                        'Set file extension (defaulting to SuperCard Pro)
+
+        Select Case cmbReadFormat.Text
+            Case "Supercard Pro"                                                            'Set file extension for SuperCard Pro "SCP"
+                extst = ".scp"
+            Case "HxC Floppy Disk Emulator"                                                 'Set file extension for HxC Floppy format "HFE"
                 extst = ".hfe"
-            Else
+            Case "KryoFlux"                                                                 'Set file extension for KryoFlux heavy dump format "RAW"
+                If UseFolders = True Then
+                    extst = "\Track_.raw"
+                Else
+                    extst = ".raw"
+                End If
+            Case Else                                                                       'If a different unknown extension is typed in, use that!
                 extst = cmbReadFormat.Text
-            End If
-        End If
+        End Select
 
         If chkFilenameRreplaceSpaceWithUnderscore.Checked Then
             filen = regWhitespace.Replace(filen, "_")                                       'Replace all spaces with underscores, if check "replace with underscores" checked.
@@ -432,8 +484,10 @@ Public Class frmMain
     End Function
 
     Function CheckForErrors() As Boolean
-        Cleanfields()
-        If txtPythonLocation.Text.Trim <> "" And txtSaveLocation.Text.Trim <> "" Then  'And cmbSerialPorts.Text.Trim <> "" 
+        If chkFilenameRreplaceSpaceWithUnderscore.Checked Then
+            Cleanfields()
+        End If
+        If txtGWLocation.Text.Trim <> "" And txtSaveLocation.Text.Trim <> "" Then  'And cmbSerialPorts.Text.Trim <> "" 
             Return False
         Else
             Dim errstr As String = ""
@@ -450,8 +504,17 @@ Public Class frmMain
                 End If
             End If
 
-            If Not IO.File.Exists(txtPythonLocation.Text.Trim) Then
-                errstr &= "Python.exe Not found!" + Environment.NewLine
+            If chkUsePython.Checked Then
+                If Not IO.File.Exists(txtPythonLocation.Text.Trim) Then
+                    errstr &= "Python.exe Not found!" + Environment.NewLine
+                End If
+                If Not IO.File.Exists(txtGWLocation.Text.Trim) Then
+                    errstr &= "GW script Not found!" + Environment.NewLine
+                End If
+            Else
+                If Not IO.File.Exists(txtGWLocation.Text.Trim) Then
+                    errstr &= "gw.exe Not found!" + Environment.NewLine
+                End If
             End If
             rtbOutput.Text &= errstr
             Return True
@@ -503,17 +566,27 @@ Public Class frmMain
     ''' <param name="GWAction">Call the GreaseWeazle function to perform: Read, Write, Erase, Reset, Update, Set Pin Level as integer</param>
     ''' <param name="fName">Path to file to read/write</param>
     ''' <param name="ComPort">COM port to talk to GreaseWeazle hardware on. v0.11+ supports 'auto'.</param>
-    ''' <param name="DoubleStep">Move the head twice for every track move indicated. Allows usage of a 40 track disk on an 80 track drive</param>
     ''' <param name="PinToSet">The pin number (on the back of the floppy drive) to change value</param>
     ''' <param name="PinLevel">Char: L or H denotes (L)ow 0v, or (H)igh 5v</param>
     ''' <param name="RPM">Integer: Sets the drive RPM. This value gets processed first</param>
+    ''' <param name="SetRPM">Actually set the drive to spin using the RPM supplied</param>
     ''' <param name="Rate">Bitcell rate. 250 for DD disks, 500 for HD disks.</param>
+    ''' <param name="SetRate">Actually set the drive to reat using the bitcell rate supplied</param>
+    ''' <param name="SeekCyl">Move the head to this cylinder/track.</param>
+    ''' <param name="StartTrack">First track to begin reading at. Can be overridden by the TrackSet track list.</param>
+    ''' <param name="EndTrack">Last track to end reading at. Can be overridden by the TrackSet track list.</param>
+    ''' <param name="TrackSet">Group of comma separated tracks to read/write/erase</param>
+    ''' <param name="HeadSet">Group of comma separated heads(disk sides) to read/write/erase</param>
+    ''' <param name="SeparateFolders">Creates a folder for each dump. Most useful for Kryoflux dumps.</param>
     ''' <returns></returns>
     Private Function CallGreaseWeazel(ByVal PythonEXE As String, ByVal gwLoc As String, ByVal GWAction As Integer,
-                                      ByVal fName As String, ByVal ComPort As String, ByVal DoubleStep As Boolean,
+                                      ByVal fName As String, ByVal ComPort As String,
                                       ByVal PinToSet As Integer, ByVal PinLevel As Char, ByVal RPM As Integer,
                                       ByVal Rate As Integer, ByVal SetRPM As Boolean, ByVal SetRate As Boolean,
-                                      ByVal SeekCyl As Integer) As Boolean
+                                      ByVal SeekCyl As Integer, ByVal StartTrack As Integer, ByVal EndTrack As Integer,
+                                      ByVal TrackSet As String, ByVal HeadSet As String,
+                                      ByVal HeadStep As Integer, ByVal DriveOffset As String,
+                                      ByVal SeparateFolders As Boolean) As Boolean
         Dim CMD As New Process
         Dim SW As IO.StreamWriter
         Dim SR As IO.StreamReader
@@ -568,21 +641,38 @@ Public Class frmMain
                         'End If
                     End If
 
-                    str += COMStr                   'Add com port to the string
+                    str += COMStr                                           'Add com port to the string
 
-                    If chkSingleSided.Checked Then                          'For single sided floppy disks or drives
-                        str += "--single-sided "
-
-                        If chkSingleSided.CheckState = 2 Then               'For legacy single sided floppy disk images
-                            fName += "::legacy_ss"
+                    'Changed track command in v0.23
+                    str += "--tracks=""c="                                  'Add tracks section: double quotes and Cylinder start
+                    If TrackSet.Trim <> "" Then                             'If using a track set, add this
+                        str += TrackSet
+                    Else
+                        If ChkStartTrack.Checked Then                       'If not using a set, use the standard start and finish track
+                            str += CStr(StartTrack)                         'If start track checked, start on that track
+                        Else
+                            str += "0"                                      'else start on the first track, track 0
+                        End If
+                        str += "-"
+                        If chkEndTrack.Checked Then                         'If end track checked, end on that track
+                            str += CStr(EndTrack)
+                        Else
+                            str += "83"                                     'else end on the 84th track
                         End If
                     End If
-                    If ChkStartTrack.Checked Then
-                        str += "--scyl=" + cmbStartTrack.Text + " "         'Start Track: 0 based index
+
+                    str += ":h="                                            'Heads (sides of the disk) to use in this operation
+                    If HeadSet.Trim <> "" Then                              'if non default sides are to be used,
+                        str += HeadSet                                      'use heads selected in drop down
+                    Else
+                        str += "0-1"                                        'else use both heads (top and bottom)
                     End If
-                    If chkEndTrack.Checked Then
-                        str += "--ecyl=" + cmbEndTrack.Text + " "           'End track: 0 based index ie track 79 is the 80th track
-                    End If
+
+                    str += ":step="
+                    str += CStr(HeadStep)                                   'Step X tracks for every read:
+
+                    str += """ "                                            'add a double quote and a spce to the end of the --tracks section
+
                     If GWAction = GWRead Then
                         If chkRevolutions.Checked Then
                             str += "--revs=" + cmbRevolutions.Text + " "    'number of revolutions of each track to store in the image (if supported). 5 is the archival norm. used to find weak sectors, etc
@@ -594,9 +684,7 @@ Public Class frmMain
                             str += "--rpm=" + CStr(RPM) + " "               'Sets drive rpm rate
                         End If
                     End If
-                    If DoubleStep = True Then
-                        str += "--double-step "                             'make the drive head step twice for ever track step. Useful to read a 40 track disk in an 80 track drive
-                    End If
+
                     If chkF7.Checked Then
                         str += "--drive " + cmbDriveSelect.Text             'For F7 devices, a drive can be selected. A/B etc.
                     End If
@@ -648,6 +736,7 @@ Public Class frmMain
                 StreamWriter.Close()
             End If
         End If
+        rtbOutput.Text += vbCrLf + str
         Return True
     End Function
 
@@ -665,17 +754,13 @@ Public Class frmMain
                 Dim loopc As Integer
                 For loopc = 0 To CInt(cmbDump.Text)
                     cmbDump.Text = CStr(loopc)
-                    Dim fileGW As String = CreateFileName(True)
+                    Dim fileGW As String = CreateFileName(True, chkSeparateFolders.Checked)
                     DoLOG()
                     rtbOutput.Clear()
-                    rtbOutput.Text &= "Reading from Greaseweazel on port " + cmbSerialPorts.Text + Environment.NewLine
-                    rtbOutput.Text &= "Start: " + cmbStartTrack.Text + "  End: " + cmbEndTrack.Text + "  Revolutions: " + cmbRevolutions.Text + "  Sided: "
-                    If chkSingleSided.Checked Then
-                        rtbOutput.Text += "Single"
-                    Else
-                        rtbOutput.Text += "Double"
-                    End If
-                    rtbOutput.Text &= Environment.NewLine
+                    rtbOutput.Text += "Reading from Greaseweazel on port " + cmbSerialPorts.Text + Environment.NewLine
+                    rtbOutput.Text += "Start: " + cmbStartTrack.Text + "  End: " + cmbEndTrack.Text + "  Revolutions: " + cmbRevolutions.Text
+                    rtbOutput.Text += "  Sides: " + cmbSides.Text
+                    rtbOutput.Text += Environment.NewLine
                     If chkRate.Checked Then
                         rtbOutput.Text += "Bitcell Data Rate (kbit/s): " + cmbRate.Text
                     Else
@@ -684,19 +769,60 @@ Public Class frmMain
                     rtbOutput.Text += Environment.NewLine
                     rtbOutput.Text &= "to file: " + fileGW + Environment.NewLine + Environment.NewLine
                     Me.Refresh()
-                    CallGreaseWeazel(txtPythonLocation.Text, "", GWRead, txtSaveLocation.Text + fileGW, cmbSerialPorts.Text, chkDoubleStep.Checked, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, 0)
+
+                    Dim TrackGroup As String = ""
+                    If chkTrackGroup.Checked Then
+                        TrackGroup = txtTrackGroup.Text
+                        If TrackGroup.StartsWith(",") Then
+                            TrackGroup = TrackGroup.Remove(0, 1)
+                        End If
+                    End If
+
+                    Dim PythonEXE As String
+                    Dim GW_Script As String
+                    If chkUsePython.Checked Then
+                        PythonEXE = txtPythonLocation.Text
+                        GW_Script = txtGWLocation.Text
+                    Else
+                        PythonEXE = txtGWLocation.Text
+                        GW_Script = ""
+                    End If
+
+                    If chkSeparateFolders.Checked = True Then
+                        If (Not System.IO.Directory.Exists(System.IO.Path.GetDirectoryName(txtSaveLocation.Text + fileGW))) Then
+                            System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(txtSaveLocation.Text + fileGW))
+                        End If
+                    End If
+
+                    CallGreaseWeazel(PythonEXE,
+                                     GW_Script,
+                                     GWRead,
+                                     txtSaveLocation.Text + fileGW,
+                                     cmbSerialPorts.Text,
+                                     0,
+                                     CChar(""),
+                                     CInt(cmbRPM.Text),
+                                     CInt(cmbRate.Text),
+                                     chkRPM.Checked,
+                                     chkRate.Checked,
+                                     0,
+                                     CInt(cmbStartTrack.Text),
+                                     CInt(cmbEndTrack.Text),
+                                     TrackGroup,
+                                     cmbSides.Text,
+                                     CInt(cmbStepping.Text),
+                                     "",
+                                     chkSeparateFolders.Checked)
+
+                    Me.Refresh()
                 Next                    'If running gw.py on a loop, to dump a disk multiple times
             Else    'Run gw.py once only
-                Dim fileGW As String = CreateFileName(True)
+                Dim fileGW As String = CreateFileName(True, chkSeparateFolders.Checked)
                 DoLOG()
                 rtbOutput.Clear()
                 rtbOutput.Text &= "Reading from Greaseweazel on port " + cmbSerialPorts.Text + Environment.NewLine
-                rtbOutput.Text &= "Start: " + cmbStartTrack.Text + "  End: " + cmbEndTrack.Text + "  Revolutions: " + cmbRevolutions.Text + "  Sided: "
-                If chkSingleSided.Checked Then
-                    rtbOutput.Text += "Single"
-                Else
-                    rtbOutput.Text += "Double"
-                End If
+                rtbOutput.Text &= "Start: " + cmbStartTrack.Text + "  End: " + cmbEndTrack.Text + "  Revolutions: " + cmbRevolutions.Text
+                rtbOutput.Text += "Sides: " + cmbSides.Text
                 rtbOutput.Text &= Environment.NewLine
                 If chkRate.Checked Then
                     rtbOutput.Text += "Bitcell Data Rate (kbit/s): " + cmbRate.Text
@@ -706,7 +832,40 @@ Public Class frmMain
                 rtbOutput.Text += Environment.NewLine
                 rtbOutput.Text &= "to file: " + fileGW + Environment.NewLine + Environment.NewLine
                 Me.Refresh()
-                CallGreaseWeazel(txtPythonLocation.Text, "", GWRead, txtSaveLocation.Text + fileGW, cmbSerialPorts.Text, chkDoubleStep.Checked, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, 0)
+
+                Dim TrackGroup As String = ""
+                If chkTrackGroup.Checked Then
+                    TrackGroup = txtTrackGroup.Text
+                    If TrackGroup.StartsWith(",") Then
+                        TrackGroup = TrackGroup.Remove(0, 1)
+                    End If
+                End If
+
+                If chkSeparateFolders.Checked = True Then
+                    If (Not System.IO.Directory.Exists(System.IO.Path.GetDirectoryName(txtSaveLocation.Text + fileGW))) Then
+                        System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(txtSaveLocation.Text + fileGW))
+                    End If
+                End If
+
+                CallGreaseWeazel(txtGWLocation.Text,
+                                 "",
+                                 GWRead,
+                                 txtSaveLocation.Text + fileGW,
+                                 cmbSerialPorts.Text,
+                                 0,
+                                 CChar(""),
+                                 CInt(cmbRPM.Text),
+                                 CInt(cmbRate.Text),
+                                 chkRPM.Checked,
+                                 chkRate.Checked,
+                                 0,
+                                 CInt(cmbStartTrack.Text),
+                                 CInt(cmbEndTrack.Text),
+                                 TrackGroup,
+                                 cmbSides.Text,
+                                 CInt(cmbStepping.Text),
+                                 "",
+                                 chkSeparateFolders.Checked)
             End If  'Run gw.py once only
         Else
         End If
@@ -727,39 +886,80 @@ Public Class frmMain
         End If
     End Sub
 
-    Private Sub BtnPythonLocation_Click(sender As Object, e As EventArgs) Handles btnPythonLocation.Click
-        OpenFileDialogMain.Title = "Select 'gw.exe' in GreaseWeazle Directory"
-        OpenFileDialogMain.Multiselect = False
-        OpenFileDialogMain.FileName = "gw.exe"
-        OpenFileDialogMain.DefaultExt = "exe"
-        OpenFileDialogMain.Filter = "Program files (*.exe)|*.exe|All files (*.*)|*.*"
+    Private Sub BtnPythonLocation_Click(sender As Object, e As EventArgs) Handles btnGW_EXE.Click
+        If chkUsePython.Checked Then 'Use python.exe, and python script
+            OpenFileDialogMain.Title = "Select 'gw.py' or 'gw' in GreaseWeazle Directory"
+            OpenFileDialogMain.Multiselect = False
+            OpenFileDialogMain.FileName = "gw.py"
+            OpenFileDialogMain.DefaultExt = "py"
+            OpenFileDialogMain.Filter = "All files (*.*)|*.*|Python Scripts (*.py)|*.py|Program files (*.exe)|*.exe"
+        Else 'Call gw.exe directly
+            OpenFileDialogMain.Title = "Select 'gw.exe' in GreaseWeazle Directory"
+            OpenFileDialogMain.Multiselect = False
+            OpenFileDialogMain.FileName = "gw.exe"
+            OpenFileDialogMain.DefaultExt = "exe"
+            OpenFileDialogMain.Filter = "Program files (*.exe)|*.exe|All files (*.*)|*.*"
+        End If
 
         If (OpenFileDialogMain.ShowDialog() = DialogResult.OK) Then
-            txtPythonLocation.Text = OpenFileDialogMain.FileName
+            txtGWLocation.Text = OpenFileDialogMain.FileName
         End If
     End Sub
 
     Private Sub BtnWrite_Click(sender As Object, e As EventArgs) Handles btnWrite.Click, WRITEDiskToolStripMenuItem.Click
         If CheckForErrors() = False Then
-            OpenFileDialogMain.Title = "Select SuperCard Pro / HxC Floppy Emulator / Amiga ADF / Software Preservation Society file to write to floppy"
+            OpenFileDialogMain.Title = "Select SuperCard Pro / HxC Floppy Emulator / Amiga ADF / 1.44MB IMG / Software Preservation Society file to write to floppy"
             OpenFileDialogMain.Multiselect = False
             OpenFileDialogMain.FileName = ""
-            OpenFileDialogMain.Filter = "Supported files|*.scp;*.hfe;*.adf;*.ipf|Supercard Pro files|*.scp|HxC Flippy Emulator HFE files|*.hfe|Commodore Amiga ADF files|*.adf|Software Preservation Society IPF files|*.ipf|All files (*.*)|*.*"
+            OpenFileDialogMain.Filter = "Supported files|*.scp;*.hfe;*.adf;*.ipf;*.img;*.raw|Supercard Pro files|*.scp|HxC Flippy Emulator HFE files|*.hfe|Commodore Amiga ADF files|*.adf| IBM 1.44MB IMG|*.img|Kryoflux files|*.raw|Software Preservation Society IPF files|*.ipf|All files (*.*)|*.*"
             Dim fileGW As String
             If (OpenFileDialogMain.ShowDialog() = DialogResult.OK) Then
                 fileGW = OpenFileDialogMain.FileName
                 DoLOG()
                 rtbOutput.Clear()
                 rtbOutput.Text &= "Writing to Greaseweazel on port " + cmbSerialPorts.Text + Environment.NewLine
-                rtbOutput.Text &= "Start: " + cmbStartTrack.Text + "  End: " + cmbEndTrack.Text + "  Revolutions: " + cmbRevolutions.Text + "  Sided: "
-                If (chkSingleSided.Checked) Then
-                    rtbOutput.Text &= "Single"
-                Else
-                    rtbOutput.Text &= "Double"
-                End If
+                rtbOutput.Text &= "Start: " + cmbStartTrack.Text + "  End: " + cmbEndTrack.Text + "  Revolutions: " + cmbRevolutions.Text
+                rtbOutput.Text &= "  Sides: " + cmbSides.Text
                 rtbOutput.Text &= Environment.NewLine
                 rtbOutput.Text &= "using file: " + fileGW + Environment.NewLine + Environment.NewLine
-                CallGreaseWeazel(txtPythonLocation.Text, "", GWWrite, fileGW, cmbSerialPorts.Text, chkDoubleStep.Checked, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, 0)
+
+                Dim TrackGroup As String = ""
+                If chkTrackGroup.Checked Then
+                    TrackGroup = txtTrackGroup.Text
+                    If TrackGroup.StartsWith(",") Then
+                        TrackGroup = TrackGroup.Remove(0, 1)
+                    End If
+                End If
+
+                Dim PythonEXE As String
+                Dim GW_Script As String
+                If chkUsePython.Checked Then
+                    PythonEXE = txtPythonLocation.Text
+                    GW_Script = txtGWLocation.Text
+                Else
+                    PythonEXE = txtGWLocation.Text
+                    GW_Script = ""
+                End If
+
+                CallGreaseWeazel(PythonEXE,
+                                 GW_Script,
+                                 GWWrite,
+                                 fileGW,
+                                 cmbSerialPorts.Text,
+                                 0,
+                                 CChar(""),
+                                 CInt(cmbRPM.Text),
+                                 CInt(cmbRate.Text),
+                                 chkRPM.Checked,
+                                 chkRate.Checked,
+                                 0,
+                                 CInt(cmbStartTrack.Text),
+                                 CInt(cmbEndTrack.Text),
+                                 TrackGroup,
+                                 cmbSides.Text,
+                                 CInt(cmbStepping.Text),
+                                 "",
+                                 chkSeparateFolders.Checked)
             Else
                 rtbOutput.Text &= Environment.NewLine + "Write image cancelled" + Environment.NewLine
             End If
@@ -807,7 +1007,7 @@ Public Class frmMain
     End Sub
 
     Private Sub LinkLabelLaunchNow_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabelLaunchNow.LinkClicked
-        ExecuteCommand(txtExecuteScript.Text.Trim, txtSaveLocation.Text.Trim + CreateFileName(False), chkExecuteScript.CheckState)
+        ExecuteCommand(txtExecuteScript.Text.Trim, txtSaveLocation.Text.Trim + CreateFileName(False, chkSeparateFolders.Checked), chkExecuteScript.CheckState)
     End Sub
 
     Private Sub ChkStartCyl_CheckedChanged(sender As Object, e As EventArgs) Handles ChkStartTrack.CheckedChanged
@@ -849,7 +1049,36 @@ Public Class frmMain
                 rtbOutput.Text &= "Please ensure GND + DCLK are bridged with a jumper before the process starts."
                 rtbOutput.Text &= Environment.NewLine + Environment.NewLine
                 If MessageBox.Show("Continue with flashing process?" + vbNewLine + vbNewLine + "Are GND + DCLK are bridged with a jumper also?", "Flash Greaseweazle", MessageBoxButtons.OKCancel) = DialogResult.OK Then
-                    CallGreaseWeazel(txtPythonLocation.Text, "", GWUpdate, fileGW, cmbSerialPorts.Text, chkDoubleStep.Checked, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, 0)
+
+                    Dim PythonEXE As String
+                    Dim GW_Script As String
+                    If chkUsePython.Checked Then
+                        PythonEXE = txtPythonLocation.Text
+                        GW_Script = txtGWLocation.Text
+                    Else
+                        PythonEXE = txtGWLocation.Text
+                        GW_Script = ""
+                    End If
+
+                    CallGreaseWeazel(PythonEXE,
+                                     GW_Script,
+                                     GWUpdate,
+                                     fileGW,
+                                     cmbSerialPorts.Text,
+                                     0,
+                                     CChar(""),
+                                     CInt(cmbRPM.Text),
+                                     CInt(cmbRate.Text),
+                                     chkRPM.Checked,
+                                     chkRate.Checked,
+                                     0,
+                                     0,
+                                     0,
+                                     "",
+                                     "",
+                                     0,
+                                     "",
+                                     chkSeparateFolders.Checked)
                     rtbOutput.Text &= Environment.NewLine + Environment.NewLine
                     rtbOutput.Text &= "Remember to select the updated gw.py in the 'Greaseweazle Script Location'"
                     rtbOutput.Text &= Environment.NewLine + Environment.NewLine
@@ -862,14 +1091,32 @@ Public Class frmMain
             rtbOutput.Text &= Environment.NewLine
             rtbOutput.Text &= "Warning: If unsuccessful, you may need to flash the firmware hex file to use the Greaseweazle again"
             rtbOutput.Text &= Environment.NewLine + Environment.NewLine
-            If IO.Path.GetFileName(txtPythonLocation.Text) <> "gw.exe" Then
+            If IO.Path.GetFileName(txtGWLocation.Text) <> "gw.exe" Then
                 rtbOutput.Text &= "Please ensure GND + DCLK are bridged with a jumper before the process starts."
                 rtbOutput.Text &= Environment.NewLine + Environment.NewLine
             End If
             If MessageBox.Show("Continue with Bootloader flashing?", "Flash Greaseweazle", MessageBoxButtons.OKCancel) = DialogResult.OK Then
-                CallGreaseWeazel(txtPythonLocation.Text, "", GWFirmware, "", cmbSerialPorts.Text, chkDoubleStep.Checked, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, 0)
+                CallGreaseWeazel(txtGWLocation.Text,
+                                 "",
+                                 GWFirmware,
+                                 "",
+                                 cmbSerialPorts.Text,
+                                 0,
+                                 CChar(""),
+                                 CInt(cmbRPM.Text),
+                                 CInt(cmbRate.Text),
+                                 chkRPM.Checked,
+                                 chkRate.Checked,
+                                 0,
+                                 0,
+                                 0,
+                                 "",
+                                 "",
+                                 0,
+                                 "",
+                                 chkSeparateFolders.Checked)
                 rtbOutput.Text &= Environment.NewLine + Environment.NewLine
-                If IO.Path.GetFileName(txtPythonLocation.Text) <> "gw.exe" Then
+                If IO.Path.GetFileName(txtGWLocation.Text) <> "gw.exe" Then
                     rtbOutput.Text &= "Remember to select the updated gw.py in the 'Greaseweazle Script Location'"
                     rtbOutput.Text &= Environment.NewLine + Environment.NewLine
                 End If
@@ -885,7 +1132,36 @@ Public Class frmMain
         If IsNumeric(cmbPIN.Text) = True Then
             rtbOutput.Text &= "Setting pin level:"
             rtbOutput.Text &= Environment.NewLine + Environment.NewLine
-            CallGreaseWeazel(txtPythonLocation.Text, "", GWSetPin, "", cmbSerialPorts.Text, False, CInt(cmbPIN.Text), cmbLowHigh.Text.Chars(0), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, 0)
+
+            Dim PythonEXE As String
+            Dim GW_Script As String
+            If chkUsePython.Checked Then
+                PythonEXE = txtPythonLocation.Text
+                GW_Script = txtGWLocation.Text
+            Else
+                PythonEXE = txtGWLocation.Text
+                GW_Script = ""
+            End If
+
+            CallGreaseWeazel(PythonEXE,
+                             GW_Script,
+                             GWSetPin,
+                             "",
+                             cmbSerialPorts.Text,
+                             CInt(cmbPIN.Text),
+                             cmbLowHigh.Text.Chars(0),
+                             CInt(cmbRPM.Text),
+                             CInt(cmbRate.Text),
+                             chkRPM.Checked,
+                             chkRate.Checked,
+                             0,
+                             0,
+                             0,
+                             "",
+                             "",
+                             0,
+                             "",
+                             chkSeparateFolders.Checked)
         Else
             rtbOutput.Text &= Environment.NewLine + Environment.NewLine
             rtbOutput.Text &= "Pin to change must be selected in the Pin dropdown box."
@@ -896,7 +1172,36 @@ Public Class frmMain
         rtbOutput.Text &= Environment.NewLine
         rtbOutput.Text &= "Issuing device reset:"
         rtbOutput.Text &= Environment.NewLine + Environment.NewLine
-        CallGreaseWeazel(txtPythonLocation.Text, "", GWReset, "", cmbSerialPorts.Text, False, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, 0)
+
+        Dim PythonEXE As String
+        Dim GW_Script As String
+        If chkUsePython.Checked Then
+            PythonEXE = txtPythonLocation.Text
+            GW_Script = txtGWLocation.Text
+        Else
+            PythonEXE = txtGWLocation.Text
+            GW_Script = ""
+        End If
+
+        CallGreaseWeazel(PythonEXE,
+                         GW_Script,
+                         GWReset,
+                         "",
+                         cmbSerialPorts.Text,
+                         0,
+                         CChar(""),
+                         CInt(cmbRPM.Text),
+                         CInt(cmbRate.Text),
+                         chkRPM.Checked,
+                         chkRate.Checked,
+                         0,
+                         0,
+                         0,
+                         "",
+                         "",
+                         0,
+                         "",
+                         chkSeparateFolders.Checked)
     End Sub
 
     Private Sub cmbDiskOf_LostFocus(sender As Object, e As EventArgs) Handles cmbDiskOf.LostFocus
@@ -930,7 +1235,43 @@ Public Class frmMain
     Private Sub BtnEraseDisk_Click(sender As Object, e As EventArgs) Handles btnEraseDisk.Click
         rtbOutput.Text &= Environment.NewLine + "Erasing Disk:" + Environment.NewLine
         If MessageBox.Show("Erase floppy disk?", "Warning: Erase disk and wipe all contents from it.", MessageBoxButtons.YesNo) = DialogResult.Yes Then
-            CallGreaseWeazel(txtPythonLocation.Text, "", GWErase, "", cmbSerialPorts.Text, False, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, 0)
+            Dim TrackGroup As String = ""
+            If chkTrackGroup.Checked Then
+                TrackGroup = txtTrackGroup.Text
+                If TrackGroup.StartsWith(",") Then
+                    TrackGroup = TrackGroup.Remove(0, 1)
+                End If
+            End If
+
+            Dim PythonEXE As String
+            Dim GW_Script As String
+            If chkUsePython.Checked Then
+                PythonEXE = txtPythonLocation.Text
+                GW_Script = txtGWLocation.Text
+            Else
+                PythonEXE = txtGWLocation.Text
+                GW_Script = ""
+            End If
+
+            CallGreaseWeazel(PythonEXE,
+                             GW_Script,
+                             GWErase,
+                             "",
+                             cmbSerialPorts.Text,
+                             0,
+                             CChar(""),
+                             CInt(cmbRPM.Text),
+                             CInt(cmbRate.Text),
+                             chkRPM.Checked,
+                             chkRate.Checked,
+                             0,
+                             CInt(cmbStartTrack.Text),
+                             CInt(cmbEndTrack.Text),
+                             TrackGroup,
+                             cmbSides.Text,
+                             CInt(cmbStepping.Text),
+                             "",
+                             chkSeparateFolders.Checked)
         Else
             rtbOutput.Text &= Environment.NewLine + "Erasing Disk: Cancelled" + Environment.NewLine
         End If
@@ -959,8 +1300,8 @@ Public Class frmMain
         lblGWLocation.TabStop = lblSaveLocation.Visible
         LinkLabelDLGW.TabStop = lblSaveLocation.Visible
         'LinkLabelDLPython.TabStop = lblSaveLocation.Visible
-        txtPythonLocation.TabStop = lblSaveLocation.Visible
-        btnPythonLocation.TabStop = lblSaveLocation.Visible
+        txtGWLocation.TabStop = lblSaveLocation.Visible
+        btnGW_EXE.TabStop = lblSaveLocation.Visible
 
         LinkLabelOpenLocation.Visible = lblSaveLocation.Visible
         txtSaveLocation.Visible = lblSaveLocation.Visible
@@ -968,8 +1309,8 @@ Public Class frmMain
         lblGWLocation.Visible = lblSaveLocation.Visible
         LinkLabelDLGW.Visible = lblSaveLocation.Visible
         'LinkLabelDLPython.Visible = lblSaveLocation.Visible
-        txtPythonLocation.Visible = lblSaveLocation.Visible
-        btnPythonLocation.Visible = lblSaveLocation.Visible
+        txtGWLocation.Visible = lblSaveLocation.Visible
+        btnGW_EXE.Visible = lblSaveLocation.Visible
 
         rtbOutput.TabStop = rtbOutput.Visible
         btnSetPin.TabStop = rtbOutput.Visible
@@ -997,17 +1338,104 @@ Public Class frmMain
 
     Private Sub btnInfo_Click(sender As Object, e As EventArgs) Handles btnInfo.Click, GreaseweazleINFOToolStripMenuItem.Click
         rtbOutput.Text &= Environment.NewLine
-        CallGreaseWeazel(txtPythonLocation.Text, "", GWInfo, "", cmbSerialPorts.Text, False, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, 0)
+
+        Dim PythonEXE As String
+        Dim GW_Script As String
+        If chkUsePython.Checked Then
+            PythonEXE = txtPythonLocation.Text
+            GW_Script = txtGWLocation.Text
+        Else
+            PythonEXE = txtGWLocation.Text
+            GW_Script = ""
+        End If
+
+        CallGreaseWeazel(PythonEXE,
+                         GW_Script,
+                         GWInfo,
+                         "",
+                         cmbSerialPorts.Text,
+                         0,
+                         CChar(""),
+                         CInt(cmbRPM.Text),
+                         CInt(cmbRate.Text),
+                         chkRPM.Checked,
+                         chkRate.Checked,
+                         0,
+                         0,
+                         0,
+                         "",
+                         "",
+                         0,
+                         "",
+                         chkSeparateFolders.Checked)
     End Sub
 
     Private Sub btnGWBandwidth_Click(sender As Object, e As EventArgs) Handles btnGWBandwidth.Click, GreaswweazleDToolStripMenuItem.Click
         rtbOutput.Text &= Environment.NewLine
-        CallGreaseWeazel(txtPythonLocation.Text, "", GWBandwidth, "", cmbSerialPorts.Text, False, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, 0)
+
+        Dim PythonEXE As String
+        Dim GW_Script As String
+        If chkUsePython.Checked Then
+            PythonEXE = txtPythonLocation.Text
+            GW_Script = txtGWLocation.Text
+        Else
+            PythonEXE = txtGWLocation.Text
+            GW_Script = ""
+        End If
+
+        CallGreaseWeazel(PythonEXE,
+                         GW_Script,
+                         GWBandwidth,
+                         "",
+                         cmbSerialPorts.Text,
+                         0,
+                         CChar(""),
+                         CInt(cmbRPM.Text),
+                         CInt(cmbRate.Text),
+                         chkRPM.Checked,
+                         chkRate.Checked,
+                         0,
+                         0,
+                         0,
+                         "",
+                         "",
+                         0,
+                         "",
+                         chkSeparateFolders.Checked)
     End Sub
 
     Private Sub btnGWDelays_Click(sender As Object, e As EventArgs) Handles btnGWDelays.Click, GreaseweazleDelaysToolStripMenuItem.Click
         rtbOutput.Text &= Environment.NewLine
-        CallGreaseWeazel(txtPythonLocation.Text, "", GWDelays, "", cmbSerialPorts.Text, False, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, 0)
+
+        Dim PythonEXE As String
+        Dim GW_Script As String
+        If chkUsePython.Checked Then
+            PythonEXE = txtPythonLocation.Text
+            GW_Script = txtGWLocation.Text
+        Else
+            PythonEXE = txtGWLocation.Text
+            GW_Script = ""
+        End If
+
+        CallGreaseWeazel(PythonEXE,
+                         GW_Script,
+                         GWDelays,
+                         "",
+                         cmbSerialPorts.Text,
+                         0,
+                         CChar(""),
+                         CInt(cmbRPM.Text),
+                         CInt(cmbRate.Text),
+                         chkRPM.Checked,
+                         chkRate.Checked,
+                         0,
+                         0,
+                         0,
+                         "",
+                         "",
+                         0,
+                         "",
+                         chkSeparateFolders.Checked)
     End Sub
 
     Private Sub chkRate_CheckedChanged(sender As Object, e As EventArgs) Handles chkRate.CheckedChanged
@@ -1044,19 +1472,40 @@ Public Class frmMain
         chkSaveLog.Checked = WriteLOGWithEachReadWriteToolStripMenuItem.Checked
     End Sub
 
-    Private Sub cmbReadFormat_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbReadFormat.SelectedIndexChanged
-        If cmbReadFormat.SelectedIndex > 0 Then
-            If chkSingleSided.CheckState = CheckState.Indeterminate Then
-                chkSingleSided.CheckState = CheckState.Checked
-            End If
-        End If
-    End Sub
-
     Private Sub btnSeekA_Click(sender As Object, e As EventArgs) Handles btnSeekA.Click
         rtbOutput.Text &= Environment.NewLine
         If IsNumeric(cmbSeekA.Text) = True Then
             rtbOutput.Text &= "Moving floppy head to track: " + cmbSeekA.Text + Environment.NewLine
-            CallGreaseWeazel(txtPythonLocation.Text, "", GWSeek, "", cmbSerialPorts.Text, chkDoubleStep.Checked, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, CInt(cmbSeekA.Text))
+
+            Dim PythonEXE As String
+            Dim GW_Script As String
+            If chkUsePython.Checked Then
+                PythonEXE = txtPythonLocation.Text
+                GW_Script = txtGWLocation.Text
+            Else
+                PythonEXE = txtGWLocation.Text
+                GW_Script = ""
+            End If
+
+            CallGreaseWeazel(PythonEXE,
+                             GW_Script,
+                             GWSeek,
+                             "",
+                             cmbSerialPorts.Text,
+                             0,
+                             CChar(""),
+                             CInt(cmbRPM.Text),
+                             CInt(cmbRate.Text),
+                             chkRPM.Checked,
+                             chkRate.Checked,
+                             CInt(cmbSeekA.Text),
+                             0,
+                             0,
+                             "",
+                             "",
+                             0,
+                             "",
+                             chkSeparateFolders.Checked)
         Else
             rtbOutput.Text &= "SeekA value '" + cmbSeekA.Text + "' isn't a number. Track number must be between 0 and 85."
         End If
@@ -1066,10 +1515,79 @@ Public Class frmMain
         rtbOutput.Text &= Environment.NewLine
         If IsNumeric(cmbSeekB.Text) = True Then
             rtbOutput.Text &= "Moving floppy head to track: " + cmbSeekB.Text + Environment.NewLine
-            CallGreaseWeazel(txtPythonLocation.Text, "", GWSeek, "", cmbSerialPorts.Text, chkDoubleStep.Checked, 0, CChar(""), CInt(cmbRPM.Text), CInt(cmbRate.Text), chkRPM.Checked, chkRate.Checked, CInt(cmbSeekB.Text))
+
+            Dim PythonEXE As String
+            Dim GW_Script As String
+            If chkUsePython.Checked Then
+                PythonEXE = txtPythonLocation.Text
+                GW_Script = txtGWLocation.Text
+            Else
+                PythonEXE = txtGWLocation.Text
+                GW_Script = ""
+            End If
+
+            CallGreaseWeazel(PythonEXE,
+                             GW_Script,
+                             GWSeek,
+                             "",
+                             cmbSerialPorts.Text,
+                             0,
+                             CChar(""),
+                             CInt(cmbRPM.Text),
+                             CInt(cmbRate.Text),
+                             chkRPM.Checked,
+                             chkRate.Checked,
+                             CInt(cmbSeekB.Text),
+                             0,
+                             0,
+                             "",
+                             "",
+                             0,
+                             "",
+                             chkSeparateFolders.Checked)
         Else
             rtbOutput.Text &= "SeekB value '" + cmbSeekB.Text + "' isn't a number. Track number must be between 0 and 85."
         End If
     End Sub
 
+    Private Sub lblAddTrackList_Click(sender As Object, e As EventArgs) Handles lblAddTrackList.Click
+        chkTrackGroup.Checked = True
+        txtTrackGroup.Text += "," + cmbStartTrack.Text + "-" + cmbEndTrack.Text
+        If txtTrackGroup.Text.StartsWith(",") Then
+            txtTrackGroup.Text = txtTrackGroup.Text.Remove(0, 1)
+        End If
+    End Sub
+
+    Private Sub lblClearTrackList_Click(sender As Object, e As EventArgs) Handles lblClearTrackList.Click
+        txtTrackGroup.Text = ""
+        chkTrackGroup.Checked = False
+    End Sub
+
+    Private Sub llabelPreCompensate_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles llabelPreCompensate.LinkClicked
+        System.Diagnostics.Process.Start("https://github.com/keirf/Greaseweazle/wiki/Write-Precompensation")
+    End Sub
+
+    Private Sub chkUsePython_CheckedChanged(sender As Object, e As EventArgs) Handles chkUsePython.CheckedChanged
+        txtPythonLocation.Enabled = chkUsePython.Checked
+        btnPython_EXE.Enabled = chkUsePython.Checked
+        txtPythonLocation.Visible = chkUsePython.Checked
+        lblPythonLocation.Visible = chkUsePython.Checked
+        btnPython_EXE.Visible = chkUsePython.Checked
+    End Sub
+
+    Private Sub LinkLabelDownloadPython_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabelDownloadPython.LinkClicked
+        System.Diagnostics.Process.Start("https://www.python.org/downloads/windows/")
+    End Sub
+
+    Private Sub btnPython_EXE_Click(sender As Object, e As EventArgs) Handles btnPython_EXE.Click
+        OpenFileDialogMain.Title = "Select 'python.exe' in Python install Directory"
+        OpenFileDialogMain.Multiselect = False
+        OpenFileDialogMain.FileName = "python.exe"
+        OpenFileDialogMain.DefaultExt = "exe"
+        OpenFileDialogMain.Filter = "Program files (*.exe)|*.exe|All files (*.*)|*.*"
+
+        If (OpenFileDialogMain.ShowDialog() = DialogResult.OK) Then
+            txtPythonLocation.Text = OpenFileDialogMain.FileName
+        End If
+    End Sub
 End Class

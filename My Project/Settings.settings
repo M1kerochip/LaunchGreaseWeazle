@@ -5,10 +5,7 @@
     <Setting Name="SaveLoc" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="GW" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="Python" Type="System.String" Scope="User">
+    <Setting Name="GWExe" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Title" Type="System.String" Scope="User">
@@ -53,9 +50,6 @@
     <Setting Name="LoopDumpCount" Type="System.String" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="DoubleStep" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="WideForm" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
@@ -70,9 +64,6 @@
     </Setting>
     <Setting Name="EndTrackNo" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">79</Value>
-    </Setting>
-    <Setting Name="SingleSided" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="AdjustWriteSpeed" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -103,6 +94,21 @@
     </Setting>
     <Setting Name="SeekB" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">83</Value>
+    </Setting>
+    <Setting Name="Sides" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0-1</Value>
+    </Setting>
+    <Setting Name="Stepping" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="SeparateFolders" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="PythonExe" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="UsePython" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>
