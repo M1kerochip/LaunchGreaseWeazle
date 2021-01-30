@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class frmMain
+Partial Class FrmMain
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -102,15 +102,15 @@ Partial Class frmMain
         Me.btnSetPin = New System.Windows.Forms.Button()
         Me.lblPin = New System.Windows.Forms.Label()
         Me.lblState = New System.Windows.Forms.Label()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.ComboBox3 = New System.Windows.Forms.ComboBox()
-        Me.ComboBox2 = New System.Windows.Forms.ComboBox()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.GroupBoxGWOptions = New System.Windows.Forms.GroupBox()
+        Me.lblWPCNanoSeconds = New System.Windows.Forms.Label()
+        Me.lblWPCTracks = New System.Windows.Forms.Label()
+        Me.lblWPCBy = New System.Windows.Forms.Label()
+        Me.cmbWPCTracks = New System.Windows.Forms.ComboBox()
+        Me.cmbWPCTrackRange = New System.Windows.Forms.ComboBox()
+        Me.cmbWPCType = New System.Windows.Forms.ComboBox()
+        Me.chkWritePreCompensate = New System.Windows.Forms.CheckBox()
+        Me.txtWPCWidth = New System.Windows.Forms.TextBox()
         Me.lblHeadStep = New System.Windows.Forms.Label()
         Me.lblDiskSides = New System.Windows.Forms.Label()
         Me.chkTrackGroup = New System.Windows.Forms.CheckBox()
@@ -144,7 +144,7 @@ Partial Class frmMain
         Me.btnPython_EXE = New System.Windows.Forms.Button()
         Me.lblPythonLocation = New System.Windows.Forms.Label()
         Me.ContextMenuStripMainCommands.SuspendLayout()
-        Me.GroupBox1.SuspendLayout()
+        Me.GroupBoxGWOptions.SuspendLayout()
         Me.SuspendLayout()
         '
         'cmbSerialPorts
@@ -797,126 +797,126 @@ Partial Class frmMain
         Me.lblState.TabIndex = 114
         Me.lblState.Text = "Voltage Level:"
         '
-        'GroupBox1
+        'GroupBoxGWOptions
         '
-        Me.GroupBox1.Controls.Add(Me.Label3)
-        Me.GroupBox1.Controls.Add(Me.Label1)
-        Me.GroupBox1.Controls.Add(Me.Label2)
-        Me.GroupBox1.Controls.Add(Me.ComboBox3)
-        Me.GroupBox1.Controls.Add(Me.ComboBox2)
-        Me.GroupBox1.Controls.Add(Me.ComboBox1)
-        Me.GroupBox1.Controls.Add(Me.CheckBox1)
-        Me.GroupBox1.Controls.Add(Me.TextBox1)
-        Me.GroupBox1.Controls.Add(Me.lblHeadStep)
-        Me.GroupBox1.Controls.Add(Me.lblDiskSides)
-        Me.GroupBox1.Controls.Add(Me.chkTrackGroup)
-        Me.GroupBox1.Controls.Add(Me.cmbSides)
-        Me.GroupBox1.Controls.Add(Me.chkSeparateFolders)
-        Me.GroupBox1.Controls.Add(Me.lblClearTrackList)
-        Me.GroupBox1.Controls.Add(Me.lblAddTrackList)
-        Me.GroupBox1.Controls.Add(Me.txtTrackGroup)
-        Me.GroupBox1.Controls.Add(Me.cmbStepping)
-        Me.GroupBox1.Controls.Add(Me.chkEraseEmpty)
-        Me.GroupBox1.Controls.Add(Me.cmbRPM)
-        Me.GroupBox1.Controls.Add(Me.chkRPM)
-        Me.GroupBox1.Controls.Add(Me.cmbRate)
-        Me.GroupBox1.Controls.Add(Me.chkRate)
-        Me.GroupBox1.Controls.Add(Me.btnHidePaths)
-        Me.GroupBox1.Controls.Add(Me.cmbReadFormat)
-        Me.GroupBox1.Controls.Add(Me.chkFilenameRreplaceSpaceWithUnderscore)
-        Me.GroupBox1.Controls.Add(Me.cmbStartTrack)
-        Me.GroupBox1.Controls.Add(Me.ChkStartTrack)
-        Me.GroupBox1.Controls.Add(Me.cmbRevolutions)
-        Me.GroupBox1.Controls.Add(Me.chkRevolutions)
-        Me.GroupBox1.Controls.Add(Me.cmbEndTrack)
-        Me.GroupBox1.Controls.Add(Me.btnResize)
-        Me.GroupBox1.Controls.Add(Me.chkEndTrack)
-        Me.GroupBox1.Controls.Add(Me.llabelPreCompensate)
-        Me.GroupBox1.Controls.Add(Me.LinkLabelDriveSelect)
-        Me.GroupBox1.Controls.Add(Me.cmbDriveSelect)
-        Me.GroupBox1.Controls.Add(Me.chkF7)
-        Me.GroupBox1.Location = New System.Drawing.Point(12, 128)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(495, 199)
-        Me.GroupBox1.TabIndex = 37
-        Me.GroupBox1.TabStop = False
+        Me.GroupBoxGWOptions.Controls.Add(Me.lblWPCNanoSeconds)
+        Me.GroupBoxGWOptions.Controls.Add(Me.lblWPCTracks)
+        Me.GroupBoxGWOptions.Controls.Add(Me.lblWPCBy)
+        Me.GroupBoxGWOptions.Controls.Add(Me.cmbWPCTracks)
+        Me.GroupBoxGWOptions.Controls.Add(Me.cmbWPCTrackRange)
+        Me.GroupBoxGWOptions.Controls.Add(Me.cmbWPCType)
+        Me.GroupBoxGWOptions.Controls.Add(Me.chkWritePreCompensate)
+        Me.GroupBoxGWOptions.Controls.Add(Me.txtWPCWidth)
+        Me.GroupBoxGWOptions.Controls.Add(Me.lblHeadStep)
+        Me.GroupBoxGWOptions.Controls.Add(Me.lblDiskSides)
+        Me.GroupBoxGWOptions.Controls.Add(Me.chkTrackGroup)
+        Me.GroupBoxGWOptions.Controls.Add(Me.cmbSides)
+        Me.GroupBoxGWOptions.Controls.Add(Me.chkSeparateFolders)
+        Me.GroupBoxGWOptions.Controls.Add(Me.lblClearTrackList)
+        Me.GroupBoxGWOptions.Controls.Add(Me.lblAddTrackList)
+        Me.GroupBoxGWOptions.Controls.Add(Me.txtTrackGroup)
+        Me.GroupBoxGWOptions.Controls.Add(Me.cmbStepping)
+        Me.GroupBoxGWOptions.Controls.Add(Me.chkEraseEmpty)
+        Me.GroupBoxGWOptions.Controls.Add(Me.cmbRPM)
+        Me.GroupBoxGWOptions.Controls.Add(Me.chkRPM)
+        Me.GroupBoxGWOptions.Controls.Add(Me.cmbRate)
+        Me.GroupBoxGWOptions.Controls.Add(Me.chkRate)
+        Me.GroupBoxGWOptions.Controls.Add(Me.btnHidePaths)
+        Me.GroupBoxGWOptions.Controls.Add(Me.cmbReadFormat)
+        Me.GroupBoxGWOptions.Controls.Add(Me.chkFilenameRreplaceSpaceWithUnderscore)
+        Me.GroupBoxGWOptions.Controls.Add(Me.cmbStartTrack)
+        Me.GroupBoxGWOptions.Controls.Add(Me.ChkStartTrack)
+        Me.GroupBoxGWOptions.Controls.Add(Me.cmbRevolutions)
+        Me.GroupBoxGWOptions.Controls.Add(Me.chkRevolutions)
+        Me.GroupBoxGWOptions.Controls.Add(Me.cmbEndTrack)
+        Me.GroupBoxGWOptions.Controls.Add(Me.btnResize)
+        Me.GroupBoxGWOptions.Controls.Add(Me.chkEndTrack)
+        Me.GroupBoxGWOptions.Controls.Add(Me.llabelPreCompensate)
+        Me.GroupBoxGWOptions.Controls.Add(Me.LinkLabelDriveSelect)
+        Me.GroupBoxGWOptions.Controls.Add(Me.cmbDriveSelect)
+        Me.GroupBoxGWOptions.Controls.Add(Me.chkF7)
+        Me.GroupBoxGWOptions.Location = New System.Drawing.Point(12, 128)
+        Me.GroupBoxGWOptions.Name = "GroupBoxGWOptions"
+        Me.GroupBoxGWOptions.Size = New System.Drawing.Size(495, 199)
+        Me.GroupBoxGWOptions.TabIndex = 37
+        Me.GroupBoxGWOptions.TabStop = False
         '
-        'Label3
+        'lblWPCNanoSeconds
         '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(399, 109)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(71, 13)
-        Me.Label3.TabIndex = 136
-        Me.Label3.Text = "nanoseconds"
+        Me.lblWPCNanoSeconds.AutoSize = True
+        Me.lblWPCNanoSeconds.Location = New System.Drawing.Point(399, 109)
+        Me.lblWPCNanoSeconds.Name = "lblWPCNanoSeconds"
+        Me.lblWPCNanoSeconds.Size = New System.Drawing.Size(71, 13)
+        Me.lblWPCNanoSeconds.TabIndex = 136
+        Me.lblWPCNanoSeconds.Text = "nanoseconds"
         '
-        'Label1
+        'lblWPCTracks
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(195, 109)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(36, 13)
-        Me.Label1.TabIndex = 136
-        Me.Label1.Text = "tracks"
+        Me.lblWPCTracks.AutoSize = True
+        Me.lblWPCTracks.Location = New System.Drawing.Point(195, 109)
+        Me.lblWPCTracks.Name = "lblWPCTracks"
+        Me.lblWPCTracks.Size = New System.Drawing.Size(36, 13)
+        Me.lblWPCTracks.TabIndex = 136
+        Me.lblWPCTracks.Text = "tracks"
         '
-        'Label2
+        'lblWPCBy
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(329, 109)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(18, 13)
-        Me.Label2.TabIndex = 136
-        Me.Label2.Text = "by"
+        Me.lblWPCBy.AutoSize = True
+        Me.lblWPCBy.Location = New System.Drawing.Point(329, 109)
+        Me.lblWPCBy.Name = "lblWPCBy"
+        Me.lblWPCBy.Size = New System.Drawing.Size(18, 13)
+        Me.lblWPCBy.TabIndex = 136
+        Me.lblWPCBy.Text = "by"
         '
-        'ComboBox3
+        'cmbWPCTracks
         '
-        Me.ComboBox3.FormattingEnabled = True
-        Me.ComboBox3.Items.AddRange(New Object() {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40"})
-        Me.ComboBox3.Location = New System.Drawing.Point(281, 106)
-        Me.ComboBox3.Name = "ComboBox3"
-        Me.ComboBox3.Size = New System.Drawing.Size(42, 21)
-        Me.ComboBox3.TabIndex = 135
-        Me.ComboBox3.Tag = ""
-        Me.ComboBox3.Text = "40"
+        Me.cmbWPCTracks.FormattingEnabled = True
+        Me.cmbWPCTracks.Items.AddRange(New Object() {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40"})
+        Me.cmbWPCTracks.Location = New System.Drawing.Point(281, 106)
+        Me.cmbWPCTracks.Name = "cmbWPCTracks"
+        Me.cmbWPCTracks.Size = New System.Drawing.Size(42, 21)
+        Me.cmbWPCTracks.TabIndex = 135
+        Me.cmbWPCTracks.Tag = ""
+        Me.cmbWPCTracks.Text = "40"
         '
-        'ComboBox2
+        'cmbWPCTrackRange
         '
-        Me.ComboBox2.FormattingEnabled = True
-        Me.ComboBox2.Items.AddRange(New Object() {"<=", "<", ">", ">="})
-        Me.ComboBox2.Location = New System.Drawing.Point(237, 106)
-        Me.ComboBox2.Name = "ComboBox2"
-        Me.ComboBox2.Size = New System.Drawing.Size(38, 21)
-        Me.ComboBox2.TabIndex = 134
-        Me.ComboBox2.Tag = ""
-        Me.ComboBox2.Text = "<="
+        Me.cmbWPCTrackRange.FormattingEnabled = True
+        Me.cmbWPCTrackRange.Items.AddRange(New Object() {"<=", "<", ">", ">="})
+        Me.cmbWPCTrackRange.Location = New System.Drawing.Point(237, 106)
+        Me.cmbWPCTrackRange.Name = "cmbWPCTrackRange"
+        Me.cmbWPCTrackRange.Size = New System.Drawing.Size(38, 21)
+        Me.cmbWPCTrackRange.TabIndex = 134
+        Me.cmbWPCTrackRange.Tag = ""
+        Me.cmbWPCTrackRange.Text = ">="
         '
-        'ComboBox1
+        'cmbWPCType
         '
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Items.AddRange(New Object() {"mfm", "fm", "gcr"})
-        Me.ComboBox1.Location = New System.Drawing.Point(147, 106)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(42, 21)
-        Me.ComboBox1.TabIndex = 132
-        Me.ComboBox1.Tag = ""
-        Me.ComboBox1.Text = "mfm"
+        Me.cmbWPCType.FormattingEnabled = True
+        Me.cmbWPCType.Items.AddRange(New Object() {"mfm", "fm", "gcr"})
+        Me.cmbWPCType.Location = New System.Drawing.Point(147, 106)
+        Me.cmbWPCType.Name = "cmbWPCType"
+        Me.cmbWPCType.Size = New System.Drawing.Size(42, 21)
+        Me.cmbWPCType.TabIndex = 132
+        Me.cmbWPCType.Tag = ""
+        Me.cmbWPCType.Text = "mfm"
         '
-        'CheckBox1
+        'chkWritePreCompensate
         '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(5, 108)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(15, 14)
-        Me.CheckBox1.TabIndex = 131
-        Me.CheckBox1.UseVisualStyleBackColor = True
+        Me.chkWritePreCompensate.AutoSize = True
+        Me.chkWritePreCompensate.Location = New System.Drawing.Point(5, 108)
+        Me.chkWritePreCompensate.Name = "chkWritePreCompensate"
+        Me.chkWritePreCompensate.Size = New System.Drawing.Size(15, 14)
+        Me.chkWritePreCompensate.TabIndex = 131
+        Me.chkWritePreCompensate.UseVisualStyleBackColor = True
         '
-        'TextBox1
+        'txtWPCWidth
         '
-        Me.TextBox1.Location = New System.Drawing.Point(353, 106)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(40, 20)
-        Me.TextBox1.TabIndex = 130
-        Me.TextBox1.Text = "125"
+        Me.txtWPCWidth.Location = New System.Drawing.Point(353, 106)
+        Me.txtWPCWidth.Name = "txtWPCWidth"
+        Me.txtWPCWidth.Size = New System.Drawing.Size(40, 20)
+        Me.txtWPCWidth.TabIndex = 130
+        Me.txtWPCWidth.Text = "125"
         '
         'lblHeadStep
         '
@@ -1263,7 +1263,7 @@ Partial Class frmMain
         Me.Controls.Add(Me.btnInfo)
         Me.Controls.Add(Me.btnExecuteScript)
         Me.Controls.Add(Me.btnEraseDisk)
-        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.GroupBoxGWOptions)
         Me.Controls.Add(Me.lblState)
         Me.Controls.Add(Me.lblPin)
         Me.Controls.Add(Me.btnSetPin)
@@ -1314,8 +1314,8 @@ Partial Class frmMain
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Run GreaseWeazle Script"
         Me.ContextMenuStripMainCommands.ResumeLayout(False)
-        Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
+        Me.GroupBoxGWOptions.ResumeLayout(False)
+        Me.GroupBoxGWOptions.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1377,7 +1377,7 @@ Partial Class frmMain
     Friend WithEvents btnSetPin As Button
     Friend WithEvents lblPin As Label
     Friend WithEvents lblState As Label
-    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents GroupBoxGWOptions As GroupBox
     Friend WithEvents chkFilenameRreplaceSpaceWithUnderscore As CheckBox
     Friend WithEvents btnEraseDisk As Button
     Friend WithEvents cmbReadFormat As ComboBox
@@ -1425,14 +1425,14 @@ Partial Class frmMain
     Friend WithEvents chkTrackGroup As CheckBox
     Friend WithEvents lblHeadStep As Label
     Friend WithEvents lblDiskSides As Label
-    Friend WithEvents Label3 As Label
-    Friend WithEvents Label1 As Label
-    Friend WithEvents Label2 As Label
-    Friend WithEvents ComboBox3 As ComboBox
-    Friend WithEvents ComboBox2 As ComboBox
-    Friend WithEvents ComboBox1 As ComboBox
-    Friend WithEvents CheckBox1 As CheckBox
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents lblWPCNanoSeconds As Label
+    Friend WithEvents lblWPCTracks As Label
+    Friend WithEvents lblWPCBy As Label
+    Friend WithEvents cmbWPCTracks As ComboBox
+    Friend WithEvents cmbWPCTrackRange As ComboBox
+    Friend WithEvents cmbWPCType As ComboBox
+    Friend WithEvents chkWritePreCompensate As CheckBox
+    Friend WithEvents txtWPCWidth As TextBox
     Friend WithEvents llabelPreCompensate As LinkLabel
     Friend WithEvents chkUsePython As CheckBox
     Friend WithEvents txtPythonLocation As TextBox

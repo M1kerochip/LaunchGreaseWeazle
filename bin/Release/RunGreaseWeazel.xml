@@ -78,5 +78,199 @@ RunGreaseWeazel
  Check to see which buttons, text boxes etc should be visible
  </summary>
 </member>
+<member name="M:RunGreaseWeazel.GreaseWeazle.ClearError">
+ <summary>
+ 
+ </summary>
+</member>
+<member name="M:RunGreaseWeazel.GreaseWeazle.UpdateWPC_Formats(System.String)">
+ <summary>
+ Override the default list of disk formats for WPC
+ </summary>
+ <param name="NewFormats">CSV list of strings representing disk formats</param>
+ <returns></returns>
+</member>
+<member name="M:RunGreaseWeazel.GreaseWeazle.UpdateDriveSTR(System.String)">
+ <summary>
+ Override the default list of F7 drives
+ </summary>
+ <param name="NewDrives">CSV list of characters representing F7 drives it can access</param>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.RPM">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.Revolutions">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.Sides">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.TrackStep">
+ <summary>
+ Number of tracks to move for each head step. Default is 1. Set to 2, to read a 40 track disk in an 80 track drive.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.BitCellDataRate">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.HeadOffsetEnable">
+ <summary>
+ Enable to use 5.25" drives, to read 'Flippy' disks. eg C64 etc. Requires an offset set, to be effective.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.HeadOffsetTrackCount">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.WritePreCompensate">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.WPC_Type">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.WPC_Width_NanoSeconds">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.WPC_Tracks">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.WPC_TrackRange">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.FileName">
+ <summary>
+ File to write, or to read to. File must exist to perform write.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.PythonEXE">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.COMPort">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.Action">
+ <summary>
+ The action to make the Greaseweazle perform. Read, write, erase, etc. 11 Commands supported so far.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.StartTrack">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.EndTrack">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.TrackGroup">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.EraseEmptyTracks">
+ <summary>
+ When writing, perform an erase on empty tracks.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.ScriptFile">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.ExcuteScript">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.ExecuteScriptHidden">
+ <summary>
+ Runs a windows exe or batch file with the path to the filename as the first argument
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.ExecuteScriptOnGWRead_Only">
+ <summary>
+ Only run script/exe on 'READ' command
+ </summary>
+ <returns>True to run on Read, false to run on all actions.</returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.F7Device">
+ <summary>
+ Is the Greaseweazle an
+ STM32F703 or STM32F103
+ </summary>
+ <returns>True for F7 device, false for F1 'bluepill' device</returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.F7_Drive">
+ <summary>
+ F7 drive selection. 'A' (PC Drive, with cable twist), 'B' (with no twist), or DS0-2 Shugart drives
+ </summary>
+ <returns>Returns PC Drive letter (A/B) or Shugart drive number (0-2)</returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.SeekTrack">
+ <summary>
+ The cylinder/track to find using the 'Seek' command. Track numbers are zero based.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.ErrorString">
+ <summary>
+ Last Error string as readable text.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:RunGreaseWeazel.GreaseWeazle.ExecuteGW">
+ <summary>
+ Main function. Make the GW perform an action
+ </summary>
+ <returns>True if GW performed action, false if there was an error. Check ErrorString.</returns>
+</member>
 </members>
 </doc>

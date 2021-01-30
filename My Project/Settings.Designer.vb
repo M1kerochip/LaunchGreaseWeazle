@@ -128,7 +128,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("A")>  _
         Public Property Drive() As String
             Get
                 Return CType(Me("Drive"),String)
@@ -483,6 +483,90 @@ Namespace My
             End Get
             Set
                 Me("UsePython") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property UseWritePreCompensate() As Boolean
+            Get
+                Return CType(Me("UseWritePreCompensate"),Boolean)
+            End Get
+            Set
+                Me("UseWritePreCompensate") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("mfm")>  _
+        Public Property WPCType() As String
+            Get
+                Return CType(Me("WPCType"),String)
+            End Get
+            Set
+                Me("WPCType") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("40")>  _
+        Public Property WPCTracks() As String
+            Get
+                Return CType(Me("WPCTracks"),String)
+            End Get
+            Set
+                Me("WPCTracks") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute(">=")>  _
+        Public Property WPCTrackRange() As String
+            Get
+                Return CType(Me("WPCTrackRange"),String)
+            End Get
+            Set
+                Me("WPCTrackRange") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("125")>  _
+        Public Property WPCTrackWidth() As String
+            Get
+                Return CType(Me("WPCTrackWidth"),String)
+            End Get
+            Set
+                Me("WPCTrackWidth") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property HeadOffsetEnable() As Boolean
+            Get
+                Return CType(Me("HeadOffsetEnable"),Boolean)
+            End Get
+            Set
+                Me("HeadOffsetEnable") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("-8")>  _
+        Public Property HeadOffsetTrackCount() As Integer
+            Get
+                Return CType(Me("HeadOffsetTrackCount"),Integer)
+            End Get
+            Set
+                Me("HeadOffsetTrackCount") = value
             End Set
         End Property
     End Class

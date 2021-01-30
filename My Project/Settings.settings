@@ -21,7 +21,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Drive" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">A</Value>
     </Setting>
     <Setting Name="F7" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -109,6 +109,27 @@
     </Setting>
     <Setting Name="UsePython" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="UseWritePreCompensate" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="WPCType" Type="System.String" Scope="User">
+      <Value Profile="(Default)">mfm</Value>
+    </Setting>
+    <Setting Name="WPCTracks" Type="System.String" Scope="User">
+      <Value Profile="(Default)">40</Value>
+    </Setting>
+    <Setting Name="WPCTrackRange" Type="System.String" Scope="User">
+      <Value Profile="(Default)">&gt;=</Value>
+    </Setting>
+    <Setting Name="WPCTrackWidth" Type="System.String" Scope="User">
+      <Value Profile="(Default)">125</Value>
+    </Setting>
+    <Setting Name="HeadOffsetEnable" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="HeadOffsetTrackCount" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">-8</Value>
     </Setting>
   </Settings>
 </SettingsFile>
