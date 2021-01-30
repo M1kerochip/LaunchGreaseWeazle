@@ -22,73 +22,105 @@ RunGreaseWeazel
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
-<member name="M:RunGreaseWeazel.frmMain.FrmMain_Load(System.Object,System.EventArgs)">
+<member name="M:RunGreaseWeazel.FrmMain.FrmMain_Load(System.Object,System.EventArgs)">
  <summary>
  Sets the title of the Form with the form name plus exe version number
  </summary>
 </member>
-<member name="M:RunGreaseWeazel.frmMain.SetUpScreen">
+<member name="M:RunGreaseWeazel.FrmMain.SetUpScreen">
  <summary>
  Loads settings from VB My.Settings (local) and sets the variables onscreen. Also sets up tooltips.
  </summary>
 </member>
-<member name="M:RunGreaseWeazel.frmMain.EnableDarkTheme(System.Boolean)">
+<member name="M:RunGreaseWeazel.FrmMain.EnableDarkTheme(System.Boolean)">
  <summary>
  Simple attempt to create an easier to use night mode.
  </summary>
  <param name="EnableDark">If true, set the program to dark, if not set to default</param>
 </member>
-<member name="M:RunGreaseWeazel.frmMain.SaveSettings">
+<member name="M:RunGreaseWeazel.FrmMain.SaveSettings">
  <summary>
  Write Settings out to VB.NET My.Settings section (All settings are per user)
  </summary>
 </member>
-<member name="M:RunGreaseWeazel.frmMain.CreateFileName(System.Boolean,System.Boolean)">
+<member name="M:RunGreaseWeazel.FrmMain.CreateFileName(System.Boolean,System.Boolean)">
  <summary>
  Create a filename from the attributes onscreen. (Including checking if file exists, if necessary)
  </summary>
  <param name="CheckExists">Check to see if the file exists on the disk. If so, append an integer to prevent GreaseSeazle from overwriting.</param>
  <returns>Filename as a string.</returns>
 </member>
-<member name="M:RunGreaseWeazel.frmMain.CallGreaseWeazel(System.String,System.String,System.Int32,System.String,System.String,System.Int32,System.Char,System.Int32,System.Int32,System.Boolean,System.Boolean,System.Int32,System.Int32,System.Int32,System.String,System.String,System.Int32,System.String,System.Boolean)">
+<member name="M:RunGreaseWeazel.FrmMain.ExecuteCommand(System.String,System.String,System.Int32)">
  <summary>
- Calls python.exe to run the gw.py script (Or run gw.exe directly in later versions)
+ Runs an exe or batch file, with the given arguments, with window shown, minimized or hidden.
  </summary>
- <param name="PythonEXE">Path to the python.exe. Python install folder must be in PATH variable.</param>
- <param name="gwLoc">Path to gw.py</param>
- <param name="GWAction">Call the GreaseWeazle function to perform: Read, Write, Erase, Reset, Update, Set Pin Level as integer</param>
- <param name="fName">Path to file to read/write</param>
- <param name="ComPort">COM port to talk to GreaseWeazle hardware on. v0.11+ supports 'auto'.</param>
- <param name="PinToSet">The pin number (on the back of the floppy drive) to change value</param>
- <param name="PinLevel">Char: L or H denotes (L)ow 0v, or (H)igh 5v</param>
- <param name="RPM">Integer: Sets the drive RPM. This value gets processed first</param>
- <param name="SetRPM">Actually set the drive to spin using the RPM supplied</param>
- <param name="Rate">Bitcell rate. 250 for DD disks, 500 for HD disks.</param>
- <param name="SetRate">Actually set the drive to reat using the bitcell rate supplied</param>
- <param name="SeekCyl">Move the head to this cylinder/track.</param>
- <param name="StartTrack">First track to begin reading at. Can be overridden by the TrackSet track list.</param>
- <param name="EndTrack">Last track to end reading at. Can be overridden by the TrackSet track list.</param>
- <param name="TrackSet">Group of comma separated tracks to read/write/erase</param>
- <param name="HeadSet">Group of comma separated heads(disk sides) to read/write/erase</param>
- <param name="SeparateFolders">Creates a folder for each dump. Most useful for Kryoflux dumps.</param>
- <returns></returns>
+ <param name="fileToRun">Batch file or EXE to run</param>
+ <param name="Arguments">Arguments for the batch/exe</param>
+ <param name="WinState">Windows state of the launched program</param>
+ <returns>True, if successfully launched.</returns>
 </member>
-<member name="M:RunGreaseWeazel.frmMain.CheckVisible">
+<member name="M:RunGreaseWeazel.FrmMain.AddErrorToMemo(RunGreaseWeazel.GreaseWeazle)">
+ <summary>
+ Add the GW.ErrorString to the Onscreen Memo text box
+ </summary>
+ <param name="GW">Greaseweazle instance</param>
+ <returns>True, if successful</returns>
+</member>
+<member name="M:RunGreaseWeazel.FrmMain.FillGWFromScreen(RunGreaseWeazel.GreaseWeazle)">
+ <summary>
+ Fills in the GW class instance from the main form
+ </summary>
+ <param name="GW">Greaseweazle class instance to fill in</param>
+ <returns>True if successful</returns>
+</member>
+<member name="M:RunGreaseWeazel.FrmMain.CheckVisible">
  <summary>
  Check to see which buttons, text boxes etc should be visible
  </summary>
 </member>
+<member name="T:RunGreaseWeazel.GreaseWeazle">
+ <summary>
+ Class to call the Greaseweazle hardware and action the results.
+ </summary>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.GWRead">
+ <summary>
+ GWRead: Instructs the GW to read tracks from the floppy disk, using the floppy drive.
+ </summary>
+ <returns>Integer, 0</returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.GWWrite">
+ <summary>
+ GWWrite: Instructs the GW to write tracks to the floppy disk, using the floppy drive from the selected File. (several formats supported for writing)
+ </summary>
+ <returns>Integer, 1</returns>
+</member>
 <member name="M:RunGreaseWeazel.GreaseWeazle.ClearError">
  <summary>
- 
+ Clears the ErrorString
  </summary>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.Results">
+ <summary>
+ Holds the results of the GW action.
+ </summary>
+ <returns>String, containing GW action output.</returns>
+</member>
+<member name="M:RunGreaseWeazel.GreaseWeazle.ExecuteCommand(System.String,System.String,System.Int32)">
+ <summary>
+ Runs an exe or batch file, with the given arguments, with window shown, minimized or hidden.
+ </summary>
+ <param name="fileToRun">Batch file or EXE to run</param>
+ <param name="Arguments">Argument for the batch/exe</param>
+ <param name="WinState">Windows state of the launched program</param>
+ <returns></returns>
 </member>
 <member name="M:RunGreaseWeazel.GreaseWeazle.UpdateWPC_Formats(System.String)">
  <summary>
  Override the default list of disk formats for WPC
  </summary>
  <param name="NewFormats">CSV list of strings representing disk formats</param>
- <returns></returns>
+ <returns>String, containing a list of comma separated strings representing disk formats</returns>
 </member>
 <member name="M:RunGreaseWeazel.GreaseWeazle.UpdateDriveSTR(System.String)">
  <summary>
@@ -97,35 +129,41 @@ RunGreaseWeazel
  <param name="NewDrives">CSV list of characters representing F7 drives it can access</param>
  <returns></returns>
 </member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.SaveLogFile">
+ <summary>
+ Save a summery log file to filename.log
+ </summary>
+ <returns>True to save log</returns>
+</member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.RPM">
  <summary>
- 
+ Disk Revolution Per Minute. Default is 300.
  </summary>
- <returns></returns>
+ <returns>Integer, rpm count.</returns>
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.Revolutions">
  <summary>
- 
+ Number of times to read each track. Default for GW is 3, default for archiving is 5.
  </summary>
- <returns></returns>
+ <returns>Integer, 5, unless previously set.</returns>
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.Sides">
  <summary>
- 
+ Drive heads to use in the GW Action. 0, bottom, 1, top or both (0-1).
  </summary>
- <returns></returns>
+ <returns>String: Set of sides to use. 0,1 or 0-1</returns>
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.TrackStep">
  <summary>
  Number of tracks to move for each head step. Default is 1. Set to 2, to read a 40 track disk in an 80 track drive.
  </summary>
- <returns></returns>
+ <returns>Integer. Default is to move 1 track at a time.</returns>
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.BitCellDataRate">
  <summary>
- 
+ The bitcell data read rate.
  </summary>
- <returns></returns>
+ <returns>250 for DD disks, 500 for HD disks.</returns>
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.HeadOffsetEnable">
  <summary>
@@ -135,21 +173,21 @@ RunGreaseWeazel
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.HeadOffsetTrackCount">
  <summary>
- 
+ Number of tracks to offset head, for reading (and writing?)
  </summary>
- <returns></returns>
+ <returns>Integer, -8 as default, for 5.25" drives with flippy disks</returns>
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.WritePreCompensate">
  <summary>
- 
+ Enable Write Precompensate. Prevent tracks from overlapping. Useful for later tracks, which are closer together. See Wiki: https://github.com/keirf/Greaseweazle/wiki/Write-Precompensation
  </summary>
- <returns></returns>
+ <returns>True to enable.</returns>
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.WPC_Type">
  <summary>
- 
+ The type of disk format to calculate Write PreCompensation. Supported formats: MFM, FM, GRC.
  </summary>
- <returns></returns>
+ <returns>String. mfm by default.</returns>
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.WPC_Width_NanoSeconds">
  <summary>
@@ -159,9 +197,9 @@ RunGreaseWeazel
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.WPC_Tracks">
  <summary>
- 
+ Apply Write PreCompensation only on tracks, starting with this track. (Only useful on later tracks)
  </summary>
- <returns></returns>
+ <returns>Integer, default 40</returns>
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.WPC_TrackRange">
  <summary>
@@ -171,15 +209,21 @@ RunGreaseWeazel
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.FileName">
  <summary>
- File to write, or to read to. File must exist to perform write.
+ File to write, or to read to. File must exist to perform write. (.Upd file, for GWFirmware also)
  </summary>
  <returns></returns>
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.PythonEXE">
  <summary>
- 
+ Path to the GW.exe or to Python.exe, if using the GW script directly
  </summary>
- <returns></returns>
+ <returns>Path to the exe.</returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.PythonScript">
+ <summary>
+ If using python.exe, this is the path to the GW python script (gw.py) or (gw)
+ </summary>
+ <returns>Path to the python script</returns>
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.COMPort">
  <summary>
@@ -191,23 +235,23 @@ RunGreaseWeazel
  <summary>
  The action to make the Greaseweazle perform. Read, write, erase, etc. 11 Commands supported so far.
  </summary>
- <returns></returns>
+ <returns>Integer, the GW action.</returns>
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.StartTrack">
  <summary>
- 
+ Track to Start reading/writing from, if not using a track set
  </summary>
- <returns></returns>
+ <returns>Start Track (Default is 0)</returns>
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.EndTrack">
  <summary>
- 
+ Track to end reading/writing etc on, if not using a track set
  </summary>
- <returns></returns>
+ <returns>End Track. (default to 83 if track is invalid)</returns>
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.TrackGroup">
  <summary>
- 
+ Set of tracks to read/write/erase etc. Can be single tracks, or a range. Values are comma separated.
  </summary>
  <returns></returns>
 </member>
@@ -219,21 +263,21 @@ RunGreaseWeazel
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.ScriptFile">
  <summary>
- 
+ Runs a windows exe or batch file with the path to the filename as the first argument, after GW process finishes
  </summary>
- <returns></returns>
+ <returns>Path to script/exe (If it exists. Blank, otherwise)</returns>
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.ExcuteScript">
  <summary>
- 
+ Execute Script/EXE in the Scriptfile property.
  </summary>
- <returns></returns>
+ <returns>True to execute</returns>
 </member>
-<member name="P:RunGreaseWeazel.GreaseWeazle.ExecuteScriptHidden">
+<member name="P:RunGreaseWeazel.GreaseWeazle.ExecuteScriptHiddenLevel">
  <summary>
- Runs a windows exe or batch file with the path to the filename as the first argument
+ Runs Script/EXE visible, minimized, or hidden.
  </summary>
- <returns></returns>
+ <returns>0: Normal, 1: Minimized, 2: Hidden</returns>
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.ExecuteScriptOnGWRead_Only">
  <summary>
@@ -243,8 +287,7 @@ RunGreaseWeazel
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.F7Device">
  <summary>
- Is the Greaseweazle an
- STM32F703 or STM32F103
+ Is the Greaseweazle an STM32F703 (F7) or STM32F103 (F1)
  </summary>
  <returns>True for F7 device, false for F1 'bluepill' device</returns>
 </member>
@@ -257,6 +300,18 @@ RunGreaseWeazel
 <member name="P:RunGreaseWeazel.GreaseWeazle.SeekTrack">
  <summary>
  The cylinder/track to find using the 'Seek' command. Track numbers are zero based.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.Pin">
+ <summary>
+ Pin to change voltage on.
+ </summary>
+ <returns>Integer, Pin Number.</returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.PinVoltage">
+ <summary>
+ Pin voltage. Either On (Pin (H)igh), or off (Pin (L)ow).
  </summary>
  <returns></returns>
 </member>

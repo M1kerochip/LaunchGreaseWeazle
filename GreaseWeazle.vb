@@ -95,7 +95,7 @@ Public Class GreaseWeazle
     End Property
 
     ''' <summary>
-    ''' Funs an exe or batch file, with the given arguments, with window shown, minimized or hidden.
+    ''' Runs an exe or batch file, with the given arguments, with window shown, minimized or hidden.
     ''' </summary>
     ''' <param name="fileToRun">Batch file or EXE to run</param>
     ''' <param name="Arguments">Argument for the batch/exe</param>
@@ -103,7 +103,6 @@ Public Class GreaseWeazle
     ''' <returns></returns>
     Private Function ExecuteCommand(ByVal fileToRun As String, ByVal Arguments As String, ByVal WinState As Integer) As Boolean
         Dim CMD As New Process
-        Dim RVal As Boolean = False
         Try
             CMD.StartInfo.FileName = fileToRun
             CMD.StartInfo.Arguments = Arguments
@@ -122,13 +121,11 @@ Public Class GreaseWeazle
             End Select
 
             CMD.StartInfo.WorkingDirectory = IO.Path.GetDirectoryName(fileToRun)
-            'CMD.StartInfo.RedirectStandardInput = True
-            'CMD.StartInfo.RedirectStandardOutput = True
             CMD.Start()
-            RVal = True
-        Finally
+            Return True
+        Catch
+            Return False
         End Try
-        Return RVal
     End Function
 
     ''' <summary>
@@ -724,14 +721,14 @@ Public Class GreaseWeazle
                     str += COMStr                                                   'Add com port to the string
                 Else
                     If Action = GWSetPin Then                                       'Set a pin level, 0v or 5v.
-                        str += " pin " + Pin.ToString + " " + P_PinVoltageLetter + " "
+                        str += " pin " + Pin.ToString + " " + P_PinVoltageLetter + " "  'Voltage is a char: H or L
                         str += COMStr                                               'Add com port to the string
                     Else
                         If ((Action = GWUpdate) Or (Action = GWFirmware)) Then      'Update the firmware. (Main or bootloader) GW must have update pins joined for main update only. Booloader update in normal operational mode.
                             str += " update "
                             If Action = GWFirmware Then str += " --bootloader "
                         Else
-                            If Action = GWErase Then                                'Erase the disk. can combine with: Adjust speed, Single Sided, Start and End Cylenders
+                            If Action = GWErase Then                                'Erase the disk. can combine with: Adjust speed, RPM, Sides, Start and End Cylenders
                                 str += " erase "
                             Else
                                 If Action = GWRead Then                             'Read from Disk to image in a supported format (determined by extension)
@@ -814,16 +811,24 @@ Public Class GreaseWeazle
                 CMD.StartInfo.RedirectStandardOutput = True
                 CMD.StartInfo.CreateNoWindow = True
 
-                CMD.Start()
-                SW = CMD.StandardInput
-                SR = CMD.StandardOutput
-                CMD.Dispose()
+                Try
+                    CMD.Start()
+                    SW = CMD.StandardInput
+                    SR = CMD.StandardOutput
 
+                Catch ex As Exception
+                    P_ErrorString = "Unable to start GW command."
+                    Return False
+                End Try
+
+                CMD.Dispose()
                 P_ResultString = ""
+
                 Do Until SR.EndOfStream = True
                     P_ResultString &= SR.ReadLine
                     P_ResultString &= Environment.NewLine
                 Loop
+
                 SW.Dispose()
                 SR.Dispose()
 
@@ -835,11 +840,13 @@ Public Class GreaseWeazle
                                          (Action = GWInfo) Or
                                          (Action = GWBandwidth) Or
                                          (Action = GWDelays) Or
-                                         (Action = GWSeek)) Then                        'Only execute script on read/write, not update/set pin/reset
-                    If System.IO.File.Exists(FileName) Then                             'Check file exists (or has been created, if reading from GW)
-                        If Not IsNothing(ScriptFile) Then                               'Check script file is initialised 
-                            If System.IO.File.Exists(ScriptFile) Then                   'Check script batch/exe file exists, before we try to run it.
-                                ExecuteCommand(ScriptFile, FileName, ExecuteScriptHiddenLevel)  'Execute batch/program, with the resulting filename as the first argument.
+                                         (Action = GWSeek)) Then                                'Only execute script on read/write, not update/set pin/reset
+                    If Not ((ExecuteScriptOnGWRead_Only = True) And (Action = GWWrite)) Then    'If NOT Only Execute batch/exe on GWRead commands:
+                        If System.IO.File.Exists(FileName) Then                                 'Check file exists (or has been created, if reading from GW)
+                            If Not IsNothing(ScriptFile) Then                                   'Check script file is initialised 
+                                If System.IO.File.Exists(ScriptFile) Then                       'Check script batch/exe file exists, before we try to run it.
+                                    ExecuteCommand(ScriptFile, FileName, ExecuteScriptHiddenLevel)  'Execute batch/program, with the resulting filename as the first argument.
+                                End If
                             End If
                         End If
                     End If

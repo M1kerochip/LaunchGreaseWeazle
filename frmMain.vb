@@ -539,9 +539,15 @@ Public Class FrmMain
         Replace(cmbDiskRevision.Text, " ", "_")
     End Sub
 
+    ''' <summary>
+    ''' Runs an exe or batch file, with the given arguments, with window shown, minimized or hidden.
+    ''' </summary>
+    ''' <param name="fileToRun">Batch file or EXE to run</param>
+    ''' <param name="Arguments">Arguments for the batch/exe</param>
+    ''' <param name="WinState">Windows state of the launched program</param>
+    ''' <returns>True, if successfully launched.</returns>
     Function ExecuteCommand(ByVal fileToRun As String, ByVal Arguments As String, ByVal WinState As Integer) As Boolean
         Dim CMD As New Process
-        Dim RVal As Boolean = False
         Try
             CMD.StartInfo.FileName = fileToRun
             CMD.StartInfo.Arguments = Arguments
@@ -560,15 +566,18 @@ Public Class FrmMain
             End Select
 
             CMD.StartInfo.WorkingDirectory = IO.Path.GetDirectoryName(fileToRun)
-            'CMD.StartInfo.RedirectStandardInput = True
-            'CMD.StartInfo.RedirectStandardOutput = True
             CMD.Start()
-            RVal = True
-        Finally
+            Return True
+        Catch
+            Return False
         End Try
-        Return RVal
     End Function
 
+    ''' <summary>
+    ''' Add the GW.ErrorString to the Onscreen Memo text box
+    ''' </summary>
+    ''' <param name="GW">Greaseweazle instance</param>
+    ''' <returns>True, if successful</returns>
     Function AddErrorToMemo(ByVal GW As GreaseWeazle) As Boolean
         Try
             If GW.ErrorString.Trim <> "" Then
@@ -687,197 +696,6 @@ Public Class FrmMain
             Return False
         End Try
     End Function
-
-    '''' <summary>
-    '''' Calls python.exe to run the gw.py script (Or run gw.exe directly in later versions)
-    '''' </summary>
-    '''' <param name="PythonEXE">Path to the python.exe. Python install folder must be in PATH variable.</param>
-    '''' <param name="gwLoc">Path to gw.py</param>
-    '''' <param name="GWAction">Call the GreaseWeazle function to perform: Read, Write, Erase, Reset, Update, Set Pin Level as integer</param>
-    '''' <param name="fName">Path to file to read/write</param>
-    '''' <param name="ComPort">COM port to talk to GreaseWeazle hardware on. v0.11+ supports 'auto'.</param>
-    '''' <param name="PinToSet">The pin number (on the back of the floppy drive) to change value</param>
-    '''' <param name="PinLevel">Char: L or H denotes (L)ow 0v, or (H)igh 5v</param>
-    '''' <param name="RPM">Integer: Sets the drive RPM. This value gets processed first</param>
-    '''' <param name="SetRPM">Actually set the drive to spin using the RPM supplied</param>
-    '''' <param name="Rate">Bitcell rate. 250 for DD disks, 500 for HD disks.</param>
-    '''' <param name="SetRate">Actually set the drive to reat using the bitcell rate supplied</param>
-    '''' <param name="SeekCyl">Move the head to this cylinder/track.</param>
-    '''' <param name="StartTrack">First track to begin reading at. Can be overridden by the TrackSet track list.</param>
-    '''' <param name="EndTrack">Last track to end reading at. Can be overridden by the TrackSet track list.</param>
-    '''' <param name="TrackSet">Group of comma separated tracks to read/write/erase</param>
-    '''' <param name="HeadSet">Group of comma separated heads(disk sides) to read/write/erase</param>
-    '''' <param name="SeparateFolders">Creates a folder for each dump. Most useful for Kryoflux dumps.</param>
-    '''' <returns></returns>
-    'Private Function CallGreaseWeazel(ByVal PythonEXE As String, ByVal gwLoc As String, ByVal GWAction As Integer,
-    '                                  ByVal fName As String, ByVal ComPort As String,
-    '                                  ByVal PinToSet As Integer, ByVal PinLevel As Char, ByVal RPM As Integer,
-    '                                  ByVal Rate As Integer, ByVal SetRPM As Boolean, ByVal SetRate As Boolean,
-    '                                  ByVal SeekCyl As Integer, ByVal StartTrack As Integer, ByVal EndTrack As Integer,
-    '                                  ByVal TrackSet As String, ByVal HeadSet As String,
-    '                                  ByVal HeadStep As Integer, ByVal DriveOffset As String,
-    '                                  ByVal SeparateFolders As Boolean) As Boolean
-    '    Dim CMD As New Process
-    '    Dim SW As IO.StreamWriter
-    '    Dim SR As IO.StreamReader
-    '    CMD.StartInfo.FileName = PythonEXE                                  'Path to and including Python.exe
-    '    Dim str As String = ""
-
-    '    If gwLoc <> "" Then
-    '        str = ControlChars.Quote + gwLoc + ControlChars.Quote 'Add save location
-    '    End If
-
-    '    Dim COMStr As String = ""                  'Define Com Port string
-    '    If ComPort <> "" Then
-    '        COMStr = "--device " + ComPort + " "
-    '    End If
-
-    '    If ((GWAction = GWReset) Or (GWAction = GWInfo) Or (GWAction = GWBandwidth) Or (GWAction = GWDelays) Or (GWAction = GWSeek)) Then
-    '        Select Case GWAction
-    '            Case GWReset
-    '                str += " reset "                    'Reset Device
-    '            Case GWInfo
-    '                str += " info "                     'Get Device Info
-    '            Case GWBandwidth
-    '                str += " bandwidth "                'Get device bandwidth between GW and pc.
-    '            Case GWDelays
-    '                str += " delays "                   'Get device delays.
-    '            Case GWSeek
-    '                str += " seek " + CStr(SeekCyl)     'Move drive head to this cylender/track
-    '        End Select
-    '        str += COMStr                   'Add com port to the string
-    '    Else
-    '        If GWAction = GWSetPin Then                                     'Set a pin level, 0v or 5v.
-    '            str += " pin " + PinToSet.ToString + " " + PinLevel + " "
-    '            str += COMStr                   'Add com port to the string
-    '        Else
-    '            If ((GWAction = GWUpdate) Or (GWAction = GWFirmware)) Then  'Update the firmware. (Main or bootloader) GW must have update pins joined for main update only. Booloader update in normal operational mode.
-    '                str += " update "
-    '                If GWAction = GWFirmware Then str += " --bootloader "
-    '            Else
-    '                If GWAction = GWErase Then                              'Erase the disk. can combine with: Adjust speed, Single Sided, Start and End Cylenders
-    '                    str += " erase "
-    '                Else
-    '                    If GWAction = GWRead Then                           'Read from Disk to image in a supported format (determined by extension)
-    '                        str += " read "
-    '                    Else
-    '                        str += " write "                                'Write image to floppy disk (from a supported format)
-    '                        If chkEraseEmpty.Checked Then                   'Erase empty sectors: only applies to write
-    '                            str += "--erase-empty "
-    '                        End If
-    '                    End If
-    '                    'If chkAdjustSpeed.Checked Then                      'Removed in Greaseweazle 0.13
-    '                    '    str += "--adjust-speed "
-    '                    'End If
-    '                End If
-
-    '                str += COMStr                                           'Add com port to the string
-
-    '                'Changed track command in v0.23
-    '                str += "--tracks=""c="                                  'Add tracks section: double quotes and Cylinder start
-    '                If TrackSet.Trim <> "" Then                             'If using a track set, add this
-    '                    str += TrackSet
-    '                Else
-    '                    If ChkStartTrack.Checked Then                       'If not using a set, use the standard start and finish track
-    '                        str += CStr(StartTrack)                         'If start track checked, start on that track
-    '                    Else
-    '                        str += "0"                                      'else start on the first track, track 0
-    '                    End If
-    '                    str += "-"
-    '                    If chkEndTrack.Checked Then                         'If end track checked, end on that track
-    '                        str += CStr(EndTrack)
-    '                    Else
-    '                        str += "83"                                     'else end on the 84th track
-    '                    End If
-    '                End If
-
-    '                str += ":h="                                            'Heads (sides of the disk) to use in this operation
-    '                If HeadSet.Trim <> "" Then                              'if non default sides are to be used,
-    '                    str += HeadSet                                      'use heads selected in drop down
-    '                Else
-    '                    str += "0-1"                                        'else use both heads (top and bottom)
-    '                End If
-
-    '                str += ":step="
-    '                str += CStr(HeadStep)                                   'Step X tracks for every read:
-
-    '                str += """ "                                            'add a double quote and a spce to the end of the --tracks section
-
-    '                If GWAction = GWRead Then
-    '                    If chkRevolutions.Checked Then
-    '                        str += "--revs=" + cmbRevolutions.Text + " "    'number of revolutions of each track to store in the image (if supported). 5 is the archival norm. used to find weak sectors, etc
-    '                    End If
-    '                    If SetRate = True Then
-    '                        str += "--rate=" + CStr(Rate) + " "             'rate of reading cells. 250= DS disk, 500= HD disk.
-    '                    End If
-    '                    If SetRPM = True Then
-    '                        str += "--rpm=" + CStr(RPM) + " "               'Sets drive rpm rate
-    '                    End If
-    '                End If
-
-    '                If GWAction = GWWrite Then                              'Only check WPC for Write Action
-    '                    If chkWritePreCompensate.Checked Then               'Enable Write PreCompensate
-    '                        str += "--precomp="                             'Add WPC switch
-    '                        str += "type=" + cmbWPCType.Text                'Add WPC disk format type
-    '                        str += ":" + cmbWPCTracks.Text + "="            'Add track to apply to, after this one:
-    '                        str += txtWPCWidth.Text                         'WPC width to adjust tracks by
-    '                        str += " "                                      'Finish with a space, to leave room for the next switch
-    '                    End If
-    '                End If
-
-    '                If chkF7.Checked Then
-    '                    str += "--drive " + cmbDriveSelect.Text             'For F7 devices, a drive can be selected. A/B etc.
-    '                End If
-    '            End If
-    '            If ((GWAction <> GWErase) And (GWAction <> GWFirmware)) Then 'If we are not erasing a disk or updating firmware, add quotes around filename to save. (Otherewise for erase/firmware, fname is blank, no need for quotes)
-    '                str += ControlChars.Quote + fName + ControlChars.Quote + " "
-    '            End If
-    '        End If
-    '    End If
-
-    '    CMD.StartInfo.Arguments = str
-    '    CMD.StartInfo.UseShellExecute = False
-    '    CMD.StartInfo.RedirectStandardInput = True
-    '    CMD.StartInfo.RedirectStandardOutput = True
-    '    CMD.StartInfo.CreateNoWindow = True
-    '    CMD.Start()
-    '    SW = CMD.StandardInput
-    '    SR = CMD.StandardOutput
-    '    CMD.Dispose()
-    '    Do Until SR.EndOfStream = True
-    '        rtbOutput.Text &= SR.ReadLine
-    '        rtbOutput.Text &= Environment.NewLine
-    '    Loop
-    '    SW.Dispose()
-    '    SR.Dispose()
-    '    If chkExecuteScript.Checked And Not ((GWAction = GWReset) Or (GWAction = GWSetPin) Or (GWAction = GWUpdate) Or (GWAction = GWFirmware)) Then  'Only execute script on read/write, not update/set pin/reset
-    '        If System.IO.File.Exists(fName) Then    'Check file exists (or has been created, if reading from GW)
-    '            Dim scriptneeded As Boolean = False
-    '            Dim oktorun As Boolean = True
-
-    '            If IO.Path.GetFileName(PythonEXE) <> "gw.exe" Then scriptneeded = True 'Only check for script if exe is not gw.exe
-
-    '            If scriptneeded Then
-    '                If txtExecuteScript.Text.Trim <> "" Then 'Check script exists
-    '                    oktorun = False
-    '                End If
-    '            End If
-
-    '            If oktorun Then
-    '                ExecuteCommand(txtExecuteScript.Text.Trim, fName, chkExecuteScript.CheckState)
-    '            End If
-    '        End If
-    '    End If
-    '    If chkSaveLog.Checked = True Then
-    '        If System.IO.File.Exists(fName) Then    'Check file exists
-    '            Dim StreamWriter As New IO.StreamWriter(System.IO.Path.ChangeExtension(fName, ".log")) 'Export rich text box as a .log file.
-    '            StreamWriter.Write(rtbOutput.Text)
-    '            StreamWriter.Close()
-    '        End If
-    '    End If
-    '    rtbOutput.Text += vbCrLf + str
-    '    Return True
-    'End Function
 
     Private Sub LinkLabelProjectName_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabelProjectName.LinkClicked
         System.Diagnostics.Process.Start("https://github.com/keirf/Greaseweazle")
@@ -1010,7 +828,7 @@ Public Class FrmMain
 
     Private Sub BtnWrite_Click(sender As Object, e As EventArgs) Handles btnWrite.Click, WRITEDiskToolStripMenuItem.Click
         If CheckForErrors() = False Then
-            OpenFileDialogMain.Title = "Select SuperCard Pro / HxC Floppy Emulator / Amiga ADF / 1.44MB IMG / Software Preservation Society file to write to floppy"
+            OpenFileDialogMain.Title = "Select SuperCard Pro / HxC Floppy Emulator / Amiga ADF / PC 1.44MB IMG / Software Preservation Society IPF file to write to floppy"
             OpenFileDialogMain.Multiselect = False
             OpenFileDialogMain.FileName = ""
             OpenFileDialogMain.Filter = "Supported files|*.scp;*.hfe;*.adf;*.ipf;*.img;*.raw|Supercard Pro files|*.scp|HxC Floppy Emulator HFE files|*.hfe|Commodore Amiga ADF files|*.adf| IBM 1.44MB IMG|*.img|Kryoflux files|*.raw|Software Preservation Society IPF files|*.ipf|All files (*.*)|*.*"

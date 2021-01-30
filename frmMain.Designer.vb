@@ -23,7 +23,7 @@ Partial Class FrmMain
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmMain))
         Me.cmbSerialPorts = New System.Windows.Forms.ComboBox()
         Me.lblComPort = New System.Windows.Forms.Label()
         Me.rtbOutput = New System.Windows.Forms.RichTextBox()
@@ -536,7 +536,7 @@ Partial Class FrmMain
         'cmbEndTrack
         '
         Me.cmbEndTrack.FormattingEnabled = True
-        Me.cmbEndTrack.Items.AddRange(New Object() {"79", "80", "81", "82", "83", "37", "38", "39", "40", "41", "42", "43"})
+        Me.cmbEndTrack.Items.AddRange(New Object() {"37", "38", "39", "40", "41", "42", "79", "80", "81", "82", "83", "84", "85"})
         Me.cmbEndTrack.Location = New System.Drawing.Point(255, 46)
         Me.cmbEndTrack.Name = "cmbEndTrack"
         Me.cmbEndTrack.Size = New System.Drawing.Size(42, 21)
@@ -1189,7 +1189,7 @@ Partial Class FrmMain
         '
         Me.cmbSeekB.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmbSeekB.FormattingEnabled = True
-        Me.cmbSeekB.Items.AddRange(New Object() {"79", "80", "81", "82", "83", "37", "38", "39", "40", "41", "42", "43"})
+        Me.cmbSeekB.Items.AddRange(New Object() {"37", "38", "39", "40", "41", "42", "79", "80", "81", "82", "83", "84", "85"})
         Me.cmbSeekB.Location = New System.Drawing.Point(733, 484)
         Me.cmbSeekB.Name = "cmbSeekB"
         Me.cmbSeekB.Size = New System.Drawing.Size(42, 21)
@@ -1242,7 +1242,7 @@ Partial Class FrmMain
         Me.lblPythonLocation.TabIndex = 133
         Me.lblPythonLocation.Text = "Python.exe Location"
         '
-        'frmMain
+        'FrmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -1310,7 +1310,7 @@ Partial Class FrmMain
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimumSize = New System.Drawing.Size(924, 39)
-        Me.Name = "frmMain"
+        Me.Name = "FrmMain"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Run GreaseWeazle Script"
         Me.ContextMenuStripMainCommands.ResumeLayout(False)
