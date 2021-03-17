@@ -569,6 +569,138 @@ Namespace My
                 Me("HeadOffsetTrackCount") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property DarkTheme() As Boolean
+            Get
+                Return CType(Me("DarkTheme"),Boolean)
+            End Get
+            Set
+                Me("DarkTheme") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("3")>  _
+        Public Property Retries() As Integer
+            Get
+                Return CType(Me("Retries"),Integer)
+            End Get
+            Set
+                Me("Retries") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property EnableRetries() As Boolean
+            Get
+                Return CType(Me("EnableRetries"),Boolean)
+            End Get
+            Set
+                Me("EnableRetries") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("100")>  _
+        Public Property CleanTimeMS() As Integer
+            Get
+                Return CType(Me("CleanTimeMS"),Integer)
+            End Get
+            Set
+                Me("CleanTimeMS") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property EnableCleanTimeMS() As Boolean
+            Get
+                Return CType(Me("EnableCleanTimeMS"),Boolean)
+            End Get
+            Set
+                Me("EnableCleanTimeMS") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("3")>  _
+        Public Property CleanPasses() As Integer
+            Get
+                Return CType(Me("CleanPasses"),Integer)
+            End Get
+            Set
+                Me("CleanPasses") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property EnableCleanPasses() As Boolean
+            Get
+                Return CType(Me("EnableCleanPasses"),Boolean)
+            End Get
+            Set
+                Me("EnableCleanPasses") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property ShowTime() As Boolean
+            Get
+                Return CType(Me("ShowTime"),Boolean)
+            End Get
+            Set
+                Me("ShowTime") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+        Public Property Manufacturer() As Integer
+            Get
+                Return CType(Me("Manufacturer"),Integer)
+            End Get
+            Set
+                Me("Manufacturer") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("5")>  _
+        Public Property DiskType() As Integer
+            Get
+                Return CType(Me("DiskType"),Integer)
+            End Get
+            Set
+                Me("DiskType") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property SetManDisktype() As Boolean
+            Get
+                Return CType(Me("SetManDisktype"),Boolean)
+            End Get
+            Set
+                Me("SetManDisktype") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

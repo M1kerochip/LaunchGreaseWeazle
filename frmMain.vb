@@ -2,17 +2,8 @@
 Imports System.Text.RegularExpressions
 
 Public Class FrmMain
-    'Private GWRead As Integer = 0       'call gw.py read
-    'Private GWWrite As Integer = 1      'call gw.py write
-    'Private GWErase As Integer = 2      'call gw.py erase
-    'Private GWReset As Integer = 3      'call gw.py reset
-    'Private GWUpdate As Integer = 4     'call gw.py update
-    'Private GWSetPin As Integer = 5     'call gw.py pin
-    'Private GWFirmware As Integer = 6   'call gw.py update --bootloader
-    'Private GWInfo As Integer = 7       'call gw.py info
-    'Private GWBandwidth As Integer = 8  'call gw.py bandwidth
-    'Private GWDelays As Integer = 9     'call gw.py delays
-    'Private GWSeek As Integer = 10      'call gw.py seek
+    Public Manufacturers(16) As String
+    Public DiskArray(16, 16) As String
 
     ''' <summary>
     ''' Sets the title of the Form with the form name plus exe version number
@@ -20,6 +11,26 @@ Public Class FrmMain
     Private Sub FrmMain_Load(sender As Object, e As EventArgs) Handles Me.Load
         Dim GW As New GreaseWeazle
         Me.Text = "Run GreaseWeazle v" + My.Application.Info.Version.ToString + " (GWHelper: " + GW.Version + ")"
+
+        Dim fl As String = System.IO.Path.ChangeExtension(Application.ExecutablePath, ".Disks.xml")
+        If System.IO.File.Exists(fl) Then
+            ReadDefaultDiskXML(fl)
+        Else
+            WriteDefaultDiskTypesXML(fl)
+            ReadDefaultDiskXML(fl)
+        End If
+        Try
+            If Manufacturers.Length > 0 Then
+                Dim x As Integer
+                cmbManufacturer.Items.Clear()
+                For x = 0 To Manufacturers.Length - 1
+                    cmbManufacturer.Items.Add(Manufacturers(x))
+                Next
+            End If
+        Catch ex As Exception
+
+        End Try
+
         SetUpScreen()
     End Sub
 
@@ -32,15 +43,19 @@ Public Class FrmMain
         End If
     End Sub
 
+    Public Function FillComPorts(ByVal cmb As ComboBox) As Boolean
+        cmb.Items.Clear()
+        For Each sp As String In My.Computer.Ports.SerialPortNames      'Add detected serial ports to combo box drop down
+            cmb.Items.Add(sp)
+        Next
+        Return True
+    End Function
+
     ''' <summary>
     ''' Loads settings from VB My.Settings (local) and sets the variables onscreen. Also sets up tooltips.
     ''' </summary>
     Public Function SetUpScreen() As Boolean
-        cmbSerialPorts.Items.Clear()
-
-        For Each sp As String In My.Computer.Ports.SerialPortNames      'Add detected serial ports to combo box drop down
-            cmbSerialPorts.Items.Add(sp)
-        Next
+        FillComPorts(cmbSerialPorts)
 
         If My.Settings.UpdateSettings = True Then                       'Copy user settings from previous application version if necessary
             My.Settings.Upgrade()
@@ -60,7 +75,7 @@ Public Class FrmMain
         cmbRate.Enabled = chkRate.Checked
         cmbDisk.Text = My.Settings.Disk
         cmbDiskOf.Text = My.Settings.DiskOf
-        chkExecuteScript.Checked = My.Settings.ExecuteScript
+        chkExecuteScriptAfterRead.Checked = My.Settings.ExecuteScript
         chkLoop.Checked = My.Settings.LoopDump
         cmbDump.Text = My.Settings.LoopDumpCount
         cmbSystem.Text = My.Settings.System
@@ -90,11 +105,38 @@ Public Class FrmMain
         cmbWPCTracks.Text = My.Settings.WPCTracks
         cmbWPCType.Text = My.Settings.WPCType
         txtWPCWidth.Text = My.Settings.WPCTrackWidth
+        chkOffsetHead.Checked = My.Settings.HeadOffsetEnable
+        cmbOffsetHeadBy.Text = CStr(My.Settings.HeadOffsetTrackCount)
+        chkSetManDiskType.Checked = My.Settings.SetManDisktype
+        cmbManufacturer.SelectedIndex = My.Settings.Manufacturer
+        cmbDiskTypes.SelectedIndex = My.Settings.DiskType
+        cmbManufacturer.Enabled = chkSetManDiskType.Checked
+        cmbDiskTypes.Enabled = chkSetManDiskType.Checked
+
 
         EnableProgramLOGToolStripMenuItem.CheckOnClick = True
         EnableProgramLOGToolStripMenuItem.Checked = chkLOG.Checked
         WriteLOGWithEachReadWriteToolStripMenuItem.CheckOnClick = True
         WriteLOGWithEachReadWriteToolStripMenuItem.Checked = chkSaveLog.Checked
+        cmbOffsetHeadBy.Enabled = chkOffsetHead.Checked
+
+        cmbRetries.Text = CStr(My.Settings.Retries)
+        chkRetries.Checked = My.Settings.EnableRetries
+        cmbRetries.Enabled = chkRetries.Checked
+
+        cmbCleanMS.Text = CStr(My.Settings.CleanTimeMS)
+        chkLingerCleaning.Checked = My.Settings.EnableCleanTimeMS
+        cmbCleanMS.Enabled = chkLingerCleaning.Checked
+
+        cmbCleanPasses.Text = CStr(My.Settings.CleanPasses)
+        chkCleanPasses.Checked = My.Settings.EnableCleanPasses
+        cmbCleanPasses.Enabled = chkCleanPasses.Checked
+
+        chkTime.Checked = My.Settings.ShowTime
+
+        If My.Settings.DarkTheme = True Then
+            EnableDarkTheme(True)
+        End If
 
         rtbOutput.Visible = False
         Me.Size = New Size(534, Me.Size.Height)
@@ -120,9 +162,22 @@ Public Class FrmMain
             btnPython_EXE.Visible = False
         End If
 
+        If chkWritePreCompensate.Checked = True Then
+            cmbWPCType.Enabled = True
+            cmbWPCTrackRange.Enabled = True
+            cmbWPCTracks.Enabled = True
+            txtWPCWidth.Enabled = True
+        Else
+            cmbWPCType.Enabled = False
+            cmbWPCTrackRange.Enabled = False
+            cmbWPCTracks.Enabled = False
+            txtWPCWidth.Enabled = False
+        End If
+
         If chkLOG.Checked Then
             rtbOutput.AppendText("Started on: " + DateTime.Today.ToString("yyyy-MM-dd") + " at " + DateTime.Now.ToString("HH:mm:ss") + vbCrLf)
         End If
+
         CheckVisible()
 
         ToolTipMainForm.SetToolTip(btnRead, "Begin GreaseWeazle read process. Creates a flux level copy of a floppy disk to a file.")
@@ -130,9 +185,10 @@ Public Class FrmMain
         ToolTipMainForm.SetToolTip(btnExecuteScript, "Select the program or batch file to run. Path to disk image is passed as first argument.")
         ToolTipMainForm.SetToolTip(btnGW_EXE, "Select the location of the gw.exe (or gw.py for Python).")
         ToolTipMainForm.SetToolTip(btnSaveLocation, "Select the location to save Disk images to.")
-        ToolTipMainForm.SetToolTip(btnResize, "Show log. Not very useful though!")
-        ToolTipMainForm.SetToolTip(chkExecuteScript, "Executes script after each read attempt.")
-        ToolTipMainForm.SetToolTip(chkSaveLog, "Writes the log to a file after each read/write attempt.")
+        ToolTipMainForm.SetToolTip(btnResize, "Show/hide log. Not very useful though!")
+        ToolTipMainForm.SetToolTip(chkExecuteScriptAfterRead, "Executes script after each read attempt. Check twice to execute script minimized.")
+        ToolTipMainForm.SetToolTip(chkExecuteScriptAfterWrite, "Executes script after each write attempt.")
+        ToolTipMainForm.SetToolTip(chkSaveLog, "Writes the log to a file after each read/write attempt. Log file matches image name.")
         ToolTipMainForm.SetToolTip(txtExecuteScript, "Location of program or batch file to execute")
         ToolTipMainForm.SetToolTip(txtGWLocation, "Location of python.exe. Python must be installed. Exe is in main python install folder.")
         ToolTipMainForm.SetToolTip(txtSaveLocation, "Location to save disk images to.")
@@ -151,7 +207,7 @@ Public Class FrmMain
         ToolTipMainForm.SetToolTip(LinkLabelDLGW, "Opens the GreaseWeazle Github download page")
         ToolTipMainForm.SetToolTip(LinkLabelDownloadPython, "Opens main Python download page")
         ToolTipMainForm.SetToolTip(LinkLabelLaunchNow, "Executes exe/script from location below, with current disk image name.")
-        ToolTipMainForm.SetToolTip(chkF7, "Check this if you are writing to a STM32F7 device (rather than the usual 'Bluepill'.")
+        ToolTipMainForm.SetToolTip(chkF7, "Check this if you are writing to a STM32F7 device (rather than the 'Bluepill' STM32 F1 device.")
         ToolTipMainForm.SetToolTip(cmbDriveSelect, "If using an F7 device, select the drive you want to read to/write from. Multiple drives may be connected at once. (F7 device only!!).")
         ToolTipMainForm.SetToolTip(LinkLabelDriveSelect, "Opens the 'Drive Select' page of the Wiki.")
         ToolTipMainForm.SetToolTip(ChkStartTrack, "Check to select a default start track other than track 0.")
@@ -171,14 +227,14 @@ Public Class FrmMain
         ToolTipMainForm.SetToolTip(btnSetPin, "Set the pin in the dropdown list to either Low (0v) or Hight (5v). GW v0.12+ required.")
         ToolTipMainForm.SetToolTip(cmbPIN, "The floppy drive pin whos value will be set either high or low. (Cannot be blank) GW 0.12+ required.")
         ToolTipMainForm.SetToolTip(cmbLowHigh, "Force a Low or High value on a given pin. (Cannot be blank) GW 0.12+ required.")
-        ToolTipMainForm.SetToolTip(cmbReadFormat, "GreaseWeazle read format. Supercard Pro (.scp), KryoFlux (.raw) or HxC (.hfe). Alternatively specify your own extension including period. GW 0.14+ required. (0.23+ for Kryoflux)")
+        ToolTipMainForm.SetToolTip(cmbReadFormat, "GreaseWeazle read format. Supercard Pro (.scp), KryoFlux (.raw), HxC (.hfe) or Extended Disk image format (.dsk). Alternatively specify your own extension including period. GW 0.14+ required. (0.23+ for Kryoflux, 0.25+ for EDSK)")
         ToolTipMainForm.SetToolTip(btnEraseDisk, "**WARNING** Erases the contents of a physical floppy disk. Write protect tab must be off/closed.")
-        ToolTipMainForm.SetToolTip(btnInfo, "Displays Greaseweazle device information.")
+        ToolTipMainForm.SetToolTip(btnInfo, "Displays Greaseweazle device information. Also displays the device bootloader info, on an F7 device.")
         ToolTipMainForm.SetToolTip(btnGWBandwidth, "Display bandwidth between Greasweazle and PC")
         ToolTipMainForm.SetToolTip(btnGWDelays, "Displays Greaseweazle device delays information.")
         ToolTipMainForm.SetToolTip(chkRate, "Enable drive read rate. 250 for DD disks, 500 for HD disks and HD drives.")
         ToolTipMainForm.SetToolTip(cmbRPM, "Set the disk RPM to this rate. This setting is set before all others.")
-        ToolTipMainForm.SetToolTip(chkRPM, "Enable the drive RPM.")
+        ToolTipMainForm.SetToolTip(chkRPM, "Enable changing the drive RPM setting. Changing this will take precedence over other settings. Default for DD drives is 300 RPM. Default for Amiga HD drives, is 150 RPM.")
         ToolTipMainForm.SetToolTip(cmbRate, "Set read rate. 250 for DD disks, 500 for HD disks.")
         ToolTipMainForm.SetToolTip(chkLOG, "Save an audit log of actions to a programname.log file")
         ToolTipMainForm.SetToolTip(chkEraseEmpty, "Erases empty tracks on write. Off by default.")
@@ -192,6 +248,29 @@ Public Class FrmMain
         ToolTipMainForm.SetToolTip(btnPython_EXE, "Click to pick the location of the python.exe")
         ToolTipMainForm.SetToolTip(txtPythonLocation, "The location of the Python.exe, if using greaseweazle python scripts.")
         ToolTipMainForm.SetToolTip(chkUsePython, "Check this to use the python version of Greaseweazle. Python must be installed with required libraries (bitarray crcmod pyserial")
+        ToolTipMainForm.SetToolTip(lblComPort, "Click to refresh the COM port list in the drop down box")
+        ToolTipMainForm.SetToolTip(cmbSerialPorts, "Serial port the Greaseweazle is connected to. Leave blank to auto detect. Select the correct COM port, if multiple GWs are connected at the same time")
+        ToolTipMainForm.SetToolTip(chkWritePreCompensate, "Check this to enable Write Precompensation. Click the WritePreComepensate link to read the Wiki entry.")
+        ToolTipMainForm.SetToolTip(llabelPreCompensate, "Launches the browser to read the WPC Wiki entry")
+        ToolTipMainForm.SetToolTip(cmbWPCType, "The format of the disk to be written: Modified Frequency Modulation, Frequency Modulation, or Group Coded Recording.")
+        ToolTipMainForm.SetToolTip(cmbWPCTracks, "Apply WPC to all subsequent tracks, starting with this track:")
+        ToolTipMainForm.SetToolTip(txtWPCWidth, "The width in nanoseconds, to shift the tracks by.")
+        ToolTipMainForm.SetToolTip(txtTitle, "Title of the disk to read. May not be blank.")
+        ToolTipMainForm.SetToolTip(lblSystem, "Click to enable my (awful) attempt at a dark theme :)")
+        ToolTipMainForm.SetToolTip(chkFilenameRreplaceSpaceWithUnderscore, "For the title of the image, replace spaces with an underscore character. Helpful to avoid problems with spaces in paths, etc.")
+        ToolTipMainForm.SetToolTip(chkOffsetHead, "Offset the head movement by -9 to 9 tracks. Only for 5.25"" drives and C64 flippy disks!!")
+        ToolTipMainForm.SetToolTip(cmbOffsetHeadBy, "Track count to offset the head by. (Only for 5.25"" drives and C64 flippy disks)")
+        ToolTipMainForm.SetToolTip(chkCleanPasses, "Check to change the number of passes the heads will move over the cleaning disk. Default is 3.")
+        ToolTipMainForm.SetToolTip(cmbCleanPasses, "The number of times the drive heads will be cleaned, on each track.")
+        ToolTipMainForm.SetToolTip(chkLingerCleaning, "Check to enable changin the length of time the heads spend cleaning each track. Default is 100ms.")
+        ToolTipMainForm.SetToolTip(cmbCleanMS, "The number of milliseconds a the drive head will stay on each track")
+        ToolTipMainForm.SetToolTip(chkRetries, "If an error occurs during read/write, retry the action a number of times.")
+        ToolTipMainForm.SetToolTip(cmbRetries, "This is the number of times to retry read/write, in the case of an error occuring.")
+        ToolTipMainForm.SetToolTip(chkTime, "Show the time taken to complete GW actions.")
+        ToolTipMainForm.SetToolTip(btnClean, "Clean drive heads using a floppy cleaning disk. (Usually a sponge or cloth like material, with IPA or similar liquid drops.")
+        ToolTipMainForm.SetToolTip(chkSetManDiskType, "Set the Supercard Pro (.scp) file disk type. Has no effect on other disk formats.")
+        ToolTipMainForm.SetToolTip(cmbManufacturer, "The Supercard Pro (.scp) file manufacturer. Has no effect on other disk formats")
+        ToolTipMainForm.SetToolTip(cmbDiskTypes, "The Supercard Pro (.scp) file disk type. Each manufacturer can have multiple disk types. Has no effect on other disk formats")
         Return True
     End Function
 
@@ -251,6 +330,11 @@ Public Class FrmMain
             btnWrite.BackColor = System.Drawing.SystemColors.Control
         End If
 
+        GroupBoxGWOptions.ForeColor = rtbOutput.ForeColor
+        GroupBoxGWOptions.BackColor = rtbOutput.BackColor
+        gbProgramOptions.ForeColor = rtbOutput.ForeColor
+        gbProgramOptions.BackColor = rtbOutput.BackColor
+
         txtTitle.ForeColor = rtbOutput.ForeColor
         txtTitle.BackColor = rtbOutput.BackColor
         txtPublisher.ForeColor = rtbOutput.ForeColor
@@ -263,6 +347,10 @@ Public Class FrmMain
         txtExecuteScript.BackColor = rtbOutput.BackColor
         txtPythonLocation.ForeColor = rtbOutput.ForeColor
         txtPythonLocation.BackColor = rtbOutput.BackColor
+        txtWPCWidth.ForeColor = rtbOutput.ForeColor
+        txtWPCWidth.BackColor = rtbOutput.BackColor
+        txtTrackGroup.ForeColor = rtbOutput.ForeColor
+        txtTrackGroup.BackColor = rtbOutput.BackColor
 
         cmbRate.ForeColor = cmbSerialPorts.ForeColor
         cmbRate.BackColor = cmbSerialPorts.BackColor
@@ -296,6 +384,28 @@ Public Class FrmMain
         cmbStartTrack.BackColor = cmbSerialPorts.BackColor
         cmbEndTrack.ForeColor = cmbSerialPorts.ForeColor
         cmbEndTrack.BackColor = cmbSerialPorts.BackColor
+        cmbWPCType.ForeColor = cmbSerialPorts.ForeColor
+        cmbWPCType.BackColor = cmbSerialPorts.BackColor
+        cmbWPCTrackRange.ForeColor = cmbSerialPorts.ForeColor
+        cmbWPCTrackRange.BackColor = cmbSerialPorts.BackColor
+        cmbWPCTracks.ForeColor = cmbSerialPorts.ForeColor
+        cmbWPCTracks.BackColor = cmbSerialPorts.BackColor
+        cmbSides.ForeColor = cmbSerialPorts.ForeColor
+        cmbSides.BackColor = cmbSerialPorts.BackColor
+        cmbStepping.ForeColor = cmbSerialPorts.ForeColor
+        cmbStepping.BackColor = cmbSerialPorts.BackColor
+        cmbOffsetHeadBy.ForeColor = cmbSerialPorts.ForeColor
+        cmbOffsetHeadBy.BackColor = cmbSerialPorts.BackColor
+        cmbRetries.ForeColor = cmbSerialPorts.ForeColor
+        cmbRetries.BackColor = cmbSerialPorts.BackColor
+        cmbCleanMS.ForeColor = cmbSerialPorts.ForeColor
+        cmbCleanMS.BackColor = cmbSerialPorts.BackColor
+        cmbCleanPasses.ForeColor = cmbSerialPorts.ForeColor
+        cmbCleanPasses.BackColor = cmbSerialPorts.BackColor
+        cmbManufacturer.BackColor = cmbSerialPorts.BackColor
+        cmbManufacturer.ForeColor = cmbSerialPorts.ForeColor
+        cmbDiskTypes.BackColor = cmbSerialPorts.BackColor
+        cmbDiskTypes.ForeColor = cmbSerialPorts.ForeColor
 
         LinkLabelGWWiki.ForeColor = LinkLabelProjectName.ForeColor
         LinkLabelGWWiki.LinkColor = LinkLabelProjectName.LinkColor
@@ -352,6 +462,10 @@ Public Class FrmMain
         btnSeekB.BackColor = btnWrite.BackColor
         btnPython_EXE.ForeColor = btnWrite.ForeColor
         btnPython_EXE.BackColor = btnWrite.BackColor
+        btnClean.ForeColor = btnWrite.ForeColor
+        btnClean.BackColor = btnWrite.BackColor
+        btnHidePaths.ForeColor = btnWrite.ForeColor
+        btnHidePaths.BackColor = btnWrite.BackColor
 
         ContextMenuStripMainCommands.BackColor = Me.BackColor
         ContextMenuStripMainCommands.ForeColor = Me.ForeColor
@@ -373,7 +487,7 @@ Public Class FrmMain
         My.Settings.Script = txtExecuteScript.Text.Trim
         My.Settings.Disk = cmbDisk.Text
         My.Settings.DiskOf = cmbDiskOf.Text
-        My.Settings.ExecuteScript = chkExecuteScript.Checked
+        My.Settings.ExecuteScript = chkExecuteScriptAfterRead.Checked
         My.Settings.LoopDump = chkLoop.Checked
         My.Settings.LoopDumpCount = cmbDump.Text
         My.Settings.Stepping = CInt(cmbStepping.Text)
@@ -387,6 +501,34 @@ Public Class FrmMain
         My.Settings.WPCTracks = cmbWPCTracks.Text
         My.Settings.WPCType = cmbWPCType.Text
         My.Settings.WPCTrackWidth = txtWPCWidth.Text
+        My.Settings.HeadOffsetEnable = chkOffsetHead.Checked
+        My.Settings.HeadOffsetTrackCount = CInt(cmbOffsetHeadBy.Text)
+        My.Settings.SetManDisktype = chkSetManDiskType.Checked
+        My.Settings.Manufacturer = cmbManufacturer.SelectedIndex
+        My.Settings.DiskType = cmbDiskTypes.SelectedIndex
+
+        If IsNumeric(cmbRetries.Text) Then
+            My.Settings.Retries = CInt(cmbRetries.Text)
+        End If
+        My.Settings.EnableRetries = chkRetries.Checked
+
+        If IsNumeric(cmbCleanMS.Text) Then
+            My.Settings.CleanTimeMS = CInt(cmbCleanMS.Text)
+        End If
+        My.Settings.EnableCleanTimeMS = chkLingerCleaning.Checked
+
+        If IsNumeric(cmbCleanPasses.Text) Then
+            My.Settings.CleanPasses = CInt(cmbCleanPasses.Text)
+        End If
+        My.Settings.EnableCleanPasses = chkCleanPasses.Checked
+
+        My.Settings.ShowTime = chkTime.Checked
+
+        If Me.BackColor = System.Drawing.SystemColors.Control Then
+            My.Settings.DarkTheme = False
+        Else
+            My.Settings.DarkTheme = True
+        End If
 
         If IsNumeric(cmbSeekA.Text) Then
             My.Settings.SeekA = CInt(cmbSeekA.Text)
@@ -419,6 +561,309 @@ Public Class FrmMain
         My.Settings.SeparateFolders = chkSeparateFolders.Checked
         My.Settings.Save()
     End Sub
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="XMLFile">Full Path to the XML file to create</param>
+    ''' <returns></returns>
+    Private Function WriteDefaultDiskTypesXML(ByVal XMLFile As String) As Boolean
+        Try
+            Dim writer As New System.Xml.XmlTextWriter(XMLFile, System.Text.Encoding.UTF8)
+            writer.WriteStartDocument(True)
+            writer.Formatting = System.Xml.Formatting.Indented
+            writer.Indentation = 4
+            writer.WriteStartElement("Disks")
+
+            writer.WriteStartElement("Manufacturer")        'Manufacturer
+            writer.WriteStartElement("Name")                'Name
+            writer.WriteString("Commodore")
+            writer.WriteEndElement()                        '/Name
+            writer.WriteStartElement("DiskTypes")           'DiskTypes
+            writer.WriteStartElement("Name")
+            writer.WriteString("C64")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("Unused")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("Unused")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("Unused")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("Amiga")
+            writer.WriteEndElement()
+            writer.WriteEndElement()                        '/DiskTypes
+            writer.WriteEndElement()                        '/Manufacturer
+
+            writer.WriteStartElement("Manufacturer")
+            writer.WriteStartElement("Name")
+            writer.WriteString("Atari")
+            writer.WriteEndElement()
+            writer.WriteStartElement("DiskTypes")
+            writer.WriteStartElement("Name")
+            writer.WriteString("Atari 8-bit (FM) Single Density")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("Atari 8-bit (FM) Double Density")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("Atari 8-bit (FM) Enhanced Density")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("Unused")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("Atari ST (Single Sided) (Double Density)")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("Atari ST (Double Sided) (Double Density)")
+            writer.WriteEndElement()
+            writer.WriteEndElement()                        '/DiskTypes
+            writer.WriteEndElement()                        '/Manufacturer
+
+            writer.WriteStartElement("Manufacturer")
+            writer.WriteStartElement("Name")
+            writer.WriteString("Apple")
+            writer.WriteEndElement()
+            writer.WriteStartElement("DiskTypes")
+            writer.WriteStartElement("Name")
+            writer.WriteString("Apple II")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("Apple II Pro")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("Unused")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("Unused")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("Apple 400Kb (Double Density) (Single Sided)")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("Apple 800Kb (Double Density) (Double Sided)")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("Apple 1.44Mb (High Density) (Double Sided)")
+            writer.WriteEndElement()
+            writer.WriteEndElement()                        '/DiskTypes
+            writer.WriteEndElement()                        '/Manufacturer
+
+            writer.WriteStartElement("Manufacturer")
+            writer.WriteStartElement("Name")
+            writer.WriteString("IBM PC")
+            writer.WriteEndElement()
+            writer.WriteStartElement("DiskTypes")
+            writer.WriteStartElement("Name")
+            writer.WriteString("360Kb (5.25"") (Double Density) (Double Sided) [40 Track]")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("720Kb (3.5"") (Double Density) (Double Sided)")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("1.2Mb (5.25"") (High Density) (Double Sided)")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("1.44Mb (3.5"") (High Density) (Double Sided)")
+            writer.WriteEndElement()
+            writer.WriteEndElement()                        '/DiskTypes
+            writer.WriteEndElement()                        '/Manufacturer
+
+            writer.WriteStartElement("Manufacturer")
+            writer.WriteStartElement("Name")
+            writer.WriteString("Tandy")
+            writer.WriteEndElement()
+            writer.WriteStartElement("DiskTypes")
+            writer.WriteStartElement("Name")
+            writer.WriteString("TRS80 (Single Density) (Single Sided)")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("TRS80 (Double Density) (Single Sided)")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("TRS80 (Single Density) (Double Sided)")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("TRS80 (Double Density) (Double Sided)")
+            writer.WriteEndElement()
+            writer.WriteEndElement()                        '/DiskTypes
+            writer.WriteEndElement()                        '/Manufacturer
+
+            writer.WriteStartElement("Manufacturer")
+            writer.WriteStartElement("Name")
+            writer.WriteString("Texas Instruments")
+            writer.WriteEndElement()
+            writer.WriteStartElement("DiskTypes")
+            writer.WriteStartElement("Name")
+            writer.WriteString("TI-99/4A")
+            writer.WriteEndElement()
+            writer.WriteEndElement()                        '/DiskTypes
+            writer.WriteEndElement()                        '/Manufacturer
+
+            writer.WriteStartElement("Manufacturer")
+            writer.WriteStartElement("Name")
+            writer.WriteString("Roland")
+            writer.WriteEndElement()
+            writer.WriteStartElement("DiskTypes")
+            writer.WriteStartElement("Name")
+            writer.WriteString("D20")
+            writer.WriteEndElement()
+            writer.WriteEndElement()                        '/DiskTypes
+            writer.WriteEndElement()                        '/Manufacturer
+
+            writer.WriteStartElement("Manufacturer")
+            writer.WriteStartElement("Name")
+            writer.WriteString("Amstrad")
+            writer.WriteEndElement()
+            writer.WriteStartElement("DiskTypes")
+            writer.WriteStartElement("Name")
+            writer.WriteString("CPC")
+            writer.WriteEndElement()
+            writer.WriteEndElement()                        '/DiskTypes
+            writer.WriteEndElement()                        '/Manufacturer
+
+            writer.WriteStartElement("Manufacturer")
+            writer.WriteStartElement("Name")
+            writer.WriteString("Other")
+            writer.WriteEndElement()
+            writer.WriteStartElement("DiskTypes")
+            writer.WriteStartElement("Name")
+            writer.WriteString("360Kb (5.25"") (Double Density) (Double Sided) [40 Track]")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("1.2Mb (5.25"") (High Density) (Double Sided)")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("Reserved (1)")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("Reserved (2)")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("720Kb (3.5"") (Double Density) (Double Sided)")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("1.44Mb (3.5"") (High Density) (Double Sided)")
+            writer.WriteEndElement()
+            writer.WriteEndElement()                        '/DiskTypes
+            writer.WriteEndElement()                        '/Manufacturer
+
+            writer.WriteStartElement("Manufacturer")
+            writer.WriteStartElement("Name")
+            writer.WriteString("Unused")
+            writer.WriteEndElement()
+            writer.WriteStartElement("DiskTypes")
+            writer.WriteEndElement()                        '/DiskTypes
+            writer.WriteEndElement()                        '/Manufacturer
+
+            writer.WriteStartElement("Manufacturer")
+            writer.WriteStartElement("Name")
+            writer.WriteString("Unused")
+            writer.WriteEndElement()
+            writer.WriteStartElement("DiskTypes")
+            writer.WriteEndElement()                        '/DiskTypes
+            writer.WriteEndElement()                        '/Manufacturer
+
+            writer.WriteStartElement("Manufacturer")
+            writer.WriteStartElement("Name")
+            writer.WriteString("Unused")
+            writer.WriteEndElement()
+            writer.WriteStartElement("DiskTypes")
+            writer.WriteEndElement()                        '/DiskTypes
+            writer.WriteEndElement()                        '/Manufacturer
+
+            writer.WriteStartElement("Manufacturer")
+            writer.WriteStartElement("Name")
+            writer.WriteString("Unused")
+            writer.WriteEndElement()
+            writer.WriteStartElement("DiskTypes")
+            writer.WriteEndElement()                        '/DiskTypes
+            writer.WriteEndElement()                        '/Manufacturer
+
+            writer.WriteStartElement("Manufacturer")
+            writer.WriteStartElement("Name")
+            writer.WriteString("Unused")
+            writer.WriteEndElement()
+            writer.WriteStartElement("DiskTypes")
+            writer.WriteEndElement()                        '/DiskTypes
+            writer.WriteEndElement()                        '/Manufacturer
+
+            writer.WriteStartElement("Manufacturer")
+            writer.WriteStartElement("Name")
+            writer.WriteString("Tape Drive")
+            writer.WriteEndElement()
+            writer.WriteStartElement("DiskTypes")
+            writer.WriteStartElement("Name")
+            writer.WriteString("GCR (1)")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("GCR (2)")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("MFM")
+            writer.WriteEndElement()
+            writer.WriteEndElement()                        '/DiskTypes
+            writer.WriteEndElement()                        '/Manufacturer
+
+            writer.WriteStartElement("Manufacturer")
+            writer.WriteStartElement("Name")
+            writer.WriteString("Hard Drive")
+            writer.WriteEndElement()
+            writer.WriteStartElement("DiskTypes")
+            writer.WriteStartElement("Name")
+            writer.WriteString("MFM")
+            writer.WriteEndElement()
+            writer.WriteStartElement("Name")
+            writer.WriteString("RLL")
+            writer.WriteEndElement()
+            writer.WriteEndElement()                        '/DiskTypes
+            writer.WriteEndElement()                        '/Manufacturer
+
+
+            writer.WriteEndDocument()
+            writer.Close()
+            Return True
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="XMLFile"></param>
+    ''' <returns></returns>
+    Private Function ReadDefaultDiskXML(ByVal XMLFile As String) As Boolean
+        Dim xd As New Xml.XmlDocument           'Create new XML Document. for the disks xml
+        Dim xn As Xml.XmlNodeList               'Create a new XML Node, for reading disks xml nodes
+        Dim xn2 As Xml.XmlNodeList               'Create a new XML Node, for reading disks xml nodes
+        xd.Load(XMLFile)                        'Load disks xml into xml document
+        Dim i As Integer                        'Count of number of manufacturer elements in the .xml file
+        Dim x As Integer
+
+        xn = xd.GetElementsByTagName("Manufacturer")
+        For i = 0 To xn.Count - 1
+            ReDim Preserve Manufacturers(xn.Count - 1)
+            Try
+                Manufacturers(i) = xn(i).FirstChild.InnerText.Trim
+
+                xn2 = xn(i).ChildNodes.Item(1).ChildNodes
+                If Not xn2 Is Nothing Then
+                    'ReDim Preserve DiskArray(i, xn2.Count - 1)
+                    For x = 0 To xn2.Count - 1
+                        DiskArray(i, x) = xn2(x).InnerText.Trim 'Attributes.GetNamedItem("Name").InnerText.Trim
+                    Next
+                End If
+            Catch ex As Exception
+                Return False
+            End Try
+        Next
+        Return True
+    End Function
 
     ''' <summary>
     ''' Create a filename from the attributes onscreen. (Including checking if file exists, if necessary)
@@ -467,6 +912,8 @@ Public Class FrmMain
                 extst = ".scp"
             Case "HxC Floppy Disk Emulator"                                                 'Set file extension for HxC Floppy format "HFE"
                 extst = ".hfe"
+            Case "EDSK (Extended Disk Image)"                                               'Set file extension for Extended Disk Image format (Spectrum +3, Amstrad CPC, Sam Coupe, PC)
+                extst = ".dsk"
             Case "KryoFlux"                                                                 'Set file extension for KryoFlux heavy dump format "RAW"
                 If UseFolders = True Then
                     extst = "\Track_.raw"
@@ -494,6 +941,10 @@ Public Class FrmMain
         Return filen
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
     Function CheckForErrors() As Boolean
         If chkFilenameRreplaceSpaceWithUnderscore.Checked Then
             Cleanfields()
@@ -532,6 +983,9 @@ Public Class FrmMain
         End If
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
     Public Sub Cleanfields()
         Replace(txtTitle.Text, " ", "_")
         Replace(txtPublisher.Text, " ", "_")
@@ -670,10 +1124,10 @@ Public Class FrmMain
                 GW.SaveLogFile = True
             End If
 
-            If chkExecuteScript.Checked Then
+            If chkExecuteScriptAfterRead.Checked Then
                 GW.ExcuteScript = True
 
-                GW.ExecuteScriptHiddenLevel = chkExecuteScript.CheckState
+                GW.ExecuteScriptHiddenLevel = chkExecuteScriptAfterRead.CheckState
                 AddErrorToMemo(GW)
 
                 GW.ScriptFile = txtExecuteScript.Text
@@ -683,12 +1137,54 @@ Public Class FrmMain
             GW.SeekTrack = CInt(cmbSeekA.Text)
             AddErrorToMemo(GW)
 
-            GW.Pin = CInt(cmbPIN.Text)
+            If cmbPIN.Text <> "" Then
+                GW.Pin = CInt(cmbPIN.Text)
+                AddErrorToMemo(GW)
+            End If
+
+            GW.HeadOffsetEnable = chkOffsetHead.Checked
+            AddErrorToMemo(GW)
+
+            GW.HeadOffsetTrackCount = CInt(cmbOffsetHeadBy.Text)
             AddErrorToMemo(GW)
 
             If cmbLowHigh.SelectedIndex > -1 Then
                 GW.PinVoltage = CInt(cmbLowHigh.SelectedIndex)
                 AddErrorToMemo(GW)
+            End If
+
+            If chkCleanPasses.Checked = True Then
+                If IsNumeric(cmbCleanPasses.Text) Then
+                    GW.CleanPasses = CInt(cmbCleanPasses.Text)
+                End If
+            End If
+
+            If chkLingerCleaning.Checked = True Then
+                If IsNumeric(cmbCleanMS.Text) Then
+                    GW.CleanLingerMS = CInt(cmbCleanMS.Text)
+                End If
+            End If
+
+            If chkRetries.Checked = True Then
+                If IsNumeric(cmbRetries.Text) Then
+                    GW.Retries = CInt(cmbRetries.Text)
+                End If
+            End If
+
+            If chkTime.Checked = True Then
+                GW.ShowTime = True
+            End If
+
+            If cmbSystem.Text = "Amiga" Then
+                GW.Manufacturer = 0
+                GW.DiskType = 4
+                GW.UseManufacturerAndDiskTypeCombined = False
+            End If
+
+            If chkSetManDiskType.Checked = True Then
+                GW.Manufacturer = cmbManufacturer.SelectedIndex
+                GW.DiskType = cmbDiskTypes.SelectedIndex
+                GW.UseManufacturerAndDiskTypeCombined = True
             End If
 
             Return True
@@ -831,7 +1327,7 @@ Public Class FrmMain
             OpenFileDialogMain.Title = "Select SuperCard Pro / HxC Floppy Emulator / Amiga ADF / PC 1.44MB IMG / Software Preservation Society IPF file to write to floppy"
             OpenFileDialogMain.Multiselect = False
             OpenFileDialogMain.FileName = ""
-            OpenFileDialogMain.Filter = "Supported files|*.scp;*.hfe;*.adf;*.ipf;*.img;*.raw|Supercard Pro files|*.scp|HxC Floppy Emulator HFE files|*.hfe|Commodore Amiga ADF files|*.adf| IBM 1.44MB IMG|*.img|Kryoflux files|*.raw|Software Preservation Society IPF files|*.ipf|All files (*.*)|*.*"
+            OpenFileDialogMain.Filter = "Supported files|*.scp;*.hfe;*.adf;*.ipf;*.img;*.ima;*.dsk;*.raw|Supercard Pro files|*.scp|HxC Floppy Emulator HFE files|*.hfe|Commodore Amiga ADF files|*.adf| IBM 1.44MB image files|*.img;*.ima|Extended Disk Image files (EDSK)|*.dsk|Kryoflux files|*.raw|Software Preservation Society IPF files|*.ipf|All files (*.*)|*.*"
             Dim fileGW As String
             If (OpenFileDialogMain.ShowDialog() = DialogResult.OK) Then
                 fileGW = OpenFileDialogMain.FileName
@@ -873,13 +1369,6 @@ Public Class FrmMain
         System.Diagnostics.Process.Start("https://github.com/keirf/Greaseweazle/wiki/Downloads")
     End Sub
 
-    Private Sub LinkLabelDLPython_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs)
-        System.Diagnostics.Process.Start("https://www.python.org/downloads/windows/")
-        rtbOutput.Text &= Environment.NewLine + Environment.NewLine
-        rtbOutput.Text &= "After downloading and installing Python (Remember to add it to the PATH variable), please run the following from a command prompt:" + Environment.NewLine + Environment.NewLine
-        rtbOutput.Text &= "pip3 install crcmod pyserial" + Environment.NewLine + Environment.NewLine + "pip3 install bitarray" + Environment.NewLine + Environment.NewLine
-    End Sub
-
     Private Sub ChkEndTrack_CheckedChanged(sender As Object, e As EventArgs) Handles chkEndTrack.CheckedChanged
         cmbEndTrack.Enabled = chkEndTrack.Checked
     End Sub
@@ -894,7 +1383,7 @@ Public Class FrmMain
         OpenFileDialogMain.Multiselect = False
         OpenFileDialogMain.FileName = ""
         OpenFileDialogMain.DefaultExt = ""
-        OpenFileDialogMain.Filter = "All files (*.*)|*.*"
+        OpenFileDialogMain.Filter = "All files (*.*)|*.*|Program files|*.exe|Batch files/scripts|*.bat;*.cmd;*.ps1"
 
         If (OpenFileDialogMain.ShowDialog() = DialogResult.OK) Then
             txtExecuteScript.Text = OpenFileDialogMain.FileName
@@ -902,7 +1391,7 @@ Public Class FrmMain
     End Sub
 
     Private Sub LinkLabelLaunchNow_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabelLaunchNow.LinkClicked
-        ExecuteCommand(txtExecuteScript.Text.Trim, txtSaveLocation.Text.Trim + CreateFileName(False, chkSeparateFolders.Checked), chkExecuteScript.CheckState)
+        ExecuteCommand(txtExecuteScript.Text.Trim, txtSaveLocation.Text.Trim + CreateFileName(False, chkSeparateFolders.Checked), chkExecuteScriptAfterRead.CheckState)
     End Sub
 
     Private Sub ChkStartCyl_CheckedChanged(sender As Object, e As EventArgs) Handles ChkStartTrack.CheckedChanged
@@ -1029,7 +1518,7 @@ Public Class FrmMain
         rtbOutput.Text += GW.Results
     End Sub
 
-    Private Sub cmbDiskOf_LostFocus(sender As Object, e As EventArgs) Handles cmbDiskOf.LostFocus
+    Private Sub cmbDiskOf_LostFocus(sender As Object, e As EventArgs)
         If cmbDiskOf.Text.Trim <> "" Then
             If cmbDisk.Text.Length < cmbDiskOf.Text.Length Then
                 cmbDisk.Text = cmbDisk.Text.Trim.PadLeft(cmbDiskOf.Text.Length, CChar("0"))                'Pad disk number to length of "diskof" field with leading zeros
@@ -1040,11 +1529,11 @@ Public Class FrmMain
         End If
     End Sub
 
-    Private Sub txtTitle_GotFocus(sender As Object, e As EventArgs) Handles txtTitle.GotFocus
+    Private Sub txtTitle_GotFocus(sender As Object, e As EventArgs)
         txtTitle.SelectAll()
     End Sub
 
-    Private Sub txtPublisher_GotFocus(sender As Object, e As EventArgs) Handles txtPublisher.GotFocus
+    Private Sub txtPublisher_GotFocus(sender As Object, e As EventArgs)
         txtPublisher.SelectAll()
     End Sub
 
@@ -1054,7 +1543,6 @@ Public Class FrmMain
         Else
             EnableDarkTheme(False)
         End If
-
     End Sub
 
     Private Sub BtnEraseDisk_Click(sender As Object, e As EventArgs) Handles btnEraseDisk.Click
@@ -1146,14 +1634,30 @@ Public Class FrmMain
         rtbOutput.Text &= Environment.NewLine
 
         Dim GW As New GreaseWeazle
+
         GW.ClearError()
         FillGWFromScreen(GW)
         GW.Action = GW.GWInfo
 
+        'Dim mea As MouseEventArgs = DirectCast(e, MouseEventArgs)
+        'If mea.Button <> MouseButtons.Left Then
+        '    GW.InfoBootloader = True            ' Set the GW info --bootloader flag
+        'End If
+
         If GW.ExecuteGW() = False Then
             rtbOutput.Text += GW.ErrorString
         End If
+        rtbOutput.Text &= Environment.NewLine
         rtbOutput.Text += GW.Results
+        rtbOutput.Text &= Environment.NewLine
+
+        If chkF7.Checked Then
+            GW.InfoBootloader = True            ' Set the GW info --bootloader flag
+            If GW.ExecuteGW() = False Then
+                rtbOutput.Text += GW.ErrorString
+            End If
+            rtbOutput.Text += GW.Results
+        End If
     End Sub
 
     Private Sub btnGWBandwidth_Click(sender As Object, e As EventArgs) Handles btnGWBandwidth.Click, GreaswweazleDToolStripMenuItem.Click
@@ -1198,7 +1702,7 @@ Public Class FrmMain
         cmbRevolutions.Enabled = chkRevolutions.Checked
     End Sub
 
-    Private Sub EnableProgramLOGToolStripMenuItem_Click(sender As Object, e As EventArgs)
+    Private Sub EnableProgramLOGToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EnableProgramLOGToolStripMenuItem.Click
         'Checks or unchecks the "Log" checkbox.
         EnableProgramLOGToolStripMenuItem.Checked = Not (chkLOG.Checked)
         chkLOG.Checked = EnableProgramLOGToolStripMenuItem.Checked
@@ -1293,6 +1797,9 @@ Public Class FrmMain
 
     Private Sub LinkLabelDownloadPython_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabelDownloadPython.LinkClicked
         System.Diagnostics.Process.Start("https://www.python.org/downloads/windows/")
+        rtbOutput.Text &= Environment.NewLine + Environment.NewLine
+        rtbOutput.Text &= "After downloading and installing Python (Remember to add it to the PATH variable), please run the following from a command prompt:" + Environment.NewLine + Environment.NewLine
+        rtbOutput.Text &= "pip3 install crcmod pyserial" + Environment.NewLine + Environment.NewLine + "pip3 install bitarray" + Environment.NewLine + Environment.NewLine
     End Sub
 
     Private Sub btnPython_EXE_Click(sender As Object, e As EventArgs) Handles btnPython_EXE.Click
@@ -1305,5 +1812,78 @@ Public Class FrmMain
         If (OpenFileDialogMain.ShowDialog() = DialogResult.OK) Then
             txtPythonLocation.Text = OpenFileDialogMain.FileName
         End If
+    End Sub
+
+    Private Sub lblComPort_Click(sender As Object, e As EventArgs) Handles lblComPort.Click
+        FillComPorts(cmbSerialPorts)
+    End Sub
+
+    Private Sub chkWritePreCompensate_CheckedChanged(sender As Object, e As EventArgs) Handles chkWritePreCompensate.CheckedChanged
+        cmbWPCType.Enabled = chkWritePreCompensate.Checked
+        cmbWPCTrackRange.Enabled = chkWritePreCompensate.Checked
+        cmbWPCTracks.Enabled = chkWritePreCompensate.Checked
+        txtWPCWidth.Enabled = chkWritePreCompensate.Checked
+    End Sub
+
+    Private Sub chkOffsetHead_CheckedChanged(sender As Object, e As EventArgs) Handles chkOffsetHead.CheckedChanged
+        cmbOffsetHeadBy.Enabled = chkOffsetHead.Checked
+    End Sub
+
+    Private Sub btnClean_Click(sender As Object, e As EventArgs) Handles btnClean.Click
+        If MessageBox.Show("Clean the disk drive, using a cleaning floppy?", "Clean drive heads using cleaning disk.", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            rtbOutput.Text &= Environment.NewLine
+
+            Dim GW As New GreaseWeazle
+
+            GW.ClearError()
+            FillGWFromScreen(GW)
+            GW.Action = GW.GWClean
+
+            If GW.ExecuteGW() = False Then
+                rtbOutput.Text += GW.ErrorString
+            End If
+            rtbOutput.Text += GW.Results
+        Else
+            rtbOutput.Text &= Environment.NewLine
+            rtbOutput.Text &= "Drive clean canceled."
+            rtbOutput.Text &= Environment.NewLine
+        End If
+    End Sub
+
+    Private Sub chkCleanPasses_CheckedChanged(sender As Object, e As EventArgs) Handles chkCleanPasses.CheckedChanged
+        cmbCleanPasses.Enabled = chkCleanPasses.Checked
+    End Sub
+
+    Private Sub chkLingerCleaning_CheckedChanged(sender As Object, e As EventArgs) Handles chkLingerCleaning.CheckedChanged
+        cmbCleanMS.Enabled = chkLingerCleaning.Checked
+    End Sub
+
+    Private Sub chkRetries_CheckedChanged(sender As Object, e As EventArgs) Handles chkRetries.CheckedChanged
+        cmbRetries.Enabled = chkRetries.Checked
+    End Sub
+
+    Private Sub cmbManufacturer_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbManufacturer.SelectedIndexChanged
+        If Not cmbManufacturer.SelectedIndex = -1 Then
+            cmbDiskTypes.Items.Clear()
+            cmbDiskTypes.Text = ""
+            cmbDiskTypes.SelectedIndex = -1
+            Dim x As Integer
+            For x = 0 To 15
+                If Not IsNothing(DiskArray(cmbManufacturer.SelectedIndex, x)) Then
+                    If DiskArray(cmbManufacturer.SelectedIndex, x).Trim <> "" Then
+                        cmbDiskTypes.Items.Add(DiskArray(cmbManufacturer.SelectedIndex, x))
+                    End If
+                End If
+            Next
+        End If
+    End Sub
+
+    Private Sub LLabelSCP_Format_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LLabelSCP_Format.LinkClicked
+        System.Diagnostics.Process.Start("https://www.cbmstuff.com/downloads/scp/scp_image_specs.txt")
+    End Sub
+
+    Private Sub chkSetManDiskType_CheckedChanged(sender As Object, e As EventArgs) Handles chkSetManDiskType.CheckedChanged
+        cmbDiskTypes.Enabled = chkSetManDiskType.Checked
+        cmbManufacturer.Enabled = chkSetManDiskType.Checked
     End Sub
 End Class

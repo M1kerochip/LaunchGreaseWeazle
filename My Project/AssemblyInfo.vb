@@ -8,7 +8,7 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("RunGreaseWeazel")>
+<Assembly: AssemblyTitle("Run GreaseWeazel")>
 <Assembly: AssemblyDescription("Executes a the GW script to read or write a disk image using the GreaseWeazle hardware.")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("RunGreaseWeazel")>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("2.0.1.24")>
-<Assembly: AssemblyFileVersion("2.0.1.24")>
+<Assembly: AssemblyVersion("2.0.4.25")>
+<Assembly: AssemblyFileVersion("2.0.4.25")>

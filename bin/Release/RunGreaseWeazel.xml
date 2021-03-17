@@ -43,12 +43,37 @@ RunGreaseWeazel
  Write Settings out to VB.NET My.Settings section (All settings are per user)
  </summary>
 </member>
+<member name="M:RunGreaseWeazel.FrmMain.WriteDefaultDiskTypesXML(System.String)">
+ <summary>
+ 
+ </summary>
+ <param name="XMLFile">Full Path to the XML file to create</param>
+ <returns></returns>
+</member>
+<member name="M:RunGreaseWeazel.FrmMain.ReadDefaultDiskXML(System.String)">
+ <summary>
+ 
+ </summary>
+ <param name="XMLFile"></param>
+ <returns></returns>
+</member>
 <member name="M:RunGreaseWeazel.FrmMain.CreateFileName(System.Boolean,System.Boolean)">
  <summary>
  Create a filename from the attributes onscreen. (Including checking if file exists, if necessary)
  </summary>
  <param name="CheckExists">Check to see if the file exists on the disk. If so, append an integer to prevent GreaseSeazle from overwriting.</param>
  <returns>Filename as a string.</returns>
+</member>
+<member name="M:RunGreaseWeazel.FrmMain.CheckForErrors">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:RunGreaseWeazel.FrmMain.Cleanfields">
+ <summary>
+ 
+ </summary>
 </member>
 <member name="M:RunGreaseWeazel.FrmMain.ExecuteCommand(System.String,System.String,System.Int32)">
  <summary>
@@ -95,10 +120,71 @@ RunGreaseWeazel
  </summary>
  <returns>Integer, 1</returns>
 </member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.GWErase">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.GWClean">
+ <summary>
+ GWClean: Instructs the GW to perform a zig zag movement of the head over the disk, from track 0 to EndTrack, staying in each place for xx MS, for xx rotations.
+ </summary>
+ <returns></returns>
+</member>
 <member name="M:RunGreaseWeazel.GreaseWeazle.ClearError">
  <summary>
  Clears the ErrorString
  </summary>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.Retries">
+ <summary>
+ If GWRead/GWWrite fails, this is the number of times the GW unit will retry that action. Default is 3
+ </summary>
+ <returns>Integer</returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.UseManufacturerAndDiskTypeCombined">
+ <summary>
+ 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.Manufacturer">
+ <summary>
+ Disk Manufacturer. CBM = 0x00, Atari = 0x10, Apple = 0x20, PC = 0x30, Tandy = 0x40, TI = 0x50, Roland = 0x60, Amstrad = 0x70, Other = 0x80, TapeDrive = 0xE0, HardDrive = 0xF0
+ As per SCP v2.2 https://www.cbmstuff.com/downloads/scp/scp_image_specs.txt
+ </summary>
+ <returns>Integer. Default is 0, Commodore</returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.DiskType">
+ <summary>
+ Disk type (0=CBM, 1=AMIGA, 2=APPLE II, 3=ATARI ST, 4=ATARI 800, 5=MAC 800, 6=360K/720K, 7=1.44MB)
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.ShowTime">
+ <summary>
+ Show time taken to complete an operation
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.InfoBootloader">
+ <summary>
+ For F7 devices, show the bootloader info, instead of the device info.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.CleanPasses">
+ <summary>
+ Number of revolutions to clean the drive for. Default to 3. Requires a floppy drive cleaning disk.
+ </summary>
+ <returns>Integer</returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.CleanLingerMS">
+ <summary>
+ When cleaning, linger in each track for xx milliseconds. Default is 100. Requires a floppy drive cleaning disk.
+ </summary>
+ <returns>Integer</returns>
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.Results">
  <summary>
@@ -185,7 +271,7 @@ RunGreaseWeazel
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.WPC_Type">
  <summary>
- The type of disk format to calculate Write PreCompensation. Supported formats: MFM, FM, GRC.
+ The type of disk format to calculate Write PreCompensation. Supported formats: (M)odified (F)requency (M)odulation, (F)requency (M)odulation, or (G)roup (C)oded (R)ecording.
  </summary>
  <returns>String. mfm by default.</returns>
 </member>

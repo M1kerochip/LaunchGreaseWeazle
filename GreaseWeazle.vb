@@ -2,10 +2,10 @@
 ''' Class to call the Greaseweazle hardware and action the results.
 ''' </summary>
 Public Class GreaseWeazle
-    Public ReadOnly Property Version As String = "v0.1, for GW 0.24"
+    Public ReadOnly Property Version As String = "v0.3, for GW 0.25"
 
     Public ReadOnly Property GWMinAction As Integer = 0
-    Public ReadOnly Property GWMaxAction As Integer = 10
+    Public ReadOnly Property GWMaxAction As Integer = 11
 
     ''' <summary>
     ''' GWRead: Instructs the GW to read tracks from the floppy disk, using the floppy drive.
@@ -17,6 +17,10 @@ Public Class GreaseWeazle
     ''' </summary>
     ''' <returns>Integer, 1</returns>
     Public ReadOnly Property GWWrite As Integer = 1      'call gw.py write
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property GWErase As Integer = 2      'call gw.py erase
     Public ReadOnly Property GWReset As Integer = 3      'call gw.py reset
     Public ReadOnly Property GWUpdate As Integer = 4     'call gw.py update
@@ -26,12 +30,17 @@ Public Class GreaseWeazle
     Public ReadOnly Property GWBandwidth As Integer = 8  'call gw.py bandwidth
     Public ReadOnly Property GWDelays As Integer = 9     'call gw.py delays
     Public ReadOnly Property GWSeek As Integer = 10      'call gw.py seek
+    ''' <summary>
+    ''' GWClean: Instructs the GW to perform a zig zag movement of the head over the disk, from track 0 to EndTrack, staying in each place for xx MS, for xx rotations.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property GWClean As Integer = 11     'call gw.py clean
 
     Public ReadOnly Property PinLow As Integer = 0
     Public ReadOnly Property PinHigh As Integer = 1
 
     Public Property MinTrack As Integer = 0
-    Public Property MaxTrack As Integer = 85
+    Public Property MaxTrack As Integer = 167
 
     Public Property MinOffset As Integer = -9
     Public Property MaxOffset As Integer = 9
@@ -76,6 +85,14 @@ Public Class GreaseWeazle
     Private P_ErrorString As String = "No Error!"
     Private P_ResultString As String
     Private P_SaveLogFile As Boolean = False
+    Private P_InfoBootloader As Boolean = False
+    Private P_CleanPasses As Integer = 3
+    Private P_CleanLingerMS As Integer = 100
+    Private P_Retries As Integer = 3
+    Private P_ShowTime As Boolean = False
+    Private P_DiskType As Integer = 0       'Commodore
+    Private P_Manufacturer As Integer = 0   'C64
+    Private P_UseManufacturerAndDiskTypeCombined As Boolean = False
 
     ''' <summary>
     ''' Clears the ErrorString
@@ -83,6 +100,119 @@ Public Class GreaseWeazle
     Public Sub ClearError()
         P_ErrorString = ""
     End Sub
+
+    ''' <summary>
+    ''' If GWRead/GWWrite fails, this is the number of times the GW unit will retry that action. Default is 3
+    ''' </summary>
+    ''' <returns>Integer</returns>
+    Public Property Retries As Integer
+        Get
+            Return P_Retries
+        End Get
+        Set(value As Integer)
+            P_Retries = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property UseManufacturerAndDiskTypeCombined As Boolean
+        Get
+            Return P_UseManufacturerAndDiskTypeCombined
+        End Get
+        Set(value As Boolean)
+            P_UseManufacturerAndDiskTypeCombined = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' Disk Manufacturer. CBM = 0x00, Atari = 0x10, Apple = 0x20, PC = 0x30, Tandy = 0x40, TI = 0x50, Roland = 0x60, Amstrad = 0x70, Other = 0x80, TapeDrive = 0xE0, HardDrive = 0xF0
+    ''' As per SCP v2.2 https://www.cbmstuff.com/downloads/scp/scp_image_specs.txt
+    ''' </summary>
+    ''' <returns>Integer. Default is 0, Commodore</returns>
+    Public Property Manufacturer As Integer
+        Get
+            Return P_Manufacturer
+        End Get
+        Set(value As Integer)
+            If (value < 0) Or (value > 15) Then
+                P_ErrorString = "Unable to set manufacturer. Must be between 0 and 15. Not all manufacturers are valid/useful"
+            Else
+                P_Manufacturer = value
+            End If
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' Disk type (0=CBM, 1=AMIGA, 2=APPLE II, 3=ATARI ST, 4=ATARI 800, 5=MAC 800, 6=360K/720K, 7=1.44MB)
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property DiskType As Integer
+        Get
+            Return P_DiskType
+        End Get
+        Set(value As Integer)
+            If (value < 0) Or (value > 15) Then
+                P_ErrorString = "Unable to set type. Disk type must be between 0 and 15. Not all disk types are valid for all manufacturers"
+            Else
+                P_DiskType = value
+            End If
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' Show time taken to complete an operation
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ShowTime As Boolean
+        Get
+            Return P_ShowTime
+        End Get
+        Set(value As Boolean)
+            P_ShowTime = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' For F7 devices, show the bootloader info, instead of the device info.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property InfoBootloader As Boolean
+        Get
+            Return P_InfoBootloader
+        End Get
+        Set(value As Boolean)
+            P_InfoBootloader = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' Number of revolutions to clean the drive for. Default to 3. Requires a floppy drive cleaning disk.
+    ''' </summary>
+    ''' <returns>Integer</returns>
+    Public Property CleanPasses As Integer
+        Get
+            Return P_CleanPasses
+        End Get
+        Set(value As Integer)
+            P_CleanPasses = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' When cleaning, linger in each track for xx milliseconds. Default is 100. Requires a floppy drive cleaning disk.
+    ''' </summary>
+    ''' <returns>Integer</returns>
+    Public Property CleanLingerMS As Integer
+        Get
+            Return P_CleanLingerMS
+        End Get
+        Set(value As Integer)
+            P_CleanLingerMS = value
+        End Set
+    End Property
 
     ''' <summary>
     ''' Holds the results of the GW action.
@@ -261,7 +391,7 @@ Public Class GreaseWeazle
     ''' Enable to use 5.25" drives, to read 'Flippy' disks. eg C64 etc. Requires an offset set, to be effective.
     ''' </summary>
     ''' <returns></returns>
-    Private Property HeadOffsetEnable As Boolean
+    Public Property HeadOffsetEnable As Boolean
         Get
             Return P_HeadOffsetEnable
         End Get
@@ -302,7 +432,7 @@ Public Class GreaseWeazle
     End Property
 
     ''' <summary>
-    ''' The type of disk format to calculate Write PreCompensation. Supported formats: MFM, FM, GRC.
+    ''' The type of disk format to calculate Write PreCompensation. Supported formats: (M)odified (F)requency (M)odulation, (F)requency (M)odulation, or (G)roup (C)oded (R)ecording.
     ''' </summary>
     ''' <returns>String. mfm by default.</returns>
     Public Property WPC_Type As String
@@ -705,12 +835,19 @@ Public Class GreaseWeazle
                     COMStr = "--device " + COMPort + " "
                 End If
 
+                If ShowTime = True Then
+                    str += " --time"
+                End If
+
                 If ((Action = GWReset) Or (Action = GWInfo) Or (Action = GWBandwidth) Or (Action = GWDelays) Or (Action = GWSeek)) Then
                     Select Case Action
                         Case GWReset
                             str += " reset "                                        'Reset Device
                         Case GWInfo
                             str += " info "                                         'Get Device Info
+                            If InfoBootloader = True Then
+                                str += "--bootloader "
+                            End If
                         Case GWBandwidth
                             str += " bandwidth "                                    'Get device bandwidth between GW and pc.
                         Case GWDelays
@@ -719,6 +856,9 @@ Public Class GreaseWeazle
                             str += " seek " + CStr(SeekTrack)                       'Move drive head to this cylender/track
                     End Select
                     str += COMStr                                                   'Add com port to the string
+                    If ShowTime = True Then
+                        str += " --time"
+                    End If
                 Else
                     If Action = GWSetPin Then                                       'Set a pin level, 0v or 5v.
                         str += " pin " + Pin.ToString + " " + P_PinVoltageLetter + " "  'Voltage is a char: H or L
@@ -734,9 +874,17 @@ Public Class GreaseWeazle
                                 If Action = GWRead Then                             'Read from Disk to image in a supported format (determined by extension)
                                     str += " read "
                                 Else
-                                    str += " write "                                'Write image to floppy disk (from a supported format)
-                                    If EraseEmptyTracks Then                        'Erase empty sectors: only applies to write
-                                        str += "--erase-empty "
+                                    If Action = GWClean Then                        'Clean the drive in a zig zag pattern, using a cleaning disk
+                                        str += " clean"
+                                        str += " --passes " + CStr(CleanPasses)
+                                        str += " --linger " + CStr(CleanLingerMS)
+                                        str += " --cyls " + CStr(EndTrack) + " "
+                                    Else
+                                        'Action = GWWrite
+                                        str += " write "                            'Write image to floppy disk (from a supported format)
+                                        If EraseEmptyTracks Then                    'Erase empty sectors: only applies to write
+                                            str += "--erase-empty "
+                                        End If
                                     End If
                                 End If
                                 'If chkAdjustSpeed.Checked Then                      'Removed in Greaseweazle 0.13
@@ -746,33 +894,35 @@ Public Class GreaseWeazle
 
                             str += COMStr                                           'Add com port to the string
 
-                            'Changed track command in v0.23
-                            str += "--tracks=""c="                                  'Add tracks section: double quotes and Cylinder start
-                            If Not IsNothing(TrackGroup) Then
-                                If TrackGroup.Trim <> "" Then                           'If using a track set, add this
-                                    str += TrackGroup
+                            If ((Action = GWRead) Or (Action = GWWrite) Or (Action = GWErase)) Then
+                                'Changed track command in v0.23
+                                str += "--tracks=""c="                                  'Add tracks section: double quotes and Cylinder start
+                                If Not IsNothing(TrackGroup) Then
+                                    If TrackGroup.Trim <> "" Then                           'If using a track set, add this
+                                        str += TrackGroup
+                                    Else
+                                        str += CStr(StartTrack)                             'If not using a set, use the standard start and finish track
+                                        str += "-"
+                                        str += CStr(EndTrack)                               'end on that track
+                                    End If
                                 Else
                                     str += CStr(StartTrack)                             'If not using a set, use the standard start and finish track
                                     str += "-"
                                     str += CStr(EndTrack)                               'end on that track
                                 End If
-                            Else
-                                str += CStr(StartTrack)                             'If not using a set, use the standard start and finish track
-                                str += "-"
-                                str += CStr(EndTrack)                               'end on that track
+
+                                str += ":h="                                            'Heads (sides of the disk) to use in this operation
+                                If Sides.Trim <> "" Then                                'if non default sides are to be used,
+                                    str += Sides                                        'use heads selected in drop down
+                                Else
+                                    str += "0-1"                                        'else use both heads (top and bottom)
+                                End If
+
+                                str += ":step="
+                                str += CStr(TrackStep)                                  'Step X tracks for every read: Useful for 40 track disks, in 80 track drives, etc.
+
+                                str += """ "                                            'add a double quote and a spce to the end of the --tracks section
                             End If
-
-                            str += ":h="                                            'Heads (sides of the disk) to use in this operation
-                            If Sides.Trim <> "" Then                                'if non default sides are to be used,
-                                str += Sides                                        'use heads selected in drop down
-                            Else
-                                str += "0-1"                                        'else use both heads (top and bottom)
-                            End If
-
-                            str += ":step="
-                            str += CStr(TrackStep)                                  'Step X tracks for every read: Useful for 40 track disks, in 80 track drives, etc.
-
-                            str += """ "                                            'add a double quote and a spce to the end of the --tracks section
 
                             If Action = GWRead Then
                                 str += "--revs=" + CStr(Revolutions) + " "          'number of revolutions of each track to store in the image (if supported). 5 is the archival norm. used to find weak sectors, etc
@@ -793,13 +943,112 @@ Public Class GreaseWeazle
                                 End If
                             End If
 
-                            If F7Device Then
+                            If (Action = GWRead) Or (Action = GWWrite) Then
+                                If HeadOffsetEnable Then
+
+                                End If
+
+                                If Retries <> 0 Then
+                                    str += "--retries " + CStr(Retries) + " "
+                                End If
+                            End If
+
+                            If F7Device Then                                        'Applies to Read, Write, Clean, Erase
                                 str += "--drive " + F7_Drive                        'For F7 devices, a drive can be selected. A/B etc.
                             End If
                         End If
                         If Not IsNothing(FileName) Then                             'Check filename is initialised before we examine it.
                             If (FileName.Trim <> "") Then                           'If we do an action that requires a file add quotes around filename to save. (Otherewise fname is blank, no need for quotes)
-                                str += ControlChars.Quote + FileName + ControlChars.Quote + " "
+                                str += ControlChars.Quote + FileName + ControlChars.Quote
+                            End If
+                        End If
+                        If Action = GWRead Then
+
+                            'Set the manufacturer and disk type: https://www.cbmstuff.com/downloads/scp/scp_image_specs.txt
+                            If UseManufacturerAndDiskTypeCombined = True Then
+                                Dim both As Byte
+                                both = CByte(Manufacturer) << 4
+                                both = both + CByte(DiskType)
+                                str += "::disktype=0x" + Hex(both).PadLeft(2, CChar("0"))
+                            Else
+                                Select Case Manufacturer    'Set the disk type bits
+                                    Case 0  'Commodore
+                                        Select Case DiskType
+                                            Case 0  'CMB C64            'Default, no changes required
+                                            Case 1  '--Unused--
+                                            Case 2  '--Unused--
+                                            Case 3  '--Unused--
+                                            Case 4  'CMB Amiga (DS/DD)
+                                                str += "::disktype=amiga"
+                                        End Select
+                                    Case 1  'Atari
+                                        Select Case DiskType
+                                            Case 0  'Atari 8-bit Single Density
+                                            Case 1  'Atari 8-bit Double Density
+                                            Case 2  'Atari 8-bit Extended Density
+                                            Case 3  '--Unused--
+                                            Case 4  'Atari ST SS/DD
+                                        '    str += "::disktype=atarists"
+                                            Case 5  'Atari ST DS/DD
+                                                '    str += "::disktype=ataristd"
+                                        End Select
+                                    Case 2  'Apple
+                                        Select Case DiskType
+                                            Case 0  'Apple II
+                                            Case 1  'Apple II Pro
+                                            Case 2  '--Unused--
+                                            Case 3  '--Unused--
+                                            Case 4  'Apple 400k
+                                            Case 5  'Apple 800k
+                                            Case 6  'Apple 1.44MB
+                                        End Select
+                                    Case 3  'PC
+                                        Select Case DiskType
+                                            Case 0  '360k
+                                            Case 1  '720k
+                                            Case 2  '1.2mb
+                                            Case 3  '1.44mb
+                                        End Select
+                                    Case 4  'Tandy
+                                        Select Case DiskType
+                                            Case 0  'TRS80 SS/SD
+                                            Case 1  'TRS80 SS/DD
+                                            Case 2  'TRS80 DS/SS
+                                            Case 3  'TRS80 DS/DD
+                                        End Select
+                                    Case 5  'Texas Instruments (TI)
+                                        Select Case DiskType
+                                            Case 0  'TI99 4A
+                                        End Select
+                                    Case 6  'Roland
+                                        Select Case DiskType
+                                            Case 0  'D20
+                                        End Select
+                                    Case 7  'Amstrad
+                                        Select Case DiskType
+                                            Case 0  'CPC
+                                        End Select
+                                    Case 8  'Other
+                                        Select Case DiskType
+                                            Case 0  '360k
+                                            Case 1  '1.2mb
+                                            Case 2  'Reserved 1
+                                            Case 3  'Reserved 2
+                                            Case 4  '720k
+                                            Case 5  '1.44mb
+                                        End Select
+                                    Case 14  'Tape Drive
+                                        Select Case DiskType
+                                            Case 0  'GCR1
+                                            Case 1  'GCR2
+                                            Case 2  'MFM
+                                        End Select
+                                    Case 15 'Harddrive
+                                        Select Case DiskType
+                                            Case 0  'MFM
+                                            Case 1  'RLL
+                                        End Select
+                                End Select
                             End If
                         End If
                     End If
