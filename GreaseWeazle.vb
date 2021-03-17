@@ -835,10 +835,6 @@ Public Class GreaseWeazle
                     COMStr = "--device " + COMPort + " "
                 End If
 
-                If ShowTime = True Then
-                    str += " --time"
-                End If
-
                 If ((Action = GWReset) Or (Action = GWInfo) Or (Action = GWBandwidth) Or (Action = GWDelays) Or (Action = GWSeek)) Then
                     Select Case Action
                         Case GWReset
@@ -856,9 +852,6 @@ Public Class GreaseWeazle
                             str += " seek " + CStr(SeekTrack)                       'Move drive head to this cylender/track
                     End Select
                     str += COMStr                                                   'Add com port to the string
-                    If ShowTime = True Then
-                        str += " --time"
-                    End If
                 Else
                     If Action = GWSetPin Then                                       'Set a pin level, 0v or 5v.
                         str += " pin " + Pin.ToString + " " + P_PinVoltageLetter + " "  'Voltage is a char: H or L
@@ -895,8 +888,14 @@ Public Class GreaseWeazle
                             str += COMStr                                           'Add com port to the string
 
                             If ((Action = GWRead) Or (Action = GWWrite) Or (Action = GWErase)) Then
+                                If ((Action = GWRead) Or (Action = GWWrite)) Then
+                                    If ShowTime = True Then
+                                        str += " --time"
+                                    End If
+                                End If
+
                                 'Changed track command in v0.23
-                                str += "--tracks=""c="                                  'Add tracks section: double quotes and Cylinder start
+                                str += " --tracks=""c="                                  'Add tracks section: double quotes and Cylinder start
                                 If Not IsNothing(TrackGroup) Then
                                     If TrackGroup.Trim <> "" Then                           'If using a track set, add this
                                         str += TrackGroup

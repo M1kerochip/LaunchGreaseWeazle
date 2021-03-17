@@ -145,7 +145,7 @@ RunGreaseWeazel
 </member>
 <member name="P:RunGreaseWeazel.GreaseWeazle.UseManufacturerAndDiskTypeCombined">
  <summary>
- 
+ Set the (hex) byte directly, rather than using the GW script label
  </summary>
  <returns></returns>
 </member>
