@@ -115,7 +115,7 @@ Public Class GreaseWeazle
     End Property
 
     ''' <summary>
-    ''' 
+    ''' Set the (hex) byte directly, rather than using the GW script label
     ''' </summary>
     ''' <returns></returns>
     Public Property UseManufacturerAndDiskTypeCombined As Boolean
