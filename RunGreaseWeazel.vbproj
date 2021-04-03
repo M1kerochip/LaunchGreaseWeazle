@@ -25,7 +25,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>26</ApplicationRevision>
-    <ApplicationVersion>2.0.4.%2a</ApplicationVersion>
+    <ApplicationVersion>2.0.5.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -88,7 +88,7 @@
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -190,8 +190,10 @@
     <None Include="Scripts_RelativeDirectories\08_nConvert_BMP_PNG.cmd" />
     <None Include="Scripts_RelativeDirectories\09_Convert_IBM_PC.img.cmd" />
     <None Include="Scripts_RelativeDirectories\10_Convert_Aufit_AtariST_STX.cmd" />
+    <None Include="Scripts_RelativeDirectories\11_Convert_Amstrad_DSK.cmd" />
     <None Include="Scripts_RelativeDirectories\Convert_All_Amiga+Atari.cmd" />
     <None Include="Scripts_RelativeDirectories\Convert_All_Amiga.cmd" />
+    <None Include="Scripts_RelativeDirectories\Convert_All_Amstrad.cmd" />
     <None Include="Scripts_RelativeDirectories\Convert_All_Atari.cmd" />
     <None Include="Scripts_RelativeDirectories\Convert_All_IBM_PC.cmd" />
   </ItemGroup>

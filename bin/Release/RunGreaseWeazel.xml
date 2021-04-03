@@ -45,7 +45,7 @@ RunGreaseWeazel
 </member>
 <member name="M:RunGreaseWeazel.FrmMain.WriteDefaultDiskTypesXML(System.String)">
  <summary>
- 
+ Creates an XML file with the v2.2 SCP file format list of manufacturers and disk types. (Used in the onscreen combo boxes (ie just give the combo box index a name)
  </summary>
  <param name="XMLFile">Full Path to the XML file to create</param>
  <returns></returns>

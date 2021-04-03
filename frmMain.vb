@@ -12,6 +12,7 @@ Public Class FrmMain
         Dim GW As New GreaseWeazle
         Me.Text = "Run GreaseWeazle v" + My.Application.Info.Version.ToString + " (GWHelper: " + GW.Version + ")"
 
+        'Load or create and load the .xml file with the manufacturers / disk types
         Dim fl As String = System.IO.Path.ChangeExtension(Application.ExecutablePath, ".Disks.xml")
         If System.IO.File.Exists(fl) Then
             ReadDefaultDiskXML(fl)
@@ -563,7 +564,7 @@ Public Class FrmMain
     End Sub
 
     ''' <summary>
-    ''' 
+    ''' Creates an XML file with the v2.2 SCP file format list of manufacturers and disk types. (Used in the onscreen combo boxes (ie just give the combo box index a name)
     ''' </summary>
     ''' <param name="XMLFile">Full Path to the XML file to create</param>
     ''' <returns></returns>
@@ -1175,16 +1176,21 @@ Public Class FrmMain
                 GW.ShowTime = True
             End If
 
-            If cmbSystem.Text = "Amiga" Then
-                GW.Manufacturer = 0
-                GW.DiskType = 4
-                GW.UseManufacturerAndDiskTypeCombined = False
-            End If
+            If ((cmbReadFormat.Text.ToUpper = ".scp".ToUpper) Or (cmbReadFormat.Text.ToUpper = "Supercard Pro".ToUpper)) Then
+                'this is an scp file, set SCP disk type details
+                If cmbSystem.Text.ToUpper.Contains("Amiga".ToUpper) Then
+                    GW.Manufacturer = 0
+                    GW.DiskType = 4
+                    GW.UseManufacturerAndDiskTypeCombined = False
+                End If
 
-            If chkSetManDiskType.Checked = True Then
-                GW.Manufacturer = cmbManufacturer.SelectedIndex
-                GW.DiskType = cmbDiskTypes.SelectedIndex
-                GW.UseManufacturerAndDiskTypeCombined = True
+                If chkSetManDiskType.Checked = True Then
+                    GW.Manufacturer = cmbManufacturer.SelectedIndex
+                    GW.DiskType = cmbDiskTypes.SelectedIndex
+                    GW.UseManufacturerAndDiskTypeCombined = True
+                End If
+            Else
+                'do nothing with SCP
             End If
 
             Return True
@@ -1529,14 +1535,6 @@ Public Class FrmMain
         End If
     End Sub
 
-    Private Sub txtTitle_GotFocus(sender As Object, e As EventArgs)
-        txtTitle.SelectAll()
-    End Sub
-
-    Private Sub txtPublisher_GotFocus(sender As Object, e As EventArgs)
-        txtPublisher.SelectAll()
-    End Sub
-
     Private Sub lblSystem_Click(sender As Object, e As EventArgs) Handles lblSystem.Click
         If Me.BackColor = System.Drawing.SystemColors.Control Then
             EnableDarkTheme(True)
@@ -1878,12 +1876,20 @@ Public Class FrmMain
         End If
     End Sub
 
+    Private Sub chkSetManDiskType_CheckedChanged(sender As Object, e As EventArgs) Handles chkSetManDiskType.CheckedChanged
+        cmbDiskTypes.Enabled = chkSetManDiskType.Checked
+        cmbManufacturer.Enabled = chkSetManDiskType.Checked
+    End Sub
+
     Private Sub LLabelSCP_Format_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LLabelSCP_Format.LinkClicked
         System.Diagnostics.Process.Start("https://www.cbmstuff.com/downloads/scp/scp_image_specs.txt")
     End Sub
 
-    Private Sub chkSetManDiskType_CheckedChanged(sender As Object, e As EventArgs) Handles chkSetManDiskType.CheckedChanged
-        cmbDiskTypes.Enabled = chkSetManDiskType.Checked
-        cmbManufacturer.Enabled = chkSetManDiskType.Checked
+    Private Sub txtTitle_GotFocus(sender As Object, e As EventArgs) Handles txtTitle.GotFocus
+        txtTitle.SelectAll()
+    End Sub
+
+    Private Sub txtPublisher_GotFocus(sender As Object, e As EventArgs) Handles txtPublisher.GotFocus
+        txtPublisher.SelectAll()
     End Sub
 End Class

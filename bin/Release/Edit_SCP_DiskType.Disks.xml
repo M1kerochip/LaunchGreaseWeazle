@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Disks>
+    <Manufacturer>
+        <Name>Commodore</Name>
+        <DiskTypes>
+            <Name>C64</Name>
+            <Name>Unused</Name>
+            <Name>Unused</Name>
+            <Name>Unused</Name>
+            <Name>Amiga</Name>
+        </DiskTypes>
+    </Manufacturer>
+    <Manufacturer>
+        <Name>Atari</Name>
+        <DiskTypes>
+            <Name>Atari 8-bit (FM) Single Density</Name>
+            <Name>Atari 8-bit (FM) Double Density</Name>
+            <Name>Atari 8-bit (FM) Enhanced Density</Name>
+            <Name>Unused</Name>
+            <Name>Atari ST (Single Sided) (Double Density)</Name>
+            <Name>Atari ST (Double Sided) (Double Density)</Name>
+        </DiskTypes>
+    </Manufacturer>
+    <Manufacturer>
+        <Name>Apple</Name>
+        <DiskTypes>
+            <Name>Apple II</Name>
+            <Name>Apple II Pro</Name>
+            <Name>Unused</Name>
+            <Name>Unused</Name>
+            <Name>Apple 400Kb (Double Density) (Single Sided)</Name>
+            <Name>Apple 800Kb (Double Density) (Double Sided)</Name>
+            <Name>Apple 1.44Mb (High Density) (Double Sided)</Name>
+        </DiskTypes>
+    </Manufacturer>
+    <Manufacturer>
+        <Name>IBM PC</Name>
+        <DiskTypes>
+            <Name>360Kb (5.25") (Double Density) (Double Sided) [40 Track]</Name>
+            <Name>720Kb (3.5") (Double Density) (Double Sided)</Name>
+            <Name>1.2Mb (5.25") (High Density) (Double Sided)</Name>
+            <Name>1.44Mb (3.5") (High Density) (Double Sided)</Name>
+        </DiskTypes>
+    </Manufacturer>
+    <Manufacturer>
+        <Name>Tandy</Name>
+        <DiskTypes>
+            <Name>TRS80 (Single Density) (Single Sided)</Name>
+            <Name>TRS80 (Double Density) (Single Sided)</Name>
+            <Name>TRS80 (Single Density) (Double Sided)</Name>
+            <Name>TRS80 (Double Density) (Double Sided)</Name>
+        </DiskTypes>
+    </Manufacturer>
+    <Manufacturer>
+        <Name>Texas Instruments</Name>
+        <DiskTypes>
+            <Name>TI-99/4A</Name>
+        </DiskTypes>
+    </Manufacturer>
+    <Manufacturer>
+        <Name>Roland</Name>
+        <DiskTypes>
+            <Name>D20</Name>
+        </DiskTypes>
+    </Manufacturer>
+    <Manufacturer>
+        <Name>Amstrad</Name>
+        <DiskTypes>
+            <Name>CPC</Name>
+        </DiskTypes>
+    </Manufacturer>
+    <Manufacturer>
+        <Name>Other</Name>
+        <DiskTypes>
+            <Name>360Kb (5.25") (Double Density) (Double Sided) [40 Track]</Name>
+            <Name>1.2Mb (5.25") (High Density) (Double Sided)</Name>
+            <Name>Reserved (1)</Name>
+            <Name>Reserved (2)</Name>
+            <Name>720Kb (3.5") (Double Density) (Double Sided)</Name>
+            <Name>1.44Mb (3.5") (High Density) (Double Sided)</Name>
+        </DiskTypes>
+    </Manufacturer>
+    <Manufacturer>
+        <Name>Unused</Name>
+        <DiskTypes />
+    </Manufacturer>
+    <Manufacturer>
+        <Name>Unused</Name>
+        <DiskTypes />
+    </Manufacturer>
+    <Manufacturer>
+        <Name>Unused</Name>
+        <DiskTypes />
+    </Manufacturer>
+    <Manufacturer>
+        <Name>Unused</Name>
+        <DiskTypes />
+    </Manufacturer>
+    <Manufacturer>
+        <Name>Unused</Name>
+        <DiskTypes />
+    </Manufacturer>
+    <Manufacturer>
+        <Name>Tape Drive</Name>
+        <DiskTypes>
+            <Name>GCR (1)</Name>
+            <Name>GCR (2)</Name>
+            <Name>MFM</Name>
+        </DiskTypes>
+    </Manufacturer>
+    <Manufacturer>
+        <Name>Hard Drive</Name>
+        <DiskTypes>
+            <Name>MFM</Name>
+            <Name>RLL</Name>
+        </DiskTypes>
+    </Manufacturer>
+</Disks>
