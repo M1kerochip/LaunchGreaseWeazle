@@ -113,7 +113,9 @@ Public Class FrmMain
         cmbDiskTypes.SelectedIndex = My.Settings.DiskType
         cmbManufacturer.Enabled = chkSetManDiskType.Checked
         cmbDiskTypes.Enabled = chkSetManDiskType.Checked
-
+        chkExtremeSeek.Checked = My.Settings.ExtremeSeek
+        chkMotorOn.Checked = My.Settings.SeekWithMotorOn
+        chkDisableVerify.Checked = My.Settings.DisableWriteVerify
 
         EnableProgramLOGToolStripMenuItem.CheckOnClick = True
         EnableProgramLOGToolStripMenuItem.Checked = chkLOG.Checked
@@ -272,6 +274,9 @@ Public Class FrmMain
         ToolTipMainForm.SetToolTip(chkSetManDiskType, "Set the Supercard Pro (.scp) file disk type. Has no effect on other disk formats.")
         ToolTipMainForm.SetToolTip(cmbManufacturer, "The Supercard Pro (.scp) file manufacturer. Has no effect on other disk formats")
         ToolTipMainForm.SetToolTip(cmbDiskTypes, "The Supercard Pro (.scp) file disk type. Each manufacturer can have multiple disk types. Has no effect on other disk formats")
+        ToolTipMainForm.SetToolTip(chkMotorOn, "Switches the drive motor on, when using the seek command. Required by some drives.")
+        ToolTipMainForm.SetToolTip(chkExtremeSeek, "Allows the drive head to move to extreme tracks, with no prompt")
+        ToolTipMainForm.SetToolTip(chkDisableVerify, "Disable write verifying, for disk image formats that support verifying.")
         Return True
     End Function
 
@@ -507,6 +512,9 @@ Public Class FrmMain
         My.Settings.SetManDisktype = chkSetManDiskType.Checked
         My.Settings.Manufacturer = cmbManufacturer.SelectedIndex
         My.Settings.DiskType = cmbDiskTypes.SelectedIndex
+        My.Settings.ExtremeSeek = chkExtremeSeek.Checked
+        My.Settings.SeekWithMotorOn = chkMotorOn.Checked
+        My.Settings.DisableWriteVerify = chkDisableVerify.Checked
 
         If IsNumeric(cmbRetries.Text) Then
             My.Settings.Retries = CInt(cmbRetries.Text)
@@ -1191,6 +1199,18 @@ Public Class FrmMain
                 End If
             Else
                 'do nothing with SCP
+            End If
+
+            If chkDisableVerify.Checked = True Then
+                GW.DisableWriteVerify = True
+            End If
+
+            If chkExtremeSeek.Checked = True Then
+                GW.ExtremeSeek = True
+            End If
+
+            If chkMotorOn.Checked = True Then
+                GW.SeekWithMotorOn = True
             End If
 
             Return True

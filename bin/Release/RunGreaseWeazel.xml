@@ -132,6 +132,24 @@ RunGreaseWeazel
  </summary>
  <returns></returns>
 </member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.SeekWithMotorOn">
+ <summary>
+ Switches the drive motor on, when issusing a seek command
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.ExtremeSeek">
+ <summary>
+ Allows the seeking of extreme tracks, without the warning message
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:RunGreaseWeazel.GreaseWeazle.DisableWriteVerify">
+ <summary>
+ Disables Verification for written images. Not supported by all image types?
+ </summary>
+ <returns></returns>
+</member>
 <member name="M:RunGreaseWeazel.GreaseWeazle.ClearError">
  <summary>
  Clears the ErrorString

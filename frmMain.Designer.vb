@@ -162,6 +162,9 @@ Partial Class FrmMain
         Me.lblTitle = New System.Windows.Forms.Label()
         Me.chkExecuteScriptAfterWrite = New System.Windows.Forms.CheckBox()
         Me.btnClean = New System.Windows.Forms.Button()
+        Me.chkMotorOn = New System.Windows.Forms.CheckBox()
+        Me.chkDisableVerify = New System.Windows.Forms.CheckBox()
+        Me.chkExtremeSeek = New System.Windows.Forms.CheckBox()
         Me.ContextMenuStripMainCommands.SuspendLayout()
         Me.GroupBoxGWOptions.SuspendLayout()
         Me.gbProgramOptions.SuspendLayout()
@@ -193,7 +196,7 @@ Partial Class FrmMain
         Me.rtbOutput.Location = New System.Drawing.Point(513, 12)
         Me.rtbOutput.MinimumSize = New System.Drawing.Size(386, 4)
         Me.rtbOutput.Name = "rtbOutput"
-        Me.rtbOutput.Size = New System.Drawing.Size(386, 638)
+        Me.rtbOutput.Size = New System.Drawing.Size(386, 613)
         Me.rtbOutput.TabIndex = 160
         Me.rtbOutput.Text = ""
         '
@@ -540,7 +543,7 @@ Partial Class FrmMain
         '
         Me.LinkLabelLaunchNow.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.LinkLabelLaunchNow.AutoSize = True
-        Me.LinkLabelLaunchNow.Location = New System.Drawing.Point(414, 659)
+        Me.LinkLabelLaunchNow.Location = New System.Drawing.Point(412, 658)
         Me.LinkLabelLaunchNow.Name = "LinkLabelLaunchNow"
         Me.LinkLabelLaunchNow.Size = New System.Drawing.Size(71, 13)
         Me.LinkLabelLaunchNow.TabIndex = 148
@@ -1177,7 +1180,7 @@ Partial Class FrmMain
         '
         Me.btnGWBandwidth.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.btnGWBandwidth.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnGWBandwidth.Location = New System.Drawing.Point(725, 604)
+        Me.btnGWBandwidth.Location = New System.Drawing.Point(707, 294)
         Me.btnGWBandwidth.Name = "btnGWBandwidth"
         Me.btnGWBandwidth.Size = New System.Drawing.Size(68, 29)
         Me.btnGWBandwidth.TabIndex = 124
@@ -1189,7 +1192,7 @@ Partial Class FrmMain
         '
         Me.btnGWDelays.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.btnGWDelays.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnGWDelays.Location = New System.Drawing.Point(799, 604)
+        Me.btnGWDelays.Location = New System.Drawing.Point(781, 294)
         Me.btnGWDelays.Name = "btnGWDelays"
         Me.btnGWDelays.Size = New System.Drawing.Size(68, 29)
         Me.btnGWDelays.TabIndex = 125
@@ -1201,17 +1204,17 @@ Partial Class FrmMain
         '
         Me.chkLOG.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.chkLOG.AutoSize = True
-        Me.chkLOG.Location = New System.Drawing.Point(808, 659)
+        Me.chkLOG.Location = New System.Drawing.Point(783, 631)
         Me.chkLOG.Name = "chkLOG"
-        Me.chkLOG.Size = New System.Drawing.Size(95, 17)
+        Me.chkLOG.Size = New System.Drawing.Size(102, 17)
         Me.chkLOG.TabIndex = 170
-        Me.chkLOG.Text = "&Save LOG File"
+        Me.chkLOG.Text = "&Save overall log"
         Me.chkLOG.UseVisualStyleBackColor = True
         '
         'btnSeekA
         '
         Me.btnSeekA.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnSeekA.Location = New System.Drawing.Point(528, 655)
+        Me.btnSeekA.Location = New System.Drawing.Point(528, 654)
         Me.btnSeekA.Name = "btnSeekA"
         Me.btnSeekA.Size = New System.Drawing.Size(61, 21)
         Me.btnSeekA.TabIndex = 162
@@ -1221,7 +1224,7 @@ Partial Class FrmMain
         'btnSeekB
         '
         Me.btnSeekB.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnSeekB.Location = New System.Drawing.Point(663, 656)
+        Me.btnSeekB.Location = New System.Drawing.Point(663, 654)
         Me.btnSeekB.Name = "btnSeekB"
         Me.btnSeekB.Size = New System.Drawing.Size(61, 21)
         Me.btnSeekB.TabIndex = 166
@@ -1233,7 +1236,7 @@ Partial Class FrmMain
         Me.cmbSeekA.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmbSeekA.FormattingEnabled = True
         Me.cmbSeekA.Items.AddRange(New Object() {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"})
-        Me.cmbSeekA.Location = New System.Drawing.Point(595, 657)
+        Me.cmbSeekA.Location = New System.Drawing.Point(595, 655)
         Me.cmbSeekA.Name = "cmbSeekA"
         Me.cmbSeekA.Size = New System.Drawing.Size(42, 21)
         Me.cmbSeekA.TabIndex = 164
@@ -1245,7 +1248,7 @@ Partial Class FrmMain
         Me.cmbSeekB.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmbSeekB.FormattingEnabled = True
         Me.cmbSeekB.Items.AddRange(New Object() {"37", "38", "39", "40", "41", "42", "79", "80", "81", "82", "83", "84", "85"})
-        Me.cmbSeekB.Location = New System.Drawing.Point(733, 656)
+        Me.cmbSeekB.Location = New System.Drawing.Point(733, 655)
         Me.cmbSeekB.Name = "cmbSeekB"
         Me.cmbSeekB.Size = New System.Drawing.Size(42, 21)
         Me.cmbSeekB.TabIndex = 168
@@ -1491,12 +1494,45 @@ Partial Class FrmMain
         Me.btnClean.Text = "&Clean"
         Me.btnClean.UseVisualStyleBackColor = True
         '
+        'chkMotorOn
+        '
+        Me.chkMotorOn.AutoSize = True
+        Me.chkMotorOn.Location = New System.Drawing.Point(783, 657)
+        Me.chkMotorOn.Name = "chkMotorOn"
+        Me.chkMotorOn.Size = New System.Drawing.Size(120, 17)
+        Me.chkMotorOn.TabIndex = 187
+        Me.chkMotorOn.Text = "Seek with Motor On"
+        Me.chkMotorOn.UseVisualStyleBackColor = True
+        '
+        'chkDisableVerify
+        '
+        Me.chkDisableVerify.AutoSize = True
+        Me.chkDisableVerify.Location = New System.Drawing.Point(528, 631)
+        Me.chkDisableVerify.Name = "chkDisableVerify"
+        Me.chkDisableVerify.Size = New System.Drawing.Size(118, 17)
+        Me.chkDisableVerify.TabIndex = 188
+        Me.chkDisableVerify.Text = "Disable Write Verify"
+        Me.chkDisableVerify.UseVisualStyleBackColor = True
+        '
+        'chkExtremeSeek
+        '
+        Me.chkExtremeSeek.AutoSize = True
+        Me.chkExtremeSeek.Location = New System.Drawing.Point(663, 632)
+        Me.chkExtremeSeek.Name = "chkExtremeSeek"
+        Me.chkExtremeSeek.Size = New System.Drawing.Size(92, 17)
+        Me.chkExtremeSeek.TabIndex = 189
+        Me.chkExtremeSeek.Text = "Extreme Seek"
+        Me.chkExtremeSeek.UseVisualStyleBackColor = True
+        '
         'FrmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(908, 747)
         Me.ContextMenuStrip = Me.ContextMenuStripMainCommands
+        Me.Controls.Add(Me.chkExtremeSeek)
+        Me.Controls.Add(Me.chkDisableVerify)
+        Me.Controls.Add(Me.chkMotorOn)
         Me.Controls.Add(Me.btnClean)
         Me.Controls.Add(Me.chkExecuteScriptAfterWrite)
         Me.Controls.Add(Me.gbProgramOptions)
@@ -1697,4 +1733,7 @@ Partial Class FrmMain
     Friend WithEvents lblManufacturer As Label
     Friend WithEvents cmbDiskTypes As ComboBox
     Friend WithEvents cmbManufacturer As ComboBox
+    Friend WithEvents chkMotorOn As CheckBox
+    Friend WithEvents chkDisableVerify As CheckBox
+    Friend WithEvents chkExtremeSeek As CheckBox
 End Class

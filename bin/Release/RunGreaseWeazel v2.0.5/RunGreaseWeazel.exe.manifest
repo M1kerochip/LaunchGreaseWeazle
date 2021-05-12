@@ -4,7 +4,7 @@
   <description asmv2:iconFile="Icon.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="RunGreaseWeazel" version="2.0.6.27" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="RunGreaseWeazel" version="2.0.5.25" language="neutral" processorArchitecture="msil" />
     <commandLine file="RunGreaseWeazel.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RunGreaseWeazel.exe" size="156672">
-      <assemblyIdentity name="RunGreaseWeazel" version="2.0.6.27" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="RunGreaseWeazel.exe" size="154112">
+      <assemblyIdentity name="RunGreaseWeazel" version="2.0.5.25" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>nyf9WEwfsd8hNZ/TX6CxRVno/Mw=</dsig:DigestValue>
+        <dsig:DigestValue>4LhpY7XJ4/mgw9tT3icGXSmfHYc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -63,13 +63,13 @@
       <dsig:DigestValue>O2BfcKnJoJnz/wFG1IC5a4p0YeU=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="RunGreaseWeazel.exe.config" size="8794">
+  <file name="RunGreaseWeazel.exe.config" size="8408">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>VXABNpfVMvf1uJjzN/yBL3/7XsQ=</dsig:DigestValue>
+      <dsig:DigestValue>FcMZOE5R0/UJdXHi5UDezqaYwes=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Scripts_RelativeDirectories\_Notes.txt" size="369">

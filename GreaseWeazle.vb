@@ -2,7 +2,7 @@
 ''' Class to call the Greaseweazle hardware and action the results.
 ''' </summary>
 Public Class GreaseWeazle
-    Public ReadOnly Property Version As String = "v0.3, for GW 0.25"
+    Public ReadOnly Property Version As String = "v0.4, for GW 0.27"
 
     Public ReadOnly Property GWMinAction As Integer = 0
     Public ReadOnly Property GWMaxAction As Integer = 11
@@ -93,6 +93,48 @@ Public Class GreaseWeazle
     Private P_DiskType As Integer = 0       'Commodore
     Private P_Manufacturer As Integer = 0   'C64
     Private P_UseManufacturerAndDiskTypeCombined As Boolean = False
+    Private P_DisableWriteVerify As Boolean = False
+    Private P_SeekWithMotorOn As Boolean = False
+    Private P_ExtremeSeek As Boolean = False
+
+    ''' <summary>
+    ''' Switches the drive motor on, when issusing a seek command
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property SeekWithMotorOn As Boolean
+        Get
+            Return P_SeekWithMotorOn
+        End Get
+        Set(value As Boolean)
+            P_SeekWithMotorOn = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' Allows the seeking of extreme tracks, without the warning message
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ExtremeSeek As Boolean
+        Get
+            Return P_ExtremeSeek
+        End Get
+        Set(value As Boolean)
+            P_ExtremeSeek = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' Disables Verification for written images. Not supported by all image types?
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property DisableWriteVerify As Boolean
+        Get
+            Return P_DisableWriteVerify
+        End Get
+        Set(value As Boolean)
+            P_DisableWriteVerify = value
+        End Set
+    End Property
 
     ''' <summary>
     ''' Clears the ErrorString
@@ -851,6 +893,14 @@ Public Class GreaseWeazle
                         Case GWSeek
                             str += " seek " + CStr(SeekTrack)                       'Move drive head to this cylender/track
                     End Select
+                    If Action = GWSeek Then
+                        If SeekWithMotorOn = True Then
+                            str += " --motor-on"
+                        End If
+                        If ExtremeSeek = True Then
+                            str += " --force"
+                        End If
+                    End If
                     str += COMStr                                                   'Add com port to the string
                 Else
                     If Action = GWSetPin Then                                       'Set a pin level, 0v or 5v.
@@ -938,6 +988,10 @@ Public Class GreaseWeazle
                                     str += "type=" + WPC_Type                       'Add WPC disk format type
                                     str += ":" + WPC_Tracks.ToString + "="          'Add track to apply to, after this one:
                                     str += WPC_Width_NanoSeconds.ToString           'WPC width to adjust tracks by
+                                    str += " "                                      'Finish with a space, to leave room for the next switch
+                                End If
+                                If DisableWriteVerify Then
+                                    str += "--no-verify"                            'Disable Write verify, on formats that support write verifying.
                                     str += " "                                      'Finish with a space, to leave room for the next switch
                                 End If
                             End If
