@@ -108,6 +108,7 @@ Public Class FrmMain
         txtWPCWidth.Text = My.Settings.WPCTrackWidth
         chkOffsetHead.Checked = My.Settings.HeadOffsetEnable
         cmbOffsetHeadBy.Text = CStr(My.Settings.HeadOffsetTrackCount)
+        cmbHeadOffsetHead.Text = CStr(My.Settings.HeadOffsetHead)
         chkSetManDiskType.Checked = My.Settings.SetManDisktype
         cmbManufacturer.SelectedIndex = My.Settings.Manufacturer
         cmbDiskTypes.SelectedIndex = My.Settings.DiskType
@@ -122,6 +123,7 @@ Public Class FrmMain
         WriteLOGWithEachReadWriteToolStripMenuItem.CheckOnClick = True
         WriteLOGWithEachReadWriteToolStripMenuItem.Checked = chkSaveLog.Checked
         cmbOffsetHeadBy.Enabled = chkOffsetHead.Checked
+        cmbHeadOffsetHead.Enabled = chkOffsetHead.Checked
 
         cmbRetries.Text = CStr(My.Settings.Retries)
         chkRetries.Checked = My.Settings.EnableRetries
@@ -140,10 +142,6 @@ Public Class FrmMain
         If My.Settings.DarkTheme = True Then
             EnableDarkTheme(True)
         End If
-
-        rtbOutput.Visible = False
-        Me.Size = New Size(534, Me.Size.Height)
-        btnResize.Text = ">"
 
         If My.Settings.WideForm = True Then
             rtbOutput.Visible = True
@@ -183,6 +181,10 @@ Public Class FrmMain
 
         CheckVisible()
 
+        rtbOutput.Visible = False
+        Me.Size = New Size(534, Me.Size.Height)
+        btnResize.Text = ">"
+
         ToolTipMainForm.SetToolTip(btnRead, "Begin GreaseWeazle read process. Creates a flux level copy of a floppy disk to a file.")
         ToolTipMainForm.SetToolTip(btnWrite, "Begin GreaseWeazle write process. Writes a supported file format to a physical floppy disk.")
         ToolTipMainForm.SetToolTip(btnExecuteScript, "Select the program or batch file to run. Path to disk image is passed as first argument.")
@@ -193,7 +195,7 @@ Public Class FrmMain
         ToolTipMainForm.SetToolTip(chkExecuteScriptAfterWrite, "Executes script after each write attempt.")
         ToolTipMainForm.SetToolTip(chkSaveLog, "Writes the log to a file after each read/write attempt. Log file matches image name.")
         ToolTipMainForm.SetToolTip(txtExecuteScript, "Location of program or batch file to execute")
-        ToolTipMainForm.SetToolTip(txtGWLocation, "Location of python.exe. Python must be installed. Exe is in main python install folder.")
+        ToolTipMainForm.SetToolTip(txtGWLocation, "Location of the Greaseweazle program (gw.exe). (If using Python, this is the gw script, instead")
         ToolTipMainForm.SetToolTip(txtSaveLocation, "Location to save disk images to.")
         ToolTipMainForm.SetToolTip(txtTitle, "Title of floppy disk image. This should not be blank.")
         ToolTipMainForm.SetToolTip(txtPublisher, "Publisher of disk image. Seperated from title by underscore. May be blank if desired.")
@@ -277,6 +279,8 @@ Public Class FrmMain
         ToolTipMainForm.SetToolTip(chkMotorOn, "Switches the drive motor on, when using the seek command. Required by some drives.")
         ToolTipMainForm.SetToolTip(chkExtremeSeek, "Allows the drive head to move to extreme tracks, with no prompt")
         ToolTipMainForm.SetToolTip(chkDisableVerify, "Disable write verifying, for disk image formats that support verifying.")
+        ToolTipMainForm.SetToolTip(lblSCP_Format, "The SCP file format specs.")
+        ToolTipMainForm.SetToolTip(cmbHeadOffsetHead, "Disk head (side) to offset the head by. (Only for 5.25"" drives and C64 flippy disks)")
         Return True
     End Function
 
@@ -402,6 +406,8 @@ Public Class FrmMain
         cmbStepping.BackColor = cmbSerialPorts.BackColor
         cmbOffsetHeadBy.ForeColor = cmbSerialPorts.ForeColor
         cmbOffsetHeadBy.BackColor = cmbSerialPorts.BackColor
+        cmbHeadOffsetHead.ForeColor = cmbSerialPorts.ForeColor
+        cmbHeadOffsetHead.BackColor = cmbSerialPorts.BackColor
         cmbRetries.ForeColor = cmbSerialPorts.ForeColor
         cmbRetries.BackColor = cmbSerialPorts.BackColor
         cmbCleanMS.ForeColor = cmbSerialPorts.ForeColor
@@ -509,6 +515,7 @@ Public Class FrmMain
         My.Settings.WPCTrackWidth = txtWPCWidth.Text
         My.Settings.HeadOffsetEnable = chkOffsetHead.Checked
         My.Settings.HeadOffsetTrackCount = CInt(cmbOffsetHeadBy.Text)
+        My.Settings.HeadOffsetHead = CInt(cmbHeadOffsetHead.Text)
         My.Settings.SetManDisktype = chkSetManDiskType.Checked
         My.Settings.Manufacturer = cmbManufacturer.SelectedIndex
         My.Settings.DiskType = cmbDiskTypes.SelectedIndex
@@ -1141,6 +1148,10 @@ Public Class FrmMain
 
                 GW.ScriptFile = txtExecuteScript.Text
                 AddErrorToMemo(GW)
+
+                If chkExecuteScriptAfterWrite.Checked = False Then
+                    GW.ExecuteScriptOnGWRead_Only = True
+                End If
             End If
 
             GW.SeekTrack = CInt(cmbSeekA.Text)
@@ -1155,6 +1166,9 @@ Public Class FrmMain
             AddErrorToMemo(GW)
 
             GW.HeadOffsetTrackCount = CInt(cmbOffsetHeadBy.Text)
+            AddErrorToMemo(GW)
+
+            GW.HeadOffsetHead = CInt(cmbHeadOffsetHead.Text)
             AddErrorToMemo(GW)
 
             If cmbLowHigh.SelectedIndex > -1 Then
@@ -1278,7 +1292,7 @@ Public Class FrmMain
                 rtbOutput.Clear()
                 rtbOutput.Text &= "Reading from Greaseweazel on port " + cmbSerialPorts.Text + Environment.NewLine
                 rtbOutput.Text &= "Start: " + cmbStartTrack.Text + "  End: " + cmbEndTrack.Text + "  Revolutions: " + cmbRevolutions.Text
-                rtbOutput.Text += "Sides: " + cmbSides.Text
+                rtbOutput.Text += "  Sides: " + cmbSides.Text
                 rtbOutput.Text &= Environment.NewLine
                 If chkRate.Checked Then
                     rtbOutput.Text += "Bitcell Data Rate (kbit/s): " + cmbRate.Text
@@ -1646,6 +1660,9 @@ Public Class FrmMain
         btnSeekB.Visible = rtbOutput.Visible
         cmbSeekA.Visible = rtbOutput.Visible
         cmbSeekB.Visible = rtbOutput.Visible
+        chkDisableVerify.Visible = rtbOutput.Visible
+        chkExtremeSeek.Visible = rtbOutput.Visible
+        chkMotorOn.Visible = rtbOutput.Visible
     End Sub
 
     Private Sub btnInfo_Click(sender As Object, e As EventArgs) Handles btnInfo.Click, GreaseweazleINFOToolStripMenuItem.Click
@@ -1845,6 +1862,7 @@ Public Class FrmMain
 
     Private Sub chkOffsetHead_CheckedChanged(sender As Object, e As EventArgs) Handles chkOffsetHead.CheckedChanged
         cmbOffsetHeadBy.Enabled = chkOffsetHead.Checked
+        cmbHeadOffsetHead.Enabled = chkOffsetHead.Checked
     End Sub
 
     Private Sub btnClean_Click(sender As Object, e As EventArgs) Handles btnClean.Click
@@ -1901,7 +1919,7 @@ Public Class FrmMain
         cmbManufacturer.Enabled = chkSetManDiskType.Checked
     End Sub
 
-    Private Sub LLabelSCP_Format_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LLabelSCP_Format.LinkClicked
+    Private Sub LLabelSCP_Format_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles lblSCP_Format.LinkClicked
         System.Diagnostics.Process.Start("https://www.cbmstuff.com/downloads/scp/scp_image_specs.txt")
     End Sub
 
@@ -1911,5 +1929,17 @@ Public Class FrmMain
 
     Private Sub txtPublisher_GotFocus(sender As Object, e As EventArgs) Handles txtPublisher.GotFocus
         txtPublisher.SelectAll()
+    End Sub
+
+    Private Sub cmbReadFormat_TextChanged(sender As Object, e As EventArgs) Handles cmbReadFormat.TextChanged
+        If ((cmbReadFormat.Text.ToUpper = ".scp".ToUpper) Or (cmbReadFormat.Text.ToUpper = "supercard pro".ToUpper)) Then
+            cmbManufacturer.Enabled = True
+            cmbDiskTypes.Enabled = True
+            chkSetManDiskType.Enabled = True
+        Else
+            cmbManufacturer.Enabled = False
+            cmbDiskTypes.Enabled = False
+            chkSetManDiskType.Enabled = False
+        End If
     End Sub
 End Class

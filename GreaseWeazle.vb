@@ -2,7 +2,7 @@
 ''' Class to call the Greaseweazle hardware and action the results.
 ''' </summary>
 Public Class GreaseWeazle
-    Public ReadOnly Property Version As String = "v0.4, for GW 0.27"
+    Public ReadOnly Property Version As String = "v0.5, for GW 0.28"
 
     Public ReadOnly Property GWMinAction As Integer = 0
     Public ReadOnly Property GWMaxAction As Integer = 11
@@ -65,6 +65,7 @@ Public Class GreaseWeazle
     Private P_Step As Integer = 1
     Private P_HeadOffsetEnable As Boolean = False
     Private P_HeadOffsetTrackCount As Integer = -8  'For 5.25" FDD flippy drives only!! (C64/Atari XE .. ?)
+    Private P_HeadOffsetHead As Integer = 1
     Private P_WritePreCompensate As Boolean = False
     Private P_WPC_Type As String = "mfm"
     Private P_WPC_TrackRange As String = ">="
@@ -456,6 +457,23 @@ Public Class GreaseWeazle
                 P_ErrorString = "Invalid offset. Defaulting to -8. Values can only be -9 to 9"
             Else
                 P_HeadOffsetTrackCount = value
+            End If
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' Head to use to offset tracks by HeadOffsetTrackCount 
+    ''' </summary>
+    ''' <returns>Integer, 1 by default, for 5.25" drives with flippy disks</returns>
+    Public Property HeadOffsetHead As Integer
+        Get
+            Return P_HeadOffsetHead
+        End Get
+        Set(value As Integer)
+            If (value = 0) Or (value = 1) Then
+                P_HeadOffsetHead = value
+            Else
+                P_ErrorString = "Invalid head. Values can only be 0 or 1"
             End If
         End Set
     End Property
@@ -967,6 +985,11 @@ Public Class GreaseWeazle
                                     str += "0-1"                                        'else use both heads (top and bottom)
                                 End If
 
+                                If HeadOffsetEnable Then
+                                    str += ":h" + CStr(HeadOffsetHead)                  'Heads (sides of the disk) to use in this operation
+                                    str += ".off=" + CStr(HeadOffsetTrackCount)         'Offset head by a number of tracks
+                                End If
+
                                 str += ":step="
                                 str += CStr(TrackStep)                                  'Step X tracks for every read: Useful for 40 track disks, in 80 track drives, etc.
 
@@ -997,10 +1020,6 @@ Public Class GreaseWeazle
                             End If
 
                             If (Action = GWRead) Or (Action = GWWrite) Then
-                                If HeadOffsetEnable Then
-
-                                End If
-
                                 If Retries <> 0 Then
                                     str += "--retries " + CStr(Retries) + " "
                                 End If

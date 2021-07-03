@@ -737,6 +737,18 @@ Namespace My
                 Me("SeekWithMotorOn") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+        Public Property HeadOffsetHead() As Integer
+            Get
+                Return CType(Me("HeadOffsetHead"),Integer)
+            End Get
+            Set
+                Me("HeadOffsetHead") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

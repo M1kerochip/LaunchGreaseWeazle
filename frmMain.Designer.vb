@@ -88,7 +88,9 @@ Partial Class FrmMain
         Me.lblPin = New System.Windows.Forms.Label()
         Me.lblState = New System.Windows.Forms.Label()
         Me.GroupBoxGWOptions = New System.Windows.Forms.GroupBox()
-        Me.LLabelSCP_Format = New System.Windows.Forms.LinkLabel()
+        Me.lblOffSetHeadBy = New System.Windows.Forms.Label()
+        Me.cmbHeadOffsetHead = New System.Windows.Forms.ComboBox()
+        Me.lblSCP_Format = New System.Windows.Forms.LinkLabel()
         Me.chkSetManDiskType = New System.Windows.Forms.CheckBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.lblManufacturer = New System.Windows.Forms.Label()
@@ -688,7 +690,9 @@ Partial Class FrmMain
         '
         'GroupBoxGWOptions
         '
-        Me.GroupBoxGWOptions.Controls.Add(Me.LLabelSCP_Format)
+        Me.GroupBoxGWOptions.Controls.Add(Me.lblOffSetHeadBy)
+        Me.GroupBoxGWOptions.Controls.Add(Me.cmbHeadOffsetHead)
+        Me.GroupBoxGWOptions.Controls.Add(Me.lblSCP_Format)
         Me.GroupBoxGWOptions.Controls.Add(Me.chkSetManDiskType)
         Me.GroupBoxGWOptions.Controls.Add(Me.Label2)
         Me.GroupBoxGWOptions.Controls.Add(Me.lblManufacturer)
@@ -746,15 +750,35 @@ Partial Class FrmMain
         Me.GroupBoxGWOptions.TabStop = False
         Me.GroupBoxGWOptions.Text = " Image Creation Options "
         '
-        'LLabelSCP_Format
+        'lblOffSetHeadBy
         '
-        Me.LLabelSCP_Format.AutoSize = True
-        Me.LLabelSCP_Format.Location = New System.Drawing.Point(378, 116)
-        Me.LLabelSCP_Format.Name = "LLabelSCP_Format"
-        Me.LLabelSCP_Format.Size = New System.Drawing.Size(63, 13)
-        Me.LLabelSCP_Format.TabIndex = 80
-        Me.LLabelSCP_Format.TabStop = True
-        Me.LLabelSCP_Format.Text = "SCP Format"
+        Me.lblOffSetHeadBy.AutoSize = True
+        Me.lblOffSetHeadBy.Location = New System.Drawing.Point(278, 205)
+        Me.lblOffSetHeadBy.Name = "lblOffSetHeadBy"
+        Me.lblOffSetHeadBy.Size = New System.Drawing.Size(18, 13)
+        Me.lblOffSetHeadBy.TabIndex = 124
+        Me.lblOffSetHeadBy.Text = "by"
+        '
+        'cmbHeadOffsetHead
+        '
+        Me.cmbHeadOffsetHead.FormattingEnabled = True
+        Me.cmbHeadOffsetHead.Items.AddRange(New Object() {"0", "1"})
+        Me.cmbHeadOffsetHead.Location = New System.Drawing.Point(237, 202)
+        Me.cmbHeadOffsetHead.Name = "cmbHeadOffsetHead"
+        Me.cmbHeadOffsetHead.Size = New System.Drawing.Size(32, 21)
+        Me.cmbHeadOffsetHead.TabIndex = 123
+        Me.cmbHeadOffsetHead.Tag = ""
+        Me.cmbHeadOffsetHead.Text = "1"
+        '
+        'lblSCP_Format
+        '
+        Me.lblSCP_Format.AutoSize = True
+        Me.lblSCP_Format.Location = New System.Drawing.Point(378, 116)
+        Me.lblSCP_Format.Name = "lblSCP_Format"
+        Me.lblSCP_Format.Size = New System.Drawing.Size(63, 13)
+        Me.lblSCP_Format.TabIndex = 80
+        Me.lblSCP_Format.TabStop = True
+        Me.lblSCP_Format.Text = "SCP Format"
         '
         'chkSetManDiskType
         '
@@ -891,23 +915,21 @@ Partial Class FrmMain
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(350, 205)
+        Me.Label1.Location = New System.Drawing.Point(346, 205)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(139, 13)
         Me.Label1.TabIndex = 114
         Me.Label1.Text = "tracks (For C64 flippy disks!)"
-        Me.Label1.Visible = False
         '
         'chkOffsetHead
         '
         Me.chkOffsetHead.AutoSize = True
-        Me.chkOffsetHead.Location = New System.Drawing.Point(207, 204)
+        Me.chkOffsetHead.Location = New System.Drawing.Point(150, 204)
         Me.chkOffsetHead.Name = "chkOffsetHead"
-        Me.chkOffsetHead.Size = New System.Drawing.Size(95, 17)
+        Me.chkOffsetHead.Size = New System.Drawing.Size(81, 17)
         Me.chkOffsetHead.TabIndex = 113
-        Me.chkOffsetHead.Text = "Offset head by"
+        Me.chkOffsetHead.Text = "Offset head"
         Me.chkOffsetHead.UseVisualStyleBackColor = True
-        Me.chkOffsetHead.Visible = False
         '
         'lblWPCNanoSeconds
         '
@@ -1060,7 +1082,6 @@ Partial Class FrmMain
         Me.cmbOffsetHeadBy.TabIndex = 72
         Me.cmbOffsetHeadBy.Tag = ""
         Me.cmbOffsetHeadBy.Text = "-8"
-        Me.cmbOffsetHeadBy.Visible = False
         '
         'cmbStepping
         '
@@ -1107,7 +1128,7 @@ Partial Class FrmMain
         'cmbRate
         '
         Me.cmbRate.FormattingEnabled = True
-        Me.cmbRate.Items.AddRange(New Object() {"250", "500"})
+        Me.cmbRate.Items.AddRange(New Object() {"250", "500", "1000"})
         Me.cmbRate.Location = New System.Drawing.Point(237, 234)
         Me.cmbRate.Name = "cmbRate"
         Me.cmbRate.Size = New System.Drawing.Size(42, 21)
@@ -1208,7 +1229,7 @@ Partial Class FrmMain
         Me.chkLOG.Name = "chkLOG"
         Me.chkLOG.Size = New System.Drawing.Size(102, 17)
         Me.chkLOG.TabIndex = 170
-        Me.chkLOG.Text = "&Save overall log"
+        Me.chkLOG.Text = "&Save master log"
         Me.chkLOG.UseVisualStyleBackColor = True
         '
         'btnSeekA
@@ -1496,6 +1517,7 @@ Partial Class FrmMain
         '
         'chkMotorOn
         '
+        Me.chkMotorOn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.chkMotorOn.AutoSize = True
         Me.chkMotorOn.Location = New System.Drawing.Point(783, 657)
         Me.chkMotorOn.Name = "chkMotorOn"
@@ -1506,6 +1528,7 @@ Partial Class FrmMain
         '
         'chkDisableVerify
         '
+        Me.chkDisableVerify.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.chkDisableVerify.AutoSize = True
         Me.chkDisableVerify.Location = New System.Drawing.Point(528, 631)
         Me.chkDisableVerify.Name = "chkDisableVerify"
@@ -1516,6 +1539,7 @@ Partial Class FrmMain
         '
         'chkExtremeSeek
         '
+        Me.chkExtremeSeek.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.chkExtremeSeek.AutoSize = True
         Me.chkExtremeSeek.Location = New System.Drawing.Point(663, 632)
         Me.chkExtremeSeek.Name = "chkExtremeSeek"
@@ -1727,7 +1751,7 @@ Partial Class FrmMain
     Friend WithEvents cmbCleanMS As ComboBox
     Friend WithEvents chkLingerCleaning As CheckBox
     Friend WithEvents chkTime As CheckBox
-    Friend WithEvents LLabelSCP_Format As LinkLabel
+    Friend WithEvents lblSCP_Format As LinkLabel
     Friend WithEvents chkSetManDiskType As CheckBox
     Friend WithEvents Label2 As Label
     Friend WithEvents lblManufacturer As Label
@@ -1736,4 +1760,6 @@ Partial Class FrmMain
     Friend WithEvents chkMotorOn As CheckBox
     Friend WithEvents chkDisableVerify As CheckBox
     Friend WithEvents chkExtremeSeek As CheckBox
+    Friend WithEvents lblOffSetHeadBy As Label
+    Friend WithEvents cmbHeadOffsetHead As ComboBox
 End Class
